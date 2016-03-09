@@ -25,12 +25,6 @@
 
 Route::group(['middleware' => ['web']], function () {
     Route::get('', 'PagesController@index');
-    Route::get('test', function(){
-        return \Auth::user()->id;
-        \DB::enableQueryLog();
-        $pages = App\Page::withVotes()->get();
-        return \DB::getQueryLog();
-    });
     Route::get('logout', 'Auth\AuthController@getLogout');
     Route::post('login', 'Auth\AuthController@postLogin');
     Route::post('register', 'Auth\AuthController@postRegister');

@@ -67,8 +67,11 @@
         border-style: hidden;
     }
     .selected-tag{
-    border-bottom: 2px outset #ff0000;
-    border-top: none;
+        border-bottom: 2px outset #ff0000;
+        border-top: none;
+    }
+    .no-link-style:hover{
+        text-decoration: none;
     }
     </style>
 
@@ -85,12 +88,12 @@
                 <div class="row">
                     <div class="col-md-12">
                         <ul class="list-inline top-v1-data">
-                            <li><a href="page_faq.html">Privacy policy</a></li>
+                            <li><a href="page_faq.html" class="new-item"><strong>Add new</strong></a></li>
                             @if(!Auth::check())
                             <li><a href="" id="login-click">Login</a></li>
                             <li><a href="" id="register-click">Register</a></li>
                             @else
-                            <li><a href="{{action('Auth\AuthController@getLogout')}}">Logout {{Auth::user()->username}}</a></li>
+                            <li><a href="{{action('Auth\AuthController@getLogout')}}">Logout {{Auth::user()->email}}</a></li>
                             @endif
                         </ul>
                     </div>
@@ -106,7 +109,7 @@
                 <div class="navbar-header">
                     <div class="row">
                         <div class="col-md-5">
-                            <img id="logo-header" height="100px" src="hslogo.png" alt="Logo">
+                            <a href="/"><img id="logo-header" height="100px" src="hslogo.png" alt="Logo"></a>
                         </div>
                         <div class="col-md-7">
                             <!--<a href="#"><img class="header-banner img-responsive" src="hslogo.png" alt=""></a>-->
@@ -180,17 +183,8 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-3 col-sm-6 column-one md-margin-bottom-50">
-                        <a href="index.html"><img class="footer-logo" src="assets/img/logo1-white.png" alt=""></a>
-                        <p class="margin-bottom-20">Unify is an ultra fully responsive template with modern and smart design.</p>
-                        <span>Headquarters:</span>
-                        <p>795 Folsom Ave, Suite 600, San Francisco, CA 94107</p>
-                        <hr>
-                        <span>Phone:</span>
-                        <p>(+123) 456 7890</p>
-                        <p>(+123) 456 7891</p>
-                        <hr>
-                        <span>Email Address:</span>
-                        <a href="#">support@htmlstream.com</a>
+                        <span>Site under construction</span>
+                        <p>Uses cookies for login. <small>Beware</small></p>
                     </div>
 
                     <div class="col-md-3 col-sm-6 md-margin-bottom-50">
@@ -198,7 +192,7 @@
                         <!-- Tag Links v4 -->
                         <ul class="tags-v4 margin-bottom-40">
                             @foreach($tags as $tag)
-                            <li><a class="sqaare-4x" href="{{ action('TagsController@show', $tag->name) }}">{{ $tag->name }}</a></li>
+                            <li><a class="sqaare-4x filter-tag" href="{{ action('TagsController@show', $tag->name) }}">{{ $tag->name }}</a></li>
                             @endforeach
                         </ul>
                         <!-- End Tag Links v4 -->
@@ -207,12 +201,14 @@
                     <div class="col-md-3 col-sm-6 md-margin-bottom-50">
                         <h2>Latest Pages</h2>
                         <!-- Latest Newws -->
-                        @foreach($pages->take(3) as $page)
-                        <div class="latest-news margin-bottom-20">
-                            <img src="{{ $page->thumbnail_path }}" alt="">
-                            <h3><a href="#">{{ $page->title }}</a></h3>
-                            <p>{{ $page->description }}</p>
-                        </div>
+                        @foreach($latestPages as $page)
+                        <a href="{{$page->url}}" class="no-link-style">
+                            <div class="latest-news margin-bottom-20">
+                                <img src="{{ $page->thumbnail_path }}" alt="">
+                                <h3>{{ $page->title }}</h3>
+                                <p>{{ $page->description }}</p>
+                            </div>
+                        </a>
                         <hr>
                         @endforeach
                         <!-- End Latest News -->
@@ -221,12 +217,14 @@
                     <div class="col-md-3 col-sm-6 md-margin-bottom-50">
                         <h2>Latest Videos</h2>
                         <!-- Latest Newws -->
-                        @foreach($videos->take(3) as $video)
-                        <div class="latest-news margin-bottom-20">
-                            <img src="{{ $video->thumbnail_path }}" alt="">
-                            <h3><a href="#">{{ $video->title }}</a></h3>
-                            <p>{{ $video->description }}</p>
-                        </div>
+                        @foreach($latestVideos as $video)
+                        <a href="{{$page->url}}" class="no-link-style">
+                            <div class="latest-news margin-bottom-20">
+                                <img src="{{ $video->thumbnail_path }}" alt="">
+                                <h3><a href="#">{{ $video->title }}</a></h3>
+                                <p>{{ $video->description }}</p>
+                            </div>
+                        </a>
                         <hr>
                         @endforeach
                         <!-- End Latest News -->
@@ -238,9 +236,8 @@
         <footer class="copyright">
             <div class="container">
                 <ul class="list-inline terms-menu">
-                    <li>2015 &copy; All Rights Reserved.</li>
-                    <li class="home"><a href="#">Terms of Use</a></li>
-                    <li><a href="#">Privacy and Policy</a></li>
+                    <li>2016 &copy; All Rights Reserved.</li>
+                    <li><a href="#">Privacy policy</a></li>
                 </ul>
             </div><!--/end container-->
         </footer>
@@ -298,14 +295,6 @@
         </div>
 
         <div class="has-error">
-            <label class="control-label" style="display:none;" register-error="username"></label>
-        </div>
-        <div class="input-group margin-bottom-20">
-            <span class="input-group-addon"><i class="fa fa-user"></i></span>
-            <input type="text" name="username" placeholder="Username" class="form-control">
-        </div>
-
-        <div class="has-error">
             <label class="control-label" style="display:none;" register-error="password"></label>
         </div>
         <div class="input-group margin-bottom-20">
@@ -330,7 +319,7 @@
     </div>
 </div>
 @endif
-{{ Form::open(['method' => 'get', 'id' => 'filter-form']) }}
+{{ Form::open(['method' => 'get', 'id' => 'filter-form', 'style' => 'display:none']) }}
 @foreach($tags as $tag)
 @if(isset($filter) && in_array($tag->name, $filter))
 <input type="checkbox" name="filter[]" checked=true value="{{ $tag->name }}">

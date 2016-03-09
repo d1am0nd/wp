@@ -27,11 +27,9 @@ class ViewComposer
      */
     public function compose(View $view)
     {
+        $latestPages = Page::orderBy('created_at', 'DESC')->take(3)->get();
+        $latestVideos = Video::orderBy('created_at', 'DESC')->take(3)->get();
         $tags = Tag::get();
-        if(!$view->offsetExists('pages'))
-            $pages = Page::take(5)->get();
-        if(!$view->offsetExists('videos'))
-            $videos = Video::take(5)->get();
-        $view->with(compact('pages', 'videos', 'tags'));
+        $view->with(compact('latestPages', 'latestVideos', 'tags'));
     }
 }

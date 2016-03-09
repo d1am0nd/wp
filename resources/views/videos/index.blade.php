@@ -93,7 +93,7 @@
                     <div class="col-xs-2">
                         <i class="fa fa-chevron-up icon-sm upvote votes-icon @if($video->my_vote == 1)upvoted @endif"  videoId="{{ $video->id }}"></i>
                         <div class="vote-sum" videoId="{{ $video->id }}" style="text-align:center;">
-                            {{ $video->votes }}
+                            {{ $video->vote_sum }}
                         </div>
                         <i class="fa fa-chevron-down icon-sm downvote votes-icon @if($video->my_vote == -1)downvoted @endif" videoId="{{ $video->id }}"></i>
                     </div>
@@ -108,7 +108,8 @@
 @section('foot')
 @if(Auth::check())
 <script>
-$("img").on('click', function(){
+$(".new-item").on('click', function(event){
+    event.preventDefault();
     $("#myModalNewItem").modal("toggle");
 });
 $(".upvote").on('click', function(event){

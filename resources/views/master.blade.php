@@ -193,7 +193,7 @@
                     <div class="col-md-3 col-sm-6 md-margin-bottom-50">
                         <h2>Latest Pages</h2>
                         <!-- Latest Newws -->
-                        @foreach($pages->take(3) as $page)
+                        @foreach($latestPages as $page)
                         <div class="latest-news margin-bottom-20">
                             <img src="{{ $page->thumbnail_path }}" alt="">
                             <h3><a href="#">{{ $page->title }}</a></h3>
@@ -207,7 +207,7 @@
                     <div class="col-md-3 col-sm-6 md-margin-bottom-50">
                         <h2>Latest Videos</h2>
                         <!-- Latest Newws -->
-                        @foreach($videos->take(3) as $video)
+                        @foreach($latestVideos as $video)
                         <div class="latest-news margin-bottom-20">
                             <img src="{{ $video->thumbnail_path }}" alt="">
                             <h3><a href="#">{{ $video->title }}</a></h3>

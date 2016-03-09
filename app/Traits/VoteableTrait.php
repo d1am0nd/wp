@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use DB;
 use Auth;
 use App\Vote;
 
@@ -20,9 +21,11 @@ trait VoteableTrait
         if($vote !== -1 && $vote !== 1)
             return 'Error voting';
 
+        $morphClass = $this->getMorphClass();
+
         $dbVote = Vote::where('user_id', Auth::user()->id)
             ->where('voteable_id', $this->id)
-            ->where('voteable_type', $this->getMorphClass())
+            ->where('voteable_type', $morphClass)
             ->first();
 
         if(!$dbVote)
@@ -31,18 +34,34 @@ trait VoteableTrait
             // If vote is same as last vote, we delete the vote (put vote on 0)
             $dbVote->delete();
             // Return negative of last vote
-            return $vote*(-1);
+            $return = $vote*(-1);
+
+            $this->updateVotesSum($return);
+            return $return;
         }
+
         // Return new vote - last vote
         $return = $vote - $dbVote->vote;
 
         $dbVote->user_id = Auth::user()->id;
         $dbVote->voteable_id = $this->id;
-        $dbVote->voteable_type = $this->getMorphClass();
+        $dbVote->voteable_type = $morphClass;
         $dbVote->vote = $vote;
         $dbVote->save();
 
+        $this->updateVotesSum($return);
+
         return $return;
+    }
+
+    public function updateVotesSum($amount){
+        DB::table($this->getTable())->where('id', $this->id)
+            ->update(['vote_sum' => \DB::raw('vote_sum +' . $amount)]);
+    }
+
+    public function scopeOrderByVoteSum($query, $order = 'DESC')
+    {
+        return $this->orderBy('vote_sum', $order);
     }
 
     public function scopeWithVotesOrder($query, $order = 'DESC')

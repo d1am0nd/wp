@@ -19,6 +19,7 @@ class CreateVideosTable extends Migration
             $table->string('url')->unique();
             $table->string('thumbnail_path')->nullable();
             $table->integer('user_id')->unsigned()->nullable();
+            $table->integer('vote_sum')->default(0);
             $table->timestamp('published_at')->nullable();
             $table->timestamps();
 
