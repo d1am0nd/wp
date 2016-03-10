@@ -4,7 +4,7 @@
 <!--[if !IE]><!--> 
 <html lang="en"> <!--<![endif]-->
 <head>
-    <title>Header v4 | Unify - Responsive Website Template</title>
+    <title>Wizard-Poker | Hearthstone Content Repository</title>
 
     <!-- Meta -->
     <meta charset="utf-8">
@@ -51,7 +51,7 @@
         margin-top: 20px;
         margin-left:auto; 
         margin-right:auto; 
-        width:380px; 
+        max-width:380px; 
         padding:15px;
         border-radius: 3px;
     }
@@ -88,11 +88,11 @@
                 <div class="row">
                     <div class="col-md-12">
                         <ul class="list-inline top-v1-data">
-                            <li><a href="page_faq.html" class="new-item"><strong>Add new</strong></a></li>
                             @if(!Auth::check())
                             <li><a href="" id="login-click">Login</a></li>
                             <li><a href="" id="register-click">Register</a></li>
                             @else
+                            <li><a href="page_faq.html" class="new-item"><strong>Add new</strong></a></li>
                             <li><a href="{{action('Auth\AuthController@getLogout')}}">Logout {{Auth::user()->email}}</a></li>
                             @endif
                         </ul>
@@ -184,7 +184,7 @@
                 <div class="row">
                     <div class="col-md-3 col-sm-6 column-one md-margin-bottom-50">
                         <span>Site under construction</span>
-                        <p>Uses cookies for login. <small>Beware</small></p>
+                        <p>Uses cookies for login and google analytics. <small>Beware</small></p>
                     </div>
 
                     <div class="col-md-3 col-sm-6 md-margin-bottom-50">
@@ -427,5 +427,15 @@ $(document).on('submit', '#login-form', function(event){
 </script>
 @endif
 @yield('foot')
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-74992400-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
 </body>
 </html>

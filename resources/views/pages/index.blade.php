@@ -86,9 +86,9 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-10">
-                            <h3 style="overflow:hidden;">{{ $page->title}}</h3>
-                            <h4>{{ $page->published_at}}</h4>
-                            <p style="overflow:hidden;">{{ $page->description }}</p>
+                        <h3 style="overflow:hidden;">{{ $page->title}}</h3>
+                        <h4>{{ $page->published_at}}</h4>
+                        <p style="overflow:hidden;">{{ $page->description }}</p>
                     </div>
                     <div class="col-xs-2">
                         <i class="fa fa-chevron-up icon-sm upvote votes-icon @if($page->my_vote == 1)upvoted @endif"  pageId="{{ $page->id }}"></i>

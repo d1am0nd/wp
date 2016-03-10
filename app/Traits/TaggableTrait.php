@@ -11,11 +11,12 @@ trait TaggableTrait
 
     public function scopeWhereHasTags($query, $tagsArray)
     {
+        $query->with('tags');
         if(!isset($tagsArray))
-            return $this;
+            return $query;
         return $query->whereHas('tags', function($query) use ($tagsArray){
             foreach($tagsArray as $tag){
-                $query->where('tags.name', $tag);
+                $query->where('name', $tag);
             }
         });
     }
