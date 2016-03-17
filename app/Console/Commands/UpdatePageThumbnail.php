@@ -54,7 +54,7 @@ class UpdatePageThumbnail extends Command
                 $property = $meta->getAttribute('property');
                 if($property == "og:image"){
                     $thumbnailUrl = $meta->getAttribute('content');
-                    $fileName = '\\thumbnails\\pages\\' . $id . '.jpg';
+                    $fileName = '/thumbnails/pages/' . $id . '.jpg';
                     $absolutePath = public_path() . $fileName;
                     // Save thumbnail to public/thumbnails/pages
                     $img = \Image::make($thumbnailUrl)->fit(480, 280);

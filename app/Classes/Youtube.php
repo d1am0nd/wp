@@ -36,7 +36,7 @@ class Youtube
      */
     public function __construct()
     {
-        $this->youtube_key = ENV('YOUTUBE_API_KEY');
+        $this->youtube_key = env('YOUTUBE_API_KEY');
     }
 
     /**
@@ -106,7 +106,7 @@ class Youtube
 
         //boilerplates for CURL
         $tuCurl = curl_init();
-        if(env('VERIFY_SSL', 'false') == 'false')
+        if(!env('VERIFY_SSL', false))
             curl_setopt($tuCurl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($tuCurl, CURLOPT_URL, $url . (strpos($url, '?') === false ? '?' : '') . http_build_query($params));
         if (strpos($url, 'https') === false) {

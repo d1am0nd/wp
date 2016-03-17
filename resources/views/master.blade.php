@@ -7,7 +7,7 @@
     <!-- Meta -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="User-generated repositroy for useful and/or funny hearthstone content">
+    <meta name="description" content="Community-generated repository for useful and/or funny hearthstone content">
     @if(isset($filter))
     <meta name="robots" content="noindex,follow"/>
     @endif

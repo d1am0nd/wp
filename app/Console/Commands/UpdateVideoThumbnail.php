@@ -46,7 +46,7 @@ class UpdateVideoThumbnail extends Command
         $thumbnailUrl = $this->channelThumbnailUrl($url);
         $this->line($thumbnailUrl);
         
-        $fileName = '\\thumbnails\\videos\\' . $id . '.jpg';
+        $fileName = '/thumbnails/videos/' . $id . '.jpg';
         $absolutePath = public_path() . $fileName;
 
         // Save thumbnail to public/thumbnails
@@ -76,17 +76,30 @@ class UpdateVideoThumbnail extends Command
             // Get og tags from url
             libxml_use_internal_errors(true);
             $doc = new \DomDocument();
-            $doc->loadHTML(file_get_contents($url));
+
+            if(!env('VERIFY_SSL')){
+                $arrContextOptions=array(
+                    "ssl"=>array(
+                        "verify_peer"=>false,
+                        "verify_peer_name"=>false,
+                    ),
+                );  
+            }
+
+            $doc->loadHTML(file_get_contents($url, false, stream_context_create($arrContextOptions)));
+
             $xpath = new \DOMXPath($doc);
-            $query = '//*/div[starts-with(@property, \'og:image\')]';
+            $query = '//img[@class="appbar-nav-avatar"]';
             $metas = $xpath->query($query);
 
+
             foreach ($metas as $meta) {
+                $this->info('1');
                 $property = $meta->getAttribute('class');
                 if($property == "appbar-nav-avatar"){
                     // TODO
-                    $thumbnailUrl = $meta->getAttribute('content');
-                    $this->info($meta->item(0));
+                    $thumbnailUrl = $meta->getAttribute('src');
+                    
                     /*
                     $fileName = '\\thumbnails\\pages\\' . $id . '.jpg';
                     $absolutePath = public_path() . $fileName;
