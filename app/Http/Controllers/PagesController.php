@@ -54,7 +54,7 @@ class PagesController extends Controller
         $tag_ids = array_map('intval', $request->input('tag_id'));
         $page->tags()->attach($tag_ids);
 
-        \Artisan::call('page:updateThumbnail', [
+        \Artisan::queue('page:updateThumbnail', [
             'id' => $page->id, 'url' => $request->input('url')
         ]);
         return json_encode("Success");

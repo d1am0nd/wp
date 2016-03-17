@@ -43,10 +43,9 @@ class UpdateVideoThumbnail extends Command
         $id = $this->argument('id');
         $url = $this->argument('url');
 
-        // Get thumbnail
-        $ytId = $this->urlToVideo($url);
-        $thumbnailUrl = 'http://img.youtube.com/vi/' . $ytId . '/0.jpg';
-
+        $thumbnailUrl = $this->channelThumbnailUrl($url);
+        $this->line($thumbnailUrl);
+        
         $fileName = '\\thumbnails\\videos\\' . $id . '.jpg';
         $absolutePath = public_path() . $fileName;
 
@@ -62,9 +61,48 @@ class UpdateVideoThumbnail extends Command
         Video::where('id', $id)->update(['thumbnail_path' => $fileName, 'published_at' => $publishedAt]);
     }
 
-    protected function urlToVideo($url)
+    protected function videoThumbnailUrl($url)
     {
+        // Get thumbnail url from video
         preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $url, $match);
-        return $match[1];
+        $ytId = $match[1];
+        $thumbnailUrl = 'http://img.youtube.com/vi/' . $ytId . '/0.jpg';
+        return $thumbnailUrl;
+    }
+
+    protected function channelThumbnailUrl($url)
+    {
+        try{
+            // Get og tags from url
+            libxml_use_internal_errors(true);
+            $doc = new \DomDocument();
+            $doc->loadHTML(file_get_contents($url));
+            $xpath = new \DOMXPath($doc);
+            $query = '//*/div[starts-with(@property, \'og:image\')]';
+            $metas = $xpath->query($query);
+
+            foreach ($metas as $meta) {
+                $property = $meta->getAttribute('class');
+                if($property == "appbar-nav-avatar"){
+                    // TODO
+                    $thumbnailUrl = $meta->getAttribute('content');
+                    $this->info($meta->item(0));
+                    /*
+                    $fileName = '\\thumbnails\\pages\\' . $id . '.jpg';
+                    $absolutePath = public_path() . $fileName;
+                    // Save thumbnail to public/thumbnails/pages
+                    $img = \Image::make($thumbnailUrl)->fit(480, 280);
+                    $img->save($absolutePath);
+
+                    Page::where('id', $id)->update(['thumbnail_path' => $fileName]);
+                    break;
+                    */
+                    return $thumbnailUrl;
+                }
+            }
+        }
+        catch(\Exception $e){
+            $this->info($e->getMessage());
+        }
     }
 }

@@ -1,6 +1,7 @@
-@extends('master2')
+@extends('master')
 
 @section('head')
+<title>Wizard-Poker | Videos</title>
 <link rel="stylesheet" href="/plugins/sky-forms-pro/skyforms/css/sky-forms.css">
 <link rel="stylesheet" href="/plugins/sky-forms-pro/skyforms/custom/custom-sky-forms.css">
 <!-- CSS Customization -->

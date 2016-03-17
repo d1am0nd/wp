@@ -55,7 +55,7 @@ class VideosController extends Controller
         $video->tags()->attach($tag_ids);
 
         // Call commands that gets image thumbnail and updates the model
-        \Artisan::call('video:updateThumbnail', [
+        \Artisan::queue('video:updateThumbnail', [
             'id' => $video->id, 'url' => $request->input('url')
         ]);
         return json_encode("Success");
