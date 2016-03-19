@@ -64,7 +64,7 @@
         border-radius: 3px;
     }
     .sky-form{
-        border-style: hidden;
+        border-style: none!important;
     }
     .selected-tag{
         border-bottom: 2px outset #ff0000;

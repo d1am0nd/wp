@@ -13,7 +13,8 @@ class UpdatePageThumbnail extends Command
      * @var string
      */
     protected $signature = 'page:updateThumbnail {id : Id of the page database record} 
-    {url : URL of the new page}';
+    {url : URL of the new page}
+    {--queue=default}';
 
     /**
      * The console command description.

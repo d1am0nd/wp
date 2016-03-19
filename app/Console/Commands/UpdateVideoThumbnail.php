@@ -14,7 +14,8 @@ class UpdateVideoThumbnail extends Command
      * @var string
      */
     protected $signature = 'video:updateThumbnail {id : Id of the video database record} 
-    {url : URL of the new video}';
+    {url : URL of the new video}
+    {--queue=default}';
     private $arrContextOptions, $id, $url;
 
     /**
@@ -102,18 +103,15 @@ class UpdateVideoThumbnail extends Command
             // Get og tags from url
             libxml_use_internal_errors(true);
             $doc = new \DomDocument();
-
             $doc->loadHTML(file_get_contents($this->url, false, stream_context_create($this->arrContextOptions)));
-
             $xpath = new \DOMXPath($doc);
-            $query = '//img[@class="appbar-nav-avatar"]';
+            $query = '//*/meta[starts-with(@property, \'og:image\')]';
             $metas = $xpath->query($query);
 
-
             foreach ($metas as $meta) {
-                $property = $meta->getAttribute('class');
-                if($property == "appbar-nav-avatar"){
-                    $thumbnailUrl = $meta->getAttribute('src');
+                $property = $meta->getAttribute('property');
+                if($property == "og:image"){
+                    $thumbnailUrl = $meta->getAttribute('content');
                     return $thumbnailUrl;
                 }
             }
