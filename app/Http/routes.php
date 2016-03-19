@@ -39,4 +39,6 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('tags', 'TagsController@index');
     Route::get('tags/{tag}', 'TagsController@show');
+
+    Route::get('sitemap.xml', 'SitemapController@show');
 });
