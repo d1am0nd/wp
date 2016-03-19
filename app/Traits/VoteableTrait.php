@@ -106,5 +106,7 @@ trait VoteableTrait
                     ->where('my_vote.user_id', '=', Auth::user()->id);
             })->addSelect('*', $table . '.id', 'my_vote.vote as my_vote');
         }
+        
+        return $query;
     }
 }
