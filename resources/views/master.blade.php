@@ -222,7 +222,7 @@
                         <h2>Latest Videos</h2>
                         <!-- Latest Newws -->
                         @foreach($latestVideos as $video)
-                        <a href="{{$page->url}}" class="no-link-style">
+                        <a href="{{$video->url}}" class="no-link-style">
                             <div class="latest-news margin-bottom-20">
                                 <img src="{{ $video->thumbnail_path }}" alt="">
                                 <h3><a href="#">{{ $video->title }}</a></h3>
