@@ -17,7 +17,7 @@ class CreateLinksTable extends Migration
             $table->string('title')->unique();
             $table->string('description');
             $table->string('url')->unique();
-            $table->string('thumbnail_path')->nullable();
+            $table->string('thumbnail_path')->default('/hslogo.jpg');
             $table->integer('vote_sum')->default(0);
             $table->integer('user_id')->unsigned()->nullable();
             $table->timestamps();

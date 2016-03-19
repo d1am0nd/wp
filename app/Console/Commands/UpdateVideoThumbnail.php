@@ -15,6 +15,7 @@ class UpdateVideoThumbnail extends Command
      */
     protected $signature = 'video:updateThumbnail {id : Id of the video database record} 
     {url : URL of the new video}';
+    private $arrContextOptions, $id, $url;
 
     /**
      * The console command description.
@@ -40,53 +41,69 @@ class UpdateVideoThumbnail extends Command
      */
     public function handle()
     {
-        $id = $this->argument('id');
-        $url = $this->argument('url');
+        // Set global variables
+        if(!env('VERIFY_SSL', true)){
+            $this->arrContextOptions=array(
+                "ssl"=>array(
+                    "verify_peer"=>false,
+                    "verify_peer_name"=>false,
+                ),
+            );  
+        }
+        $this->id = $this->argument('id');
+        $this->url = $this->argument('url');
+        $this->videoUpdateArray = [];
 
-        $thumbnailUrl = $this->channelThumbnailUrl($url);
+        $this->line($this->videoThumbnailUrl());
+
+        // If video thumbnail is found use this
+        // else find channel thumbnail
+        $thumbnailUrl = $this->videoThumbnailUrl();
+        if($thumbnailUrl === false)
+            $thumbnailUrl = $this->channelThumbnailUrl();
+
         $this->line($thumbnailUrl);
         
-        $fileName = '/thumbnails/videos/' . $id . '.jpg';
+        $fileName = '/thumbnails/videos/' . $this->id . '.jpg';
         $absolutePath = public_path() . $fileName;
 
         // Save thumbnail to public/thumbnails
-        file_put_contents($absolutePath, file_get_contents($thumbnailUrl));
+        file_put_contents($absolutePath, file_get_contents($thumbnailUrl, false, stream_context_create($this->arrContextOptions)));
+        $img = \Image::make($absolutePath)->resize(480, 280);
+        $img->save($absolutePath);
 
-        // Gets publishedAt attribute with Youtube API
-        $video = new Youtube();
-        $result = $video->getVideoInfo($ytId);
-        $publishedAt = $result->snippet->publishedAt;
-        $publishedAt = \Carbon\Carbon::parse($publishedAt);
-
-        Video::where('id', $id)->update(['thumbnail_path' => $fileName, 'published_at' => $publishedAt]);
+        Video::where('id', $this->id)->update(array_merge(['thumbnail_path' => $fileName], $this->videoUpdateArray));
     }
 
-    protected function videoThumbnailUrl($url)
+    protected function videoThumbnailUrl()
     {
         // Get thumbnail url from video
-        preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $url, $match);
+        preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $this->url, $match);
+        if(!isset($match[1]))
+            return false;
         $ytId = $match[1];
         $thumbnailUrl = 'http://img.youtube.com/vi/' . $ytId . '/0.jpg';
         return $thumbnailUrl;
     }
 
-    protected function channelThumbnailUrl($url)
+    protected function videoUpdateArray($ytId)
+    {
+        // Gets publishedAt attribute with Youtube API
+        $video = new Youtube();
+        $result = $video->getVideoInfo($ytId);
+        $publishedAt = $result->snippet->publishedAt;
+        $publishedAt = \Carbon\Carbon::parse($publishedAt);
+        return ['published_at' => $publishedAt];
+    }
+
+    protected function channelThumbnailUrl()
     {
         try{
             // Get og tags from url
             libxml_use_internal_errors(true);
             $doc = new \DomDocument();
 
-            if(!env('VERIFY_SSL')){
-                $arrContextOptions=array(
-                    "ssl"=>array(
-                        "verify_peer"=>false,
-                        "verify_peer_name"=>false,
-                    ),
-                );  
-            }
-
-            $doc->loadHTML(file_get_contents($url, false, stream_context_create($arrContextOptions)));
+            $doc->loadHTML(file_get_contents($this->url, false, stream_context_create($this->arrContextOptions)));
 
             $xpath = new \DOMXPath($doc);
             $query = '//img[@class="appbar-nav-avatar"]';
@@ -94,22 +111,9 @@ class UpdateVideoThumbnail extends Command
 
 
             foreach ($metas as $meta) {
-                $this->info('1');
                 $property = $meta->getAttribute('class');
                 if($property == "appbar-nav-avatar"){
-                    // TODO
                     $thumbnailUrl = $meta->getAttribute('src');
-                    
-                    /*
-                    $fileName = '\\thumbnails\\pages\\' . $id . '.jpg';
-                    $absolutePath = public_path() . $fileName;
-                    // Save thumbnail to public/thumbnails/pages
-                    $img = \Image::make($thumbnailUrl)->fit(480, 280);
-                    $img->save($absolutePath);
-
-                    Page::where('id', $id)->update(['thumbnail_path' => $fileName]);
-                    break;
-                    */
                     return $thumbnailUrl;
                 }
             }

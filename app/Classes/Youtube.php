@@ -106,7 +106,7 @@ class Youtube
 
         //boilerplates for CURL
         $tuCurl = curl_init();
-        if(!env('VERIFY_SSL', false))
+        if(!env('VERIFY_SSL', true))
             curl_setopt($tuCurl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($tuCurl, CURLOPT_URL, $url . (strpos($url, '?') === false ? '?' : '') . http_build_query($params));
         if (strpos($url, 'https') === false) {
