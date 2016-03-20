@@ -355,7 +355,8 @@ jQuery(document).ready(function() {
 });
 
 $(".team-img").on('click', function(event){
-    var url = $(event.target).attr('url');
+    event.preventDefault();
+    var url = $(event.target).closest('.team-img').attr('url');
     window.open(url,'_blank');
 });
 $('.tags-filter-cancel').on('click', function(event){
