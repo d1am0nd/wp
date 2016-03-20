@@ -73,37 +73,41 @@
         {!! Form::close() !!}
     </div>
 </div>
-    <div class="container content-md team-v1">
-        <ul class="list-unstyled row">
-            @foreach($pages as $page)
-            <li class="col-sm-3 col-xs-6 md-margin-bottom-30">
-                <div class="team-img" url="{{ $page->url }}">
-                    <a href="{{ $page->url }}">
-                        <img class="img-responsive" src="{{ $page->thumbnail_path }}" alt="">
-                        <ul>
-                            <li><i class="icon-custom icon-sm rounded-x icon-cursor"></i></li>
-                        </ul>
-                    </a>
+<div class="container content-md team-v1">
+    <ul class="list-unstyled row">
+        @foreach($pages as $page)
+        <li class="col-sm-3 col-xs-6 md-margin-bottom-30">
+            <div class="team-img" url="{{ $page->url }}">
+                <a href="{{ $page->url }}">
+                    <img class="img-responsive" src="{{ $page->thumbnail_path }}" alt="">
+                    <ul>
+                        <li><i class="icon-custom icon-sm rounded-x icon-cursor"></i></li>
+                    </ul>
+                </a>
+            </div>
+            <div class="row">
+                <div class="col-xs-10">
+                    <h3 style="overflow:hidden;">{{ $page->title}}</h3>
+                    <h4>{{ $page->published_at}}</h4>
+                    <p style="overflow:hidden;">{{ $page->description }}</p>
                 </div>
-                <div class="row">
-                    <div class="col-xs-10">
-                        <h3 style="overflow:hidden;">{{ $page->title}}</h3>
-                        <h4>{{ $page->published_at}}</h4>
-                        <p style="overflow:hidden;">{{ $page->description }}</p>
+                <div class="col-xs-2">
+                    <i class="fa fa-chevron-up icon-sm upvote votes-icon @if($page->my_vote == 1)upvoted @endif"  pageId="{{ $page->id }}"></i>
+                    <div class="vote-sum" pageId="{{ $page->id }}" style="text-align:center;">
+                        {{ $page->vote_sum }}
                     </div>
-                    <div class="col-xs-2">
-                        <i class="fa fa-chevron-up icon-sm upvote votes-icon @if($page->my_vote == 1)upvoted @endif"  pageId="{{ $page->id }}"></i>
-                        <div class="vote-sum" pageId="{{ $page->id }}" style="text-align:center;">
-                            {{ $page->vote_sum }}
-                        </div>
-                        <i class="fa fa-chevron-down icon-sm downvote votes-icon @if($page->my_vote == -1)downvoted @endif" pageId="{{ $page->id }}"></i>
-                    </div>
+                    <i class="fa fa-chevron-down icon-sm downvote votes-icon @if($page->my_vote == -1)downvoted @endif" pageId="{{ $page->id }}"></i>
                 </div>
-            </li>
-            @endforeach
-        </ul>
-    </div>
-    <!--=== End Team v1 ===-->
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                </div>
+            </div>
+        </li>
+        @endforeach
+    </ul>
+</div>
+<!--=== End Team v1 ===-->
 @stop
 
 @section('foot')

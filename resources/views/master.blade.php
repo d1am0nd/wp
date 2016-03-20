@@ -8,6 +8,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Community-generated repository for useful and/or funny hearthstone content">
+    <meta name="google-site-verification" content="dbZm6GFuvEGRol9FGnF-6D5vofQHk5Z6mTSy4s_-23w" />
     @if(isset($filter))
     <meta name="robots" content="noindex,follow"/>
     @endif
@@ -355,7 +356,7 @@ jQuery(document).ready(function() {
 
 $(".team-img").on('click', function(event){
     var url = $(event.target).attr('url');
-    window.location.href = url;
+    window.open(url,'_blank');
 });
 $('.tags-filter-cancel').on('click', function(event){
     event.preventDefault();
