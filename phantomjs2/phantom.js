@@ -9,6 +9,7 @@ function renderPage(url) {
       var fs = require('fs');
       fs.write('snapshotUrl.txt', targetUrl, 'w');
       console.log('New url: ' + targetUrl);
+      phantom.exit();
     }
   };
 
