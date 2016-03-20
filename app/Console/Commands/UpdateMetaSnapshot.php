@@ -57,7 +57,7 @@ class UpdateMetaSnapshot extends Command
             $su = new SiteUpdate;
             $su->master_url = 'https://tempostorm.com/hearthstone/meta-snapshot';
             $su->url = $this->url;
-            $su->identifier = $this->identifier;
+            $su->identifier = $identifier;
         }
         $su->save();
 
