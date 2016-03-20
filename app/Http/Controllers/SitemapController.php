@@ -21,6 +21,8 @@ class SitemapController extends Controller
     {
         $videos = Video::get();
         $pages = Page::get();
-        return view('sitemap', compact('videos', 'pages'));
+        $content = view('sitemap', compact('videos', 'pages'))->render();
+
+        return response($content)->header('Content-Type', 'application/xml');
     }
 }

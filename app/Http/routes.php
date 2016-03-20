@@ -37,8 +37,10 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('videos', 'VideosController@store');
     Route::post('videos/{video}', 'VideosController@postVote');
 
+    /*
     Route::get('tags', 'TagsController@index');
     Route::get('tags/{tag}', 'TagsController@show');
+    */
 
     Route::get('sitemap.xml', 'SitemapController@show');
 });

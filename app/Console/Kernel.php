@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
         Commands\Inspire::class,
         Commands\UpdateVideoThumbnail::class,
         Commands\UpdatePageThumbnail::class,
+        Commands\UpdateMetaSnapshot::class,
     ];
 
     /**
