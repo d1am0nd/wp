@@ -24,7 +24,7 @@ class PagesController extends Controller
     public function index(Request $request)
     {
         $filter = $request->input('filter');
-        $pages = Page::withMyVote()->whereHasTags($filter)->get();
+        $pages = Page::orderByVoteSum()->withMyVote()->whereHasTags($filter)->get();
         return view('pages.index', compact('pages', 'filter'));
     }
 
