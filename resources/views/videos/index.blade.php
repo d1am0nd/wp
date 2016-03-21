@@ -88,7 +88,7 @@
                 <div class="row">
                     <div class="col-xs-10">
                             <h3 style="overflow:hidden;">{{ $video->title}}</h3>
-                            <h4>{{ $video->published_at}}</h4>
+                            @if(isset($video->published_at))<h4 style="font: 300 12px 'Lato', sans-serif; color: #999;">{{ $video->published_at}}</h4>@endif
                             <p style="overflow:hidden;">{{ $video->description }}</p>
                     </div>
                     <div class="col-xs-2">
