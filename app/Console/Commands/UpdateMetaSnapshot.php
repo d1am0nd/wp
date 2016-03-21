@@ -40,7 +40,9 @@ class UpdateMetaSnapshot extends Command
      */
     public function handle()
     {
+        $this->master_url = 'https://tempostorm.com/hearthstone/meta-snapshot';
         $this->url = $this->getLastMetaSnapshotUrl();
+
         $identifier = 'tempostorm-meta-snapshot';
         $su = SiteUpdate::where('identifier', $identifier)->first();
         if(isset($su)){
@@ -48,25 +50,34 @@ class UpdateMetaSnapshot extends Command
             // and new url starts with 'https://tempostorm.com/hearthstone/meta-snapshot/'
             $this->info($this->url);
             if($this->checkIfUrlIsDifferent($su) && $this->startsWith($this->url, $su->master_url . '/')){
-                $this->url('Sending');
+                $this->info('Sending');
                 $this->sendTwitterMessage();
-                $su->url = $this->url;
             }
         }
         else{
             $su = new SiteUpdate;
-            $su->master_url = 'https://tempostorm.com/hearthstone/meta-snapshot';
-            $su->url = $this->url;
+            $su->master_url = $this->master_url;
             $su->identifier = $identifier;
         }
+        $su->url = $this->url;
         $su->save();
-
     }
 
     private function getLastMetaSnapshotUrl()
     {
+        $api = 'https://tempostorm.com/api/snapshots/findOne?filter=%7B%22order%22:%22createdDate+DESC%22,%22where%22:%7B%22isActive%22:true%7D%7D';
+        $json = json_decode(file_get_contents($api));
+        // $json->slug->url = 'the-old-standard'
+        // full url = 'https://tempostorm.com/hearthstone/meta-snapshot/the-old-standard'
+        $url = $this->master_url . '/' . $json->slug->url;
+        $this->info($url);
+        return $url;
+
+        /*
+        // Old implementation
         $url = \File(base_path() . '/phantomjs2/snapshotUrl.txt');
         return $url[0];
+        */
     }
 
     private function checkIfUrlIsDifferent($su)
@@ -78,7 +89,7 @@ class UpdateMetaSnapshot extends Command
 
     private function sendTwitterMessage()
     {
-        \Twitter::postTweet(['status' => 'New Tempostorm meta snapshot is out! @Tempo_Storm', 'format' => 'json']);
+        \Twitter::postTweet(['status' => 'New Tempostorm meta snapshot is out! ' . $this->url . ' @Tempo_Storm', 'format' => 'json']);
     }
 
     private function startsWith($haystack, $needle){
