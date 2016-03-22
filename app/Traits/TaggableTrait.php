@@ -14,10 +14,10 @@ trait TaggableTrait
         $query->with('tags');
         if(!isset($tagsArray))
             return $query;
-        return $query->whereHas('tags', function($query) use ($tagsArray){
-            foreach($tagsArray as $tag){
+        foreach($tagsArray as $tag){
+            $query->whereHas('tags', function($query) use ($tag){
                 $query->where('name', $tag);
-            }
-        });
+            });
+        }
     }
 }

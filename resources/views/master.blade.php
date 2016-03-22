@@ -346,7 +346,7 @@
 {{ Form::open(['method' => 'get', 'id' => 'filter-form', 'style' => 'display:none']) }}
 @foreach($tags as $tag)
 @if(isset($filter) && in_array($tag->name, $filter))
-<input type="checkbox" name="filter[]" checked=true value="{{ $tag->name }}">
+<input type="checkbox" name="filter[]" checked="true" value="{{ $tag->name }}">
 @else
 <input type="checkbox" name="filter[]" value="{{ $tag->name }}">
 @endif
@@ -386,7 +386,7 @@ $('.tags-filter-cancel').on('click', function(event){
 });
 $(".filter-tag").on('click', function(event){
     event.preventDefault();
-    var dom = $(event.target);
+    var dom = $(this);
     var tagName = dom.html();
     var checkbox = $("input[value='" + tagName + "']")
     checkbox.prop('checked', !checkbox.prop('checked'));
