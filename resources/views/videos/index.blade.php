@@ -1,7 +1,14 @@
 @extends('master')
 
-@section('head')
+@section('meta')
 <title>Wizard-Poker | Videos</title>
+<meta property="og:title" content="Wizard-Poker Videos" />
+<meta property="og:url" content="{{ action('VideosController@index') }}" />
+<meta name="twitter:title" content="Community-picked hearthstone videos" />
+<meta name="twitter:description" content="Blood salt and tears in hearthstone videos" />
+@stop
+
+@section('head')
 <link rel="stylesheet" href="/plugins/sky-forms-pro/skyforms/css/sky-forms.css">
 <link rel="stylesheet" href="/plugins/sky-forms-pro/skyforms/custom/custom-sky-forms.css">
 <!-- CSS Customization -->
@@ -75,31 +82,39 @@
 </div>
     <div class="container content-md team-v1">
         <ul class="list-unstyled row">
-            @foreach($videos as $video)
-            <li class="col-sm-3 col-xs-6 md-margin-bottom-30">
-                <div class="team-img" url="{{ $video->url }}">
-                    <a href="{{ $video->url }}">
-                        <img class="img-responsive" src="{{ $video->thumbnail_path }}" alt="">
-                        <ul>
-                            <li><i class="icon-custom icon-sm rounded-x icon-cursor"></i></li>
-                        </ul>
-                    </a>
-                </div>
-                <div class="row">
-                    <div class="col-xs-10">
-                            <h3 style="overflow:hidden;">{{ $video->title}}</h3>
-                            @if(isset($video->published_at))<h4 style="font: 300 12px 'Lato', sans-serif; color: #999;">{{ $video->published_at}}</h4>@endif
-                            <p style="overflow:hidden;">{{ $video->description }}</p>
-                    </div>
-                    <div class="col-xs-2">
-                        <i class="fa fa-chevron-up icon-sm upvote votes-icon @if($video->my_vote == 1)upvoted @endif"  videoId="{{ $video->id }}"></i>
-                        <div class="vote-sum" videoId="{{ $video->id }}" style="text-align:center;">
-                            {{ $video->vote_sum }}
+            @foreach($videos as $key => $video)
+            @if($key % 4 == 0)
+            <div class="row">
+                <div class="col-md-12">
+            @endif
+                    <li class="col-sm-3 col-xs-6 md-margin-bottom-30">
+                        <div class="team-img" url="{{ $video->url }}">
+                            <a href="{{ $video->url }}">
+                                <img class="img-responsive" src="{{ $video->thumbnail_path }}" alt="">
+                                <ul>
+                                    <li><i class="icon-custom icon-sm rounded-x icon-cursor"></i></li>
+                                </ul>
+                            </a>
                         </div>
-                        <i class="fa fa-chevron-down icon-sm downvote votes-icon @if($video->my_vote == -1)downvoted @endif" videoId="{{ $video->id }}"></i>
-                    </div>
+                        <div class="row">
+                            <div class="col-xs-10">
+                                    <h3 style="overflow:hidden;">{{ $video->title}}</h3>
+                                    @if(isset($video->published_at))<h4 style="font: 300 12px 'Lato', sans-serif; color: #999;">{{ $video->published_at}}</h4>@endif
+                                    <p style="overflow:hidden;">{{ $video->description }}</p>
+                            </div>
+                            <div class="col-xs-2">
+                                <i class="fa fa-chevron-up icon-sm upvote votes-icon @if($video->my_vote == 1)upvoted @endif"  videoId="{{ $video->id }}"></i>
+                                <div class="vote-sum" videoId="{{ $video->id }}" style="text-align:center;">
+                                    {{ $video->vote_sum }}
+                                </div>
+                                <i class="fa fa-chevron-down icon-sm downvote votes-icon @if($video->my_vote == -1)downvoted @endif" videoId="{{ $video->id }}"></i>
+                            </div>
+                        </div>
+                    </li>
+            @if($key % 4 == 3)
                 </div>
-            </li>
+            </div>
+            @endif
             @endforeach
         </ul>
     </div>

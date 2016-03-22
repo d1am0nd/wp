@@ -30,7 +30,12 @@ class TagsSeeder extends Seeder
                 'updated_at' => $createdAt
             ],
             [
-                'name' => 'Discussion',
+                'name' => 'Fanmade',
+                'created_at' => $createdAt,
+                'updated_at' => $createdAt
+            ],
+            [
+                'name' => 'Salty',
                 'created_at' => $createdAt,
                 'updated_at' => $createdAt
             ],

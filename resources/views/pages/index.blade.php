@@ -1,7 +1,14 @@
 @extends('master')
 
-@section('head')
+@section('meta')
 <title>Wizard-Poker | Pages</title>
+<meta property="og:title" content="Wizard-Poker Pages" />
+<meta property="og:url" content="{{ action('PagesController@index') }}" />
+<meta name="twitter:title" content="Community-picked hearthstone pages" />
+<meta name="twitter:description" content="If one boom bot is good, two are better. Pages with hearthstone advice and stuff" />
+@stop
+
+@section('head')
 <link rel="stylesheet" href="/plugins/sky-forms-pro/skyforms/css/sky-forms.css">
 <link rel="stylesheet" href="/plugins/sky-forms-pro/skyforms/custom/custom-sky-forms.css">
 <!-- CSS Customization -->
@@ -75,35 +82,43 @@
 </div>
 <div class="container content-md team-v1">
     <ul class="list-unstyled row">
-        @foreach($pages as $page)
-        <li class="col-sm-3 col-xs-6 md-margin-bottom-30">
-            <div class="team-img" url="{{ $page->url }}">
-                <a href="{{ $page->url }}">
-                    <img class="img-responsive" src="{{ $page->thumbnail_path }}" alt="">
-                    <ul>
-                        <li><i class="icon-custom icon-sm rounded-x icon-cursor"></i></li>
-                    </ul>
-                </a>
-            </div>
-            <div class="row">
-                <div class="col-xs-10">
-                    <h3 style="overflow:hidden;">{{ $page->title}}</h3>
-                    <h4>{{ $page->published_at}}</h4>
-                    <p style="overflow:hidden;">{{ $page->description }}</p>
-                </div>
-                <div class="col-xs-2">
-                    <i class="fa fa-chevron-up icon-sm upvote votes-icon @if($page->my_vote == 1)upvoted @endif"  pageId="{{ $page->id }}"></i>
-                    <div class="vote-sum" pageId="{{ $page->id }}" style="text-align:center;">
-                        {{ $page->vote_sum }}
+        @foreach($pages as $key => $page)
+        @if($key % 4 == 0)
+        <div class="row">
+            <div class="col-md-12">
+        @endif
+                <li class="col-sm-3 col-xs-6 md-margin-bottom-30">
+                    <div class="team-img" url="{{ $page->url }}">
+                        <a href="{{ $page->url }}">
+                            <img class="img-responsive" src="{{ $page->thumbnail_path }}" alt="">
+                            <ul>
+                                <li><i class="icon-custom icon-sm rounded-x icon-cursor"></i></li>
+                            </ul>
+                        </a>
                     </div>
-                    <i class="fa fa-chevron-down icon-sm downvote votes-icon @if($page->my_vote == -1)downvoted @endif" pageId="{{ $page->id }}"></i>
-                </div>
+                    <div class="row">
+                        <div class="col-xs-10">
+                            <h3 style="overflow:hidden;">{{ $page->title}}</h3>
+                            <h4>{{ $page->published_at}}</h4>
+                            <p style="overflow:hidden;">{{ $page->description }}</p>
+                        </div>
+                        <div class="col-xs-2">
+                            <i class="fa fa-chevron-up icon-sm upvote votes-icon @if($page->my_vote == 1)upvoted @endif"  pageId="{{ $page->id }}"></i>
+                            <div class="vote-sum" pageId="{{ $page->id }}" style="text-align:center;">
+                                {{ $page->vote_sum }}
+                            </div>
+                            <i class="fa fa-chevron-down icon-sm downvote votes-icon @if($page->my_vote == -1)downvoted @endif" pageId="{{ $page->id }}"></i>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                        </div>
+                    </div>
+                </li>
+        @if($key % 4 == 3)
             </div>
-            <div class="row">
-                <div class="col-xs-12">
-                </div>
-            </div>
-        </li>
+        </div>
+        @endif
         @endforeach
     </ul>
 </div>

@@ -12,6 +12,12 @@
     @if(isset($filter))
     <meta name="robots" content="noindex,follow"/>
     @endif
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@WizardPokerCom" />
+    <meta name="twitter:image" content="/hslogo.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/hslogo.png" />
+    @yield('meta')
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="favicon.ico">
@@ -190,6 +196,7 @@
                     <div class="col-md-3 col-sm-6 column-one md-margin-bottom-50">
                         <span>Site under construction</span>
                         <p>Uses cookies for login and google analytics. <small>Beware</small></p>
+                        <a href="https://twitter.com/WizardPokerCom"><i class="fa fa-twitter fa-2x"></i> @WizardPokerCom</a>
                     </div>
 
                     <div class="col-md-3 col-sm-6 md-margin-bottom-50">
