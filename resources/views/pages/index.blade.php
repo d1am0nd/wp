@@ -90,7 +90,14 @@
                 <li class="col-sm-3 col-xs-6 md-margin-bottom-30">
                     <div class="team-img" url="{{ $page->url }}">
                         <a href="{{ $page->url }}">
-                            <img class="img-responsive" src="{{ $page->thumbnail_path }}" alt="">
+                            <div class="img-wrapper">
+                                <div class="img-tags">
+                                    @foreach($page->tags as $tag)
+                                    <span class="img-tag label label-u label-default">{{ $tag->name }}</span>
+                                    @endforeach
+                                </div>
+                                <img class="img-responsive" src="{{ $page->thumbnail_path }}" alt="">
+                            </div>
                             <ul>
                                 <li><i class="icon-custom icon-sm rounded-x icon-cursor"></i></li>
                             </ul>

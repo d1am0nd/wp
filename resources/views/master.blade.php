@@ -14,9 +14,9 @@
     @endif
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="@WizardPokerCom" />
-    <meta name="twitter:image" content="/hslogo.png" />
+    <meta name="twitter:image" content="http://www.wizard-poker.com/hslogo.png" />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="/hslogo.png" />
+    <meta property="og:image" content="http://www.wizard-poker.com/hslogo.png" />
     @yield('meta')
 
     <!-- Favicon -->
@@ -84,6 +84,18 @@
         margin:0;
         padding:0;
         font-size: 12px
+    }
+    .img-wrapper { 
+       position: relative; 
+       width: 100%; /* for IE 6 */
+    }
+    .img-tag {
+        margin-right: 5px;
+    }
+    .img-tags {
+       position: absolute;
+       top: 5px;
+       left: 5px;
     }
     </style>
 
