@@ -74,7 +74,7 @@
         border-style: none!important;
     }
     .selected-tag{
-        border-bottom: 2px outset #ff0000;
+        border-bottom: -2px inset #ff0000;
         border-top: none;
     }
     .no-link-style:hover{
@@ -156,7 +156,7 @@
                 <div class="container">
                     <ul class="nav navbar-nav">
                         <!-- Home -->
-                        <li>
+                        <li style="max-height:43px">
                             <a href="{{ action('PagesController@index') }}" title="Pages">
                                 <i class="fa fa-hand-o-up fa-2x"></i>
                             </a>
@@ -165,7 +165,7 @@
                     </ul>
                     <ul class="nav navbar-nav">
                         <!-- Home -->
-                        <li>
+                        <li style="max-height:43px">
                             <a href="{{ action('VideosController@index') }}" title="Videos">
                                 <i class="fa fa-youtube-play fa-2x"></i>
                             </a>
@@ -185,8 +185,14 @@
                         </li>
                         @endforeach
                         {{ Form::close() }}
-                        <li class="no-border">
-                            <i class="search tags-filter-cancel fa fa-times"></i>
+                        <li class="dropdown">
+                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
+                                Order by 
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#TODO">Score</a></li>
+                                <li><a href="#TODO">Uploaded</a></li>
+                            </ul>
                         </li>
                     </ul>
                     <!-- End Search Block -->
