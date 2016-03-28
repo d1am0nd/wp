@@ -27,14 +27,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('', function(){
         return redirect(action('PagesController@index'));
     });
-    Route::get('test', function(){
-        return class_uses('App\Page');
-        return array_diff_key([], ['test' => 22]);
-        return Request::url();
-        return url_with_get('pages', ['test' => 'lala', 'haha' => 'hoho']);
-        return array_merge(['test' => 1, 'test2' => 2], ['test' => '4']);
-        return redirect(action('PagesController@index'));
-    });
     Route::get('logout', 'Auth\AuthController@getLogout');
     Route::post('login', 'Auth\AuthController@postLogin');
     Route::post('register', 'Auth\AuthController@postRegister');
@@ -47,7 +39,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('videos', 'VideosController@store');
     Route::post('videos/{video}', 'VideosController@postVote');
 
-    Route::post('privacy-polidy', 'GeneralController@getPrivacyPolicy');
+    Route::get('privacy-policy', 'GeneralController@getPrivacyPolicy');
 
     /*
     Route::get('tags', 'TagsController@index');
