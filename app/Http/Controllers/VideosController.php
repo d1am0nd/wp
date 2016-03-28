@@ -23,9 +23,10 @@ class VideosController extends Controller
      */
     public function index(Request $request)
     {
-        $filter = $request->input('filter');
-        $videos = Video::orderByVoteSum()->withMyVote()->whereHasTags($filter)->get();
-        return view('videos.index', compact('videos', 'filter'));
+        $filterTag = $request->input('tag');
+        $filterOrderBy = $request->input('orderBy');
+        $videos = Video::filterOrderBy($filterOrderBy)->withMyVote()->whereHasTag($filterTag)->get();
+        return view('videos.index', compact('videos', 'filterTag', 'filterOrderBy'));
     }
 
     /**

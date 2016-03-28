@@ -23,9 +23,10 @@ class PagesController extends Controller
      */
     public function index(Request $request)
     {
-        $filter = $request->input('filter');
-        $pages = Page::orderByVoteSum()->withMyVote()->whereHasTags($filter)->get();
-        return view('pages.index', compact('pages', 'filter'));
+        $filterTag = $request->input('tag');
+        $filterOrderBy = $request->input('orderBy');
+        $pages = Page::filterOrderBy($filterOrderBy)->withMyVote()->whereHasTag($filterTag)->get();
+        return view('pages.index', compact('pages', 'filterTag', 'filterOrderBy'));
     }
 
     /**
