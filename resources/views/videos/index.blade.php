@@ -14,6 +14,9 @@
 <!-- CSS Customization -->
 @stop
 
+@section('filters')
+@include('filters.navbar')
+@stop
 
 @section('content')<!--=== Team v1 ===-->
 
@@ -121,7 +124,7 @@
                             </div>
                         </div>
                     </li>
-            @if($key % 4 == 3)
+            @if($key % 4 == 3 || $key == (count($videos) - 1))
                 </div>
             </div>
             @endif

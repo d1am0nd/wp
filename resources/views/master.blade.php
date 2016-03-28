@@ -163,53 +163,19 @@
                 <div class="container">
                     <ul class="nav navbar-nav">
                         <!-- Home -->
-                        <li style="max-height:43px" @if(Request::url() == action('PagesController@index'))class="active" @endif>
+                        <li title="Pages" style="max-height:43px" @if(Request::url() == action('PagesController@index'))class="active" @endif>
                             <a href="{{ action('PagesController@index') }}" title="Pages">
                                 <i class="icon-link fa-2x"></i>
                             </a>
                         </li>
-                        <li style="max-height:43px" @if(Request::url() == action('VideosController@index'))class="active" @endif>
+                        <li title="Videos" style="max-height:43px" @if(Request::url() == action('VideosController@index'))class="active" @endif>
                             <a href="{{ action('VideosController@index') }}" title="Videos">
                                 <i class="icon-social-youtube fa-2x"></i>
                             </a>
                         </li>
                         <!-- End Home -->
                     </ul>
-
-                    <!-- Search Block -->
-                    <ul class="nav navbar-nav pull-right">
-                        <li class="dropdown">
-                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
-                                {{ isset($filterTag) ? $filterTag : 'Tags'}} 
-                            </a>
-                            <ul class="dropdown-menu menu-rtl">
-                                <li>
-                                    <a href="{{ url_with_get(Request::segment(1),  array_diff_key(Request::input() ? Request::input() : [], ['tag' => ''])) }}">
-                                        All tags
-                                    </a>
-                                </li>
-                                @foreach($tags as $tag)
-                                <li>
-                                    <a href="{{ url_with_get(Request::segment(1),  array_merge(Request::input() ? Request::input() : [], ['tag' => $tag->name])) }}">
-                                        {{ $tag->name }}
-                                    </a>
-                                </li>
-                                @endforeach
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="nav navbar-nav pull-right">
-                        <li class="dropdown">
-                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
-                                {{ isset($filterOrderBy) ? $filterOrderBy : 'Best rated'}} 
-                            </a>
-                            <ul class="dropdown-menu menu-rtl">
-                                <li><a href="{{ url_with_get(Request::segment(1),  array_diff_key(Request::input() ? Request::input() : [], ['orderBy' => ''])) }}">Best rated</a></li>
-                                <li><a href="{{ url_with_get(Request::segment(1),  array_merge(Request::input() ? Request::input() : [], ['orderBy' => 'newest'])) }}">Newest</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <!-- End Search Block -->
+                    @yield('filters')
                 </div><!--/end container-->
             </div><!--/navbar-collapse-->
         </div>
@@ -281,7 +247,7 @@
             <div class="container">
                 <ul class="list-inline terms-menu">
                     <li>2016 &copy; All Rights Reserved.</li>
-                    <li><a href="#">Privacy policy</a></li>
+                    <li><a href="{{ action('GeneralController@getPrivacyPolicy') }}">Privacy policy</a></li>
                 </ul>
             </div><!--/end container-->
         </footer>
