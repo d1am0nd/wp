@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Community-generated repository for useful and/or funny hearthstone content">
     <meta name="google-site-verification" content="dbZm6GFuvEGRol9FGnF-6D5vofQHk5Z6mTSy4s_-23w" />
-    @if(isset($filter))
+    @if(isset($filterTag) || isset($filterOrderBy))
     <meta name="robots" content="noindex,follow"/>
     @endif
     <meta name="twitter:card" content="summary" />
@@ -74,7 +74,8 @@
         border-style: none!important;
     }
     .selected-tag{
-        border-bottom: -2px inset #ff0000;
+        border-bottom: 2px inset #ff0000;
+        height: 42px;
         border-top: none;
     }
     .no-link-style:hover{
@@ -97,6 +98,12 @@
        top: 5px;
        left: 5px;
     }
+    .menu-rtl{
+        right:inherit!important;
+    }
+    .new-item-h{
+        font-size: 27px;
+    }
     </style>
 
     @yield('head')
@@ -116,7 +123,7 @@
                             <li><a href="" id="login-click">Login</a></li>
                             <li><a href="" id="register-click">Register</a></li>
                             @else
-                            <li><a href="page_faq.html" class="new-item"><strong>Add new</strong></a></li>
+                            <li><a href="" class="new-item"><strong>Add new</strong></a></li>
                             <li><a href="{{action('Auth\AuthController@getLogout')}}">Logout {{Auth::user()->email}}</a></li>
                             @endif
                         </ul>
@@ -152,46 +159,53 @@
 
             <div class="clearfix"></div>
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse navbar-responsive-collapse">
+            <div class="collapse mega-menu navbar-collapse navbar-responsive-collapse">
                 <div class="container">
                     <ul class="nav navbar-nav">
                         <!-- Home -->
-                        <li style="max-height:43px">
+                        <li style="max-height:43px" @if(Request::url() == action('PagesController@index'))class="active" @endif>
                             <a href="{{ action('PagesController@index') }}" title="Pages">
-                                <i class="fa fa-hand-o-up fa-2x"></i>
+                                <i class="icon-link fa-2x"></i>
                             </a>
                         </li>
-                        <!-- End Home -->
-                    </ul>
-                    <ul class="nav navbar-nav">
-                        <!-- Home -->
-                        <li style="max-height:43px">
+                        <li style="max-height:43px" @if(Request::url() == action('VideosController@index'))class="active" @endif>
                             <a href="{{ action('VideosController@index') }}" title="Videos">
-                                <i class="fa fa-youtube-play fa-2x"></i>
+                                <i class="icon-social-youtube fa-2x"></i>
                             </a>
                         </li>
                         <!-- End Home -->
                     </ul>
 
                     <!-- Search Block -->
-                    <ul class="nav navbar-nav navbar-border-bottom navbar-right">
-                        @foreach($tags as $tag)
-                        @if(isset($filter) && in_array($tag->name, $filter))
-                        <li class="no-border selected-tag">
-                        @else
-                        <li class="no-border">
-                        @endif
-                            <a class="sqaare-4x filter-tag" href="javascript:;">{{ $tag->name }}</a>
-                        </li>
-                        @endforeach
-                        {{ Form::close() }}
+                    <ul class="nav navbar-nav pull-right">
                         <li class="dropdown">
                             <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
-                                Order by 
+                                {{ isset($filterTag) ? $filterTag : 'Tags'}} 
                             </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#TODO">Score</a></li>
-                                <li><a href="#TODO">Uploaded</a></li>
+                            <ul class="dropdown-menu menu-rtl">
+                                <li>
+                                    <a href="{{ url_with_get(Request::segment(1),  array_diff_key(Request::input() ? Request::input() : [], ['tag' => ''])) }}">
+                                        All tags
+                                    </a>
+                                </li>
+                                @foreach($tags as $tag)
+                                <li>
+                                    <a href="{{ url_with_get(Request::segment(1),  array_merge(Request::input() ? Request::input() : [], ['tag' => $tag->name])) }}">
+                                        {{ $tag->name }}
+                                    </a>
+                                </li>
+                                @endforeach
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav pull-right">
+                        <li class="dropdown">
+                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
+                                {{ isset($filterOrderBy) ? $filterOrderBy : 'Best rated'}} 
+                            </a>
+                            <ul class="dropdown-menu menu-rtl">
+                                <li><a href="{{ url_with_get(Request::segment(1),  array_diff_key(Request::input() ? Request::input() : [], ['orderBy' => ''])) }}">Best rated</a></li>
+                                <li><a href="{{ url_with_get(Request::segment(1),  array_merge(Request::input() ? Request::input() : [], ['orderBy' => 'newest'])) }}">Newest</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -222,7 +236,7 @@
                         <!-- Tag Links v4 -->
                         <ul class="tags-v4 margin-bottom-40">
                             @foreach($tags as $tag)
-                            <li><a class="sqaare-4x filter-tag" href="javascript:;">{{ $tag->name }}</a></li>
+                            <li><a class="sqaare-4x filter-tag" href="{{ url_with_get(Request::segment(1),  array_merge(Request::input() ? Request::input() : [], ['tag' => $tag->name])) }}">{{ $tag->name }}</a></li>
                             @endforeach
                         </ul>
                         <!-- End Tag Links v4 -->
@@ -349,15 +363,6 @@
     </div>
 </div>
 @endif
-{{ Form::open(['method' => 'get', 'id' => 'filter-form', 'style' => 'display:none']) }}
-@foreach($tags as $tag)
-@if(isset($filter) && in_array($tag->name, $filter))
-<input type="checkbox" name="filter[]" checked="true" value="{{ $tag->name }}">
-@else
-<input type="checkbox" name="filter[]" value="{{ $tag->name }}">
-@endif
-@endforeach
-{{ Form::close() }}
 <!-- JS Global Compulsory -->
 <script type="text/javascript" src="/plugins/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="/plugins/jquery/jquery-migrate.min.js"></script>
@@ -389,14 +394,6 @@ $('.tags-filter-cancel').on('click', function(event){
     var filterForm = $("#filter-form");
     $('#filter-form input[type="checkbox"]').removeAttr('checked');
     filterForm.submit();
-});
-$(".filter-tag").on('click', function(event){
-    event.preventDefault();
-    var dom = $(this);
-    var tagName = dom.html();
-    var checkbox = $("input[value='" + tagName + "']")
-    checkbox.prop('checked', !checkbox.prop('checked'));
-    $("#filter-form").submit();
 });
 </script>
 <!--[if lt IE 9]>
@@ -466,7 +463,13 @@ $(document).on('submit', '#login-form', function(event){
 
   ga('create', 'UA-74992400-1', 'auto');
   ga('send', 'pageview');
-
 </script>
+<!-- Begin Cookie Consent plugin by Silktide - http://silktide.com/cookieconsent -->
+<script type="text/javascript">
+    window.cookieconsent_options = {"message":"This website uses Google cookies to ensure you get the best experience on our website","dismiss":"Got it!","learnMore":"More info","link":"{{action('GeneralController@getPrivacyPolicy')}}","theme":"dark-floating"};
+</script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.9/cookieconsent.min.js"></script>
+<!-- End Cookie Consent plugin -->
 </body>
 </html>

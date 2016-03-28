@@ -21,6 +21,9 @@
     <div class="container modal-container-new-item">
         {!! Form::open(['action' => 'VideosController@store', 'class' => 'sky-form', 'id' => 'new-video-form', "style" => "margin-bottom:20px"]) !!}
         <fieldset style="border-style:none">
+            <div class="container">
+                <span class="new-item-h">Add a new Hearthstone related video</span>
+            </div>
             <section>
                 <div class="form-group">
                     <label class="col-md-1 control-label">Title</label>
