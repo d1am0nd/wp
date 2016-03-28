@@ -8,12 +8,14 @@ use App\Vote;
 
 trait VoteableTrait
 {
+    // Relationship definition (One to Many - Polymorphic)
     public function votes()
     {
         return $this->morphMany('App\Vote', 'voteable');
     }
 
-    // Vote: -1 | 0 | 1
+    // Casts a vote, updates corresponding tables
+    // $vote = -1 | 0 | 1
     // Return: newVote - previousVote
     public function vote($vote)
     {
@@ -56,6 +58,25 @@ trait VoteableTrait
         return $return;
     }
 
+    // Filter by orderBy (get parameter)
+    // Expects $filterOrderBy to be empty or 
+    public function scopeFilterOrderBy($query, $filterOrderBy)
+    {
+        // Example: 'pages'
+        $table = $this->getTable();
+        $associations = [
+            'newest' => ['created_at', 'DESC'],
+            'top' => ['vote_sum', 'DESC']
+        ];
+        // If $filterOrderBy is not set or doesn't exist in $associations, we order by vote_sum
+        if(!isset($filterOrderBy) || !array_key_exists($filterOrderBy, $associations))
+            return $query->orderByVoteSum();
+        $orderBy = $associations[$filterOrderBy][0];
+        $order = $associations[$filterOrderBy][1];
+        return $query->orderBy($table . '.' . $orderBy, $order);
+    }
+
+    // Updates vote_sum column
     public function updateVotesSum($amount){
         DB::table($this->getTable())->where('id', $this->id)
             ->update(['vote_sum' => \DB::raw('vote_sum +' . $amount)]);
@@ -71,6 +92,7 @@ trait VoteableTrait
         return $this->scopeWithVotes($query)->orderBy('votes', $order);
     }
 
+    // Left joins sum of all votes (currently never used //28.3.2916)
     public function scopeWithVotes($query)
     {
         // Example: 'App\Page'
@@ -90,6 +112,7 @@ trait VoteableTrait
         return $query;
     }
 
+    // Left joins current users vote as my_vote
     public function scopeWithMyVote($query)
     {
         // Example: 'App\Page'

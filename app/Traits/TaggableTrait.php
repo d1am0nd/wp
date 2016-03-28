@@ -20,4 +20,14 @@ trait TaggableTrait
             });
         }
     }
+
+    public function scopeWhereHasTag($query, $tag)
+    {
+        $query->with('tags');
+        if(!isset($tag))
+            return $query;
+        $query->whereHas('tags', function($query) use ($tag){
+            $query->where('name', $tag);
+        });
+    }
 }
