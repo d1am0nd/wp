@@ -24,9 +24,7 @@
 */
 
 Route::group(['middleware' => ['web']], function () {
-    Route::get('', function(){
-        return redirect(action('PagesController@index'));
-    });
+    Route::get('', 'GeneralController@getHome');
     Route::get('logout', 'Auth\AuthController@getLogout');
     Route::post('login', 'Auth\AuthController@postLogin');
     Route::post('register', 'Auth\AuthController@postRegister');
@@ -38,8 +36,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('videos', 'VideosController@index');
     Route::post('videos', 'VideosController@store');
     Route::post('videos/{video}', 'VideosController@postVote');
-
-    Route::get('privacy-policy', 'GeneralController@getPrivacyPolicy');
 
     /*
     Route::get('tags', 'TagsController@index');

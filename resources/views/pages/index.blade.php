@@ -1,10 +1,11 @@
 @extends('master')
 
 @section('meta')
+
 <title>Wizard-Poker | Pages</title>
 <meta property="og:title" content="Wizard-Poker Pages" />
 <meta property="og:url" content="{{ action('PagesController@index') }}" />
-<meta name="twitter:title" content="Community-picked hearthstone pages" />
+<meta name="twitter:title" content="Community posted hearthstone pages" />
 <meta name="twitter:description" content="If one boom bot is good, two are better. Pages with hearthstone advice and stuff" />
 @stop
 
@@ -111,8 +112,8 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-10">
-                            <h3 style="overflow:hidden;">{{ $page->title}}</h3>
-                            <h4>{{ $page->published_at}}</h4>
+                            <h3 style="overflow:hidden;">{{ $page->title }}</h3>
+                            <h4>{{ $page->published_at }}</h4>
                             <p style="overflow:hidden;">{{ $page->description }}</p>
                         </div>
                         <div class="col-xs-2">

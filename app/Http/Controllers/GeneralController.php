@@ -18,8 +18,8 @@ class GeneralController extends Controller
         return response($content)->header('Content-Type', 'application/xml');
     }
 
-    public function getPrivacyPolicy()
+    public function getHome()
     {
-        return view('privacy-policy');
+        return view('home');
     }
 }

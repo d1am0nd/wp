@@ -2,7 +2,7 @@
 <ul class="nav navbar-nav pull-right">
     <li class="dropdown">
         <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
-            {{ isset($filterTag) ? $filterTag : 'Tags'}} 
+            {{ isset($filterTag) ? $filterTag : 'All tags'}} 
         </a>
         <ul class="dropdown-menu menu-rtl">
             <li>

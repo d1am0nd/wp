@@ -4,7 +4,7 @@
 <title>Wizard-Poker | Videos</title>
 <meta property="og:title" content="Wizard-Poker Videos" />
 <meta property="og:url" content="{{ action('VideosController@index') }}" />
-<meta name="twitter:title" content="Community-picked hearthstone videos" />
+<meta name="twitter:title" content="Community posted hearthstone videos" />
 <meta name="twitter:description" content="Blood salt and tears in hearthstone videos" />
 @stop
 
