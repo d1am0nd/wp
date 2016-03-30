@@ -3,6 +3,13 @@
   xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" 
   xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
   <url> 
+    <loc>http://www.wizard-poker.com/</loc>
+    <image:image>
+       <image:loc>http://www.wizard-poker.com/backgrounds/demon-hunter-bg.jpg</image:loc>
+       <image:caption>Wizard-Poker Hearthstone Related Content</image:caption>
+    </image:image>
+  </url>
+  <url> 
     <loc>http://www.wizard-poker.com/pages</loc>
     @foreach($pages as $page)
     <image:image>
