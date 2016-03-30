@@ -26,15 +26,16 @@ class StorePagesRequest extends Request
         return [
             'title' => 'required|max:40',
             'description' => 'required|min:15|max:120',
-            'url' => 'required|url|unique:pages,url',
-            'tag_id' => 'required|array'
+            'url' => 'required|url|unique:pages,url|notYoutube',
+            'tag_id' => 'required|array',
         ];
     }
 
     public function messages()
     {
         return [
-            'tag_id.required' => 'The tags field is required'
+            'tag_id.required' => 'The tags field is required',
+            'url.not_youtube' => 'This should be posted as a video'
         ];
     }
 }

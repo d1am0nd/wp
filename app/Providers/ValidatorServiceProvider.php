@@ -24,6 +24,17 @@ class ValidatorServiceProvider extends ServiceProvider
             $has_match = preg_match($rx, $value, $matches);
             return $has_match;
         });
+        $this->app['validator']->extend('not_youtube', function ($attribute, $value, $parameters)
+        {
+            $rx = '~
+                ^(?:https?://)?              # Optional protocol
+                 (?:www\.)?                  # Optional subdomain
+                 (?:youtube\.com|youtu\.be)  # Mandatory domain name' .
+                 // /watch\?v=([^&]+)           # URI with video id as capture group 1
+                 '~x';
+            $has_match = preg_match($rx, $value, $matches);
+            return !$has_match;
+        });
     }
 
     /**
