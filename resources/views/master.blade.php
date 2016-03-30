@@ -123,7 +123,11 @@
                             <li><a href="" id="login-click">Login</a></li>
                             <li><a href="" id="register-click">Register</a></li>
                             @else
-                            <li><a href="" class="new-item"><strong>Add new</strong></a></li>
+                            @if(Request::url() == action('PagesController@index'))
+                            <li><a href="" class="new-item"><strong>Add new page</strong></a></li>
+                            @elseif(Request::url() == action('VideosController@index'))
+                            <li><a href="" class="new-item"><strong>Add new video</strong></a></li>
+                            @endif
                             <li><a href="{{action('Auth\AuthController@getLogout')}}">Logout {{Auth::user()->email}}</a></li>
                             @endif
                         </ul>
@@ -164,7 +168,7 @@
                     <ul class="nav navbar-nav">
                         <!-- Home -->
                         <li title="Home" @if(Request::url() == action('GeneralController@getHome'))class="active" @endif>
-                            <a href="{{ action('GeneralController@getHome') }}" title="Videos">
+                            <a href="{{ action('GeneralController@getHome') }}" title="Home">
                                 <span class="icon-home"></span> Home
                             </a>
                         </li>
@@ -198,7 +202,7 @@
                 <div class="row">
                     <div class="col-md-3 col-sm-6 column-one md-margin-bottom-50">
                         <span>Site under construction</span>
-                        <p>Uses cookies for login and google analytics. <a href="{{ action('GeneralController@getTos') }}#privacy">More</a>.<small>Beware</small></p>
+                        <p>Uses cookies for login and google analytics. <a href="{{ action('GeneralController@getTos') }}#privacy">More</a>. <small>Beware</small></p>
                         <a href="https://twitter.com/WizardPokerCom"><i class="fa fa-twitter fa-2x"></i> @WizardPokerCom</a>
                     </div>
 

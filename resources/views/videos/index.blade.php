@@ -1,10 +1,10 @@
 @extends('master')
 
 @section('meta')
-<title>Wizard-Poker | Videos</title>
-<meta property="og:title" content="Wizard-Poker Videos" />
+<title>Wizard-Poker | Hearthstone Videos</title>
+<meta property="og:title" content="Wizard-Poker Hearthstone related videos" />
 <meta property="og:url" content="{{ action('VideosController@index') }}" />
-<meta name="twitter:title" content="Community posted hearthstone videos" />
+<meta name="twitter:title" content="Community posted hearthstone related videos" />
 <meta name="twitter:description" content="Blood salt and tears in hearthstone videos" />
 @stop
 

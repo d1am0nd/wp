@@ -33,7 +33,7 @@
                 <div class="tp-caption re-title-v1 sft start"
                     data-x="center"
                     data-hoffset="0"
-                    data-y="100"
+                    data-y="0"
                     data-speed="1500"
                     data-start="500"
                     data-easing="Back.easeInOut"
@@ -47,7 +47,7 @@
                 <div class="tp-caption re-text-v1 sft"
                     data-x="center"
                     data-hoffset="0"
-                    data-y="200"
+                    data-y="100"
                     data-speed="1400"
                     data-start="2000"
                     data-easing="Power4.easeOut"
@@ -55,7 +55,7 @@
                     data-endeasing="Power1.easeIn"
                     data-captionhidden="off"
                     style="z-index: 6">
-                    Share some awesome Hearthstone related content!<br>
+                    Share awesome Hearthstone related content!<br>
                     Wizard-Poker features links to community picked best Hearthstone related content.
                 </div>
                 <!-- END LAYER -->
@@ -64,7 +64,7 @@
                 <div class="tp-caption sft"
                     data-x="center"
                     data-hoffset="0"
-                    data-y="320"
+                    data-y="220"
                     data-speed="1600"
                     data-start="2800"
                     data-easing="Power4.easeOut"

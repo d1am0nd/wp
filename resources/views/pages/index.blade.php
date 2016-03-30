@@ -1,11 +1,10 @@
 @extends('master')
 
 @section('meta')
-
-<title>Wizard-Poker | Pages</title>
-<meta property="og:title" content="Wizard-Poker Pages" />
+<title>Wizard-Poker | Hearthstone Pages</title>
+<meta property="og:title" content="Wizard-Poker Hearthstone related pages" />
 <meta property="og:url" content="{{ action('PagesController@index') }}" />
-<meta name="twitter:title" content="Community posted hearthstone pages" />
+<meta name="twitter:title" content="Community posted hearthstone related pages" />
 <meta name="twitter:description" content="If one boom bot is good, two are better. Pages with hearthstone advice and stuff" />
 @stop
 
