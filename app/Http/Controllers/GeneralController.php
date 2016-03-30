@@ -10,16 +10,21 @@ use App\Http\Requests;
 
 class GeneralController extends Controller
 {
+    public function getHome()
+    {
+        return view('home');
+    }
+
+    public function getTos()
+    {
+        return view('tos');
+    }
+
     public function getSitemapXml()
     {
         $videos = Video::get();
         $pages = Page::get();
         $content = view('sitemap', compact('videos', 'pages'))->render();
         return response($content)->header('Content-Type', 'application/xml');
-    }
-
-    public function getHome()
-    {
-        return view('home');
     }
 }

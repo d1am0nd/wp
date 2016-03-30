@@ -163,19 +163,19 @@
                 <div class="container">
                     <ul class="nav navbar-nav">
                         <!-- Home -->
-                        <li title="Home" style="max-height:43px" @if(Request::url() == action('GeneralController@getHome'))class="active" @endif>
+                        <li title="Home" @if(Request::url() == action('GeneralController@getHome'))class="active" @endif>
                             <a href="{{ action('GeneralController@getHome') }}" title="Videos">
-                                <i class="icon-notebook fa-2x"></i>
+                                <span class="icon-home"></span> Home
                             </a>
                         </li>
-                        <li title="Pages" style="max-height:43px" @if(Request::url() == action('PagesController@index'))class="active" @endif>
+                        <li title="Pages" @if(Request::url() == action('PagesController@index'))class="active" @endif>
                             <a href="{{ action('PagesController@index') }}" title="Pages">
-                                <i class="icon-link fa-2x"></i> 
+                                <span class="icon-link"></span> Pages
                             </a>
                         </li>
-                        <li title="Videos" style="max-height:43px" @if(Request::url() == action('VideosController@index'))class="active" @endif>
+                        <li title="Videos" @if(Request::url() == action('VideosController@index'))class="active" @endif>
                             <a href="{{ action('VideosController@index') }}" title="Videos">
-                                <i class="icon-social-youtube fa-2x"></i>
+                               <span class="icon-social-youtube"></span> Videos
                             </a>
                         </li>
                         <!-- End Home -->
@@ -198,7 +198,7 @@
                 <div class="row">
                     <div class="col-md-3 col-sm-6 column-one md-margin-bottom-50">
                         <span>Site under construction</span>
-                        <p>Uses cookies for login and google analytics. <small>Beware</small></p>
+                        <p>Uses cookies for login and google analytics. <a href="{{ action('GeneralController@getTos') }}#privacy">More</a>.<small>Beware</small></p>
                         <a href="https://twitter.com/WizardPokerCom"><i class="fa fa-twitter fa-2x"></i> @WizardPokerCom</a>
                     </div>
 
@@ -252,7 +252,7 @@
             <div class="container">
                 <ul class="list-inline terms-menu">
                     <li>2016 &copy; All Rights Reserved.</li>
-                    <li><a href="{{ action('GeneralController@getHome') }}#privacy">Privacy policy</a></li>
+                    <li><a href="{{ action('GeneralController@getTos') }}">Terms of Service</a></li>
                 </ul>
             </div><!--/end container-->
         </footer>
@@ -437,7 +437,7 @@ $(document).on('submit', '#login-form', function(event){
 </script>
 <!-- Begin Cookie Consent plugin by Silktide - http://silktide.com/cookieconsent -->
 <script type="text/javascript">
-    window.cookieconsent_options = {"message":"This website uses Google cookies to ensure you get the best experience on our website","dismiss":"Got it!","learnMore":"More info","link":"{{action('GeneralController@getHome')}}#privacy","theme":"dark-floating"};
+    window.cookieconsent_options = {"message":"This website uses Google cookies to ensure you get the best experience on our website","dismiss":"Got it!","learnMore":"More info","link":"{{ action('GeneralController@getTos') }}#privacy","theme":"dark-floating"};
 </script>
 
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.9/cookieconsent.min.js"></script>
