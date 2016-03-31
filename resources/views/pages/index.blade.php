@@ -133,6 +133,7 @@
         </div>
         @endif
         @endforeach
+        {{ $pages->appends(Request::input()) }}
     </ul>
 </div>
 <!--=== End Team v1 ===-->

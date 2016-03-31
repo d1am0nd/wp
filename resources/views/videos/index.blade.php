@@ -129,6 +129,7 @@
             </div>
             @endif
             @endforeach
+            {{ $videos->appends(Request::input()) }}
         </ul>
     </div>
     <!--=== End Team v1 ===-->

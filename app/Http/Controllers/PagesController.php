@@ -25,7 +25,7 @@ class PagesController extends Controller
     {
         $filterTag = $request->input('tag');
         $filterOrderBy = $request->input('orderBy');
-        $pages = Page::filterOrderBy($filterOrderBy)->withMyVote()->whereHasTag($filterTag)->get();
+        $pages = Page::filterOrderBy($filterOrderBy)->withMyVote()->whereHasTag($filterTag)->paginate(2);
         return view('pages.index', compact('pages', 'filterTag', 'filterOrderBy'));
     }
 
