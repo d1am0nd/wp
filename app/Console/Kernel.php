@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
         Commands\UpdateVideoThumbnail::class,
         Commands\UpdatePageThumbnail::class,
         Commands\UpdateMetaSnapshot::class,
+        Commands\UpdateRedditCustomWeekly::class,
     ];
 
     /**
