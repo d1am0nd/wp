@@ -22,7 +22,7 @@ class UpdateMetaSnapshot extends Command
      */
     protected $description = 'Updates Twitter account if new snapshot is out';
 
-    private $url;
+    private $url, $master_url;
     /**
      * Create a new command instance.
      *
@@ -41,7 +41,7 @@ class UpdateMetaSnapshot extends Command
     public function handle()
     {
         $this->master_url = 'https://tempostorm.com/hearthstone/meta-snapshot';
-        $this->url = $this->getLastMetaSnapshotUrl();
+        $this->url = $this->getLastUrl();
 
         $identifier = 'tempostorm-meta-snapshot';
         $su = SiteUpdate::where('identifier', $identifier)->first();
@@ -63,7 +63,7 @@ class UpdateMetaSnapshot extends Command
         $su->save();
     }
 
-    private function getLastMetaSnapshotUrl()
+    private function getLastUrl()
     {
         $api = 'https://tempostorm.com/api/snapshots/findOne?filter=%7B%22order%22:%22createdDate+DESC%22,%22where%22:%7B%22isActive%22:true%7D%7D';
         $json = json_decode(file_get_contents($api));

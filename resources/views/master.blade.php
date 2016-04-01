@@ -422,8 +422,9 @@ $(document).on('submit', '#login-form', function(event){
                 }, 5000);
             });
         },
-        success: function(){
-            location.reload();
+        error: function(xhr, status, error){
+            if(xhr.status != 422)
+                location.reload();
         }
     });
 });
