@@ -18,6 +18,7 @@ class Kernel extends ConsoleKernel
         Commands\UpdatePageThumbnail::class,
         Commands\UpdateMetaSnapshot::class,
         Commands\UpdateRedditCustomWeekly::class,
+        Commands\SlugifyEvertything::class,
     ];
 
     /**
