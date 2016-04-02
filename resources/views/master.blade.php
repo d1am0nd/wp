@@ -422,9 +422,8 @@ $(document).on('submit', '#login-form', function(event){
                 }, 5000);
             });
         },
-        error: function(xhr, status, error){
-            if(xhr.status != 422)
-                location.reload();
+        success: function(){
+            location.reload();
         }
     });
 });

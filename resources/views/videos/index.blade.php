@@ -86,53 +86,41 @@
         {!! Form::close() !!}
     </div>
 </div>
-    <div class="container content-md team-v1">
-        <ul class="list-unstyled row">
-            @foreach($videos as $key => $video)
-            @if($key % 4 == 0)
-            <div class="row">
-                <div class="col-md-12">
-            @endif
-                    <li class="col-sm-3 col-xs-6 md-margin-bottom-30">
-                        <div class="team-img" url="{{ $video->url }}">
-                            <a href="{{ $video->url }}">
-                                <div class="img-wrapper">
-                                    <div class="img-tags">
-                                        @foreach($video->tags as $tag)
-                                        <span class="img-tag label label-u label-default">{{ $tag->name }}</span>
-                                        @endforeach
-                                    </div>
-                                    <img class="img-responsive" src="{{ $video->thumbnail_path }}" alt="">
-                                </div>
-                                <ul>
-                                    <li><i class="icon-custom icon-sm rounded-x icon-cursor"></i></li>
-                                </ul>
-                            </a>
+
+<div class="container content-md">
+    <div class="row news-v1">
+        @foreach($videos as $video)
+        <div class="col-md-4 md-margin-bottom-40">
+            <div class="news-v1-in" style="height:451px">
+                <a href="{{ $video->url }}" target="_blank">
+                    <div class="img-wrapper">
+                        <div class="img-tags">
+                            @foreach($video->tags as $tag)
+                            <span class="img-tag label label-u label-default">{{ $tag->name }}</span>
+                            @endforeach
                         </div>
-                        <div class="row">
-                            <div class="col-xs-10">
-                                    <h3 style="overflow:hidden;">{{ $video->title}}</h3>
-                                    @if(isset($video->published_at))<h4 style="font: 300 12px 'Lato', sans-serif; color: #999;">{{ $video->published_at}}</h4>@endif
-                                    <p style="overflow:hidden;">{{ $video->description }}</p>
-                            </div>
-                            <div class="col-xs-2">
-                                <i class="fa fa-chevron-up icon-sm upvote votes-icon @if($video->my_vote == 1)upvoted @endif"  videoId="{{ $video->id }}"></i>
-                                <div class="vote-sum" videoId="{{ $video->id }}" style="text-align:center;">
-                                    {{ $video->vote_sum }}
-                                </div>
-                                <i class="fa fa-chevron-down icon-sm downvote votes-icon @if($video->my_vote == -1)downvoted @endif" videoId="{{ $video->id }}"></i>
-                            </div>
+                        <img class="img-responsive" src="{{ $video->thumbnail_path }}" alt="">
+                    </div>
+                </a>
+                <h3 style="overflow:hidden;"><a href="{{ $video->url }}" target="_blank">{{ $video->title }}</a></h3>
+                <p style="overflow:hidden;">{{ $video->description }}</p>
+                <ul class="list-inline news-v1-info">
+                    <li><i class="fa fa-chevron-down downvote votes-icon @if($video->my_vote == -1)downvoted @endif" videoId="{{ $video->id }}"></i></li>
+                    <li>                            
+                        <div class="vote-sum" videoId="{{ $video->id }}">
+                        {{ $video->vote_sum }}
                         </div>
                     </li>
-            @if($key % 4 == 3 || $key == (count($videos) - 1))
-                </div>
+                    <li><i class="fa fa-chevron-up upvote votes-icon @if($video->my_vote == 1)upvoted @endif"  videoId="{{ $video->id }}"></i></li>
+                    <li>|</li>
+                    <li><i class="fa fa-clock-o"></i> {{ $video->created_at }}</li>
+                    <li class="pull-right"><a href="#"><i class="fa fa-comments-o"></i> 14</a></li>
+                </ul>
             </div>
-            @endif
-            @endforeach
-            {{ $videos->appends(Request::input()) }}
-        </ul>
+        </div>
+        @endforeach
     </div>
-    <!--=== End Team v1 ===-->
+</div>
 @stop
 
 @section('foot')

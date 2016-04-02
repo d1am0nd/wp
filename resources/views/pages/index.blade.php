@@ -12,6 +12,12 @@
 <link rel="stylesheet" href="/plugins/sky-forms-pro/skyforms/css/sky-forms.css">
 <link rel="stylesheet" href="/plugins/sky-forms-pro/skyforms/custom/custom-sky-forms.css">
 <!-- CSS Customization -->
+    <!-- CSS Implementing Plugins -->
+    <link rel="stylesheet" href="/plugins/animate.css">
+    <link rel="stylesheet" href="/plugins/line-icons/line-icons.css">
+    <link rel="stylesheet" href="/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/plugins/fancybox/source/jquery.fancybox.css">
+    <link rel="stylesheet" href="/css/custom.css">
 @stop
 
 @section('filters')
@@ -86,57 +92,42 @@
         {!! Form::close() !!}
     </div>
 </div>
-<div class="container content-md team-v1">
-    <ul class="list-unstyled row">
-        @foreach($pages as $key => $page)
-        @if($key % 4 == 0)
-        <div class="row">
-            <div class="col-md-12">
-        @endif
-                <li class="col-sm-3 col-xs-6 md-margin-bottom-30">
-                    <div class="team-img" url="{{ $page->url }}">
-                        <a href="{{ $page->url }}">
-                            <div class="img-wrapper">
-                                <div class="img-tags">
-                                    @foreach($page->tags as $tag)
-                                    <span class="img-tag label label-u label-default">{{ $tag->name }}</span>
-                                    @endforeach
-                                </div>
-                                <img class="img-responsive" src="{{ $page->thumbnail_path }}" alt="">
-                            </div>
-                            <ul>
-                                <li><i class="icon-custom icon-sm rounded-x icon-cursor"></i></li>
-                            </ul>
-                        </a>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-10">
-                            <h3 style="overflow:hidden;">{{ $page->title }}</h3>
-                            <h4>{{ $page->published_at }}</h4>
-                            <p style="overflow:hidden;">{{ $page->description }}</p>
+
+<div class="container content-md">
+    <div class="row news-v1">
+        @foreach($pages as $page)
+        <div class="col-md-4 md-margin-bottom-40">
+            <div class="news-v1-in" style="height:451px">
+                <a href="{{ $page->url }}" target="_blank">
+                    <div class="img-wrapper">
+                        <div class="img-tags">
+                            @foreach($page->tags as $tag)
+                            <span class="img-tag label label-u label-default">{{ $tag->name }}</span>
+                            @endforeach
                         </div>
-                        <div class="col-xs-2">
-                            <i class="fa fa-chevron-up icon-sm upvote votes-icon @if($page->my_vote == 1)upvoted @endif"  pageId="{{ $page->id }}"></i>
-                            <div class="vote-sum" pageId="{{ $page->id }}" style="text-align:center;">
-                                {{ $page->vote_sum }}
-                            </div>
-                            <i class="fa fa-chevron-down icon-sm downvote votes-icon @if($page->my_vote == -1)downvoted @endif" pageId="{{ $page->id }}"></i>
-                        </div>
+                        <img class="img-responsive" src="{{ $page->thumbnail_path }}" alt="">
                     </div>
-                    <div class="row">
-                        <div class="col-xs-12">
+                </a>
+                <h3 style="overflow:hidden;"><a href="{{ $page->url }}" target="_blank">{{ $page->title }}</a></h3>
+                <p style="overflow:hidden;">{{ $page->description }}</p>
+                <ul class="list-inline news-v1-info">
+                    <li><i class="fa fa-chevron-down downvote votes-icon @if($page->my_vote == -1)downvoted @endif" pageId="{{ $page->id }}"></i></li>
+                    <li>                            
+                        <div class="vote-sum" pageId="{{ $page->id }}">
+                        {{ $page->vote_sum }}
                         </div>
-                    </div>
-                </li>
-        @if($key % 4 == 3 || $key == (count($pages) - 1))
+                    </li>
+                    <li><i class="fa fa-chevron-up upvote votes-icon @if($page->my_vote == 1)upvoted @endif"  pageId="{{ $page->id }}"></i></li>
+                    <li>|</li>
+                    <li><i class="fa fa-clock-o"></i> {{ $page->created_at }}</li>
+                    <li class="pull-right"><a href="#"><i class="fa fa-comments-o"></i> 14</a></li>
+                </ul>
             </div>
         </div>
-        @endif
         @endforeach
-        {{ $pages->appends(Request::input()) }}
-    </ul>
+    </div>
 </div>
-<!--=== End Team v1 ===-->
+<!-- End News v1 Gray -->
 @stop
 
 @section('foot')
