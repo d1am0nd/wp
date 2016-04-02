@@ -42,6 +42,9 @@ class UpdateVideoThumbnail extends Command
      */
     public function handle()
     {
+
+        $this->url = $this->argument('url');
+
         // Set global variables
         if(!env('VERIFY_SSL', true)){
             $this->arrContextOptions=array(
@@ -92,6 +95,8 @@ class UpdateVideoThumbnail extends Command
         // Gets publishedAt attribute with Youtube API
         $video = new Youtube();
         $result = $video->getVideoInfo($ytId);
+        $this->line('1');
+        $this->line(print_r($result));
         $publishedAt = $result->snippet->publishedAt;
         $publishedAt = \Carbon\Carbon::parse($publishedAt);
         return ['published_at' => $publishedAt];

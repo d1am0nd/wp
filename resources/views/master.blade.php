@@ -15,6 +15,7 @@
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="@WizardPokerCom" />
     <meta name="twitter:image" content="http://www.wizard-poker.com/hslogo.png" />
+    <meta property="og:url" content="{{ Request::url() }}" />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="http://www.wizard-poker.com/hslogo.png" />
     @yield('meta')
@@ -144,7 +145,7 @@
                 <div class="navbar-header">
                     <div class="row">
                         <div class="col-md-5">
-                            <a href="/"><img id="logo-header" height="100px" src="hslogo.png" alt="Logo"></a>
+                            <a href="/"><img id="logo-header" height="100px" src="/hslogo.png" alt="Logo"></a>
                         </div>
                         <div class="col-md-7">
                             <!--<a href="#"><img class="header-banner img-responsive" src="hslogo.png" alt=""></a>-->
@@ -303,6 +304,14 @@
     {!! Form::open(['class'=>'reg-page', 'action' => 'Auth\\AuthController@postRegister', 'id' => 'register-form']) !!}
         <div class="reg-header">
             <h2>Register a new account</h2>
+        </div>
+
+        <div class="has-error">
+            <label class="control-label" style="display:none;" register-error="username"></label>
+        </div>
+        <div class="input-group margin-bottom-20">
+            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+            <input type="text" name="username" placeholder="Username" class="form-control">
         </div>
 
         <div class="has-error">

@@ -3,7 +3,6 @@
 @section('meta')
 <title>Wizard-Poker | Hearthstone Videos</title>
 <meta property="og:title" content="Wizard-Poker Hearthstone related videos" />
-<meta property="og:url" content="{{ action('VideosController@index') }}" />
 <meta name="twitter:title" content="Community posted hearthstone related videos" />
 <meta name="twitter:description" content="Blood salt and tears in hearthstone videos" />
 @stop
@@ -105,16 +104,16 @@
                 <h3 style="overflow:hidden;"><a href="{{ $video->url }}" target="_blank">{{ $video->title }}</a></h3>
                 <p style="overflow:hidden;">{{ $video->description }}</p>
                 <ul class="list-inline news-v1-info">
-                    <li><i class="fa fa-chevron-down downvote votes-icon @if($video->my_vote == -1)downvoted @endif" videoId="{{ $video->id }}"></i></li>
+                    <li><i class="fa fa-chevron-down downvote votes-icon @if($video->my_vote == -1)downvoted @endif" videoSlug="{{ $video->slug }}"></i></li>
                     <li>                            
-                        <div class="vote-sum" videoId="{{ $video->id }}">
+                        <div class="vote-sum" videoSlug="{{ $video->slug }}">
                         {{ $video->vote_sum }}
                         </div>
                     </li>
-                    <li><i class="fa fa-chevron-up upvote votes-icon @if($video->my_vote == 1)upvoted @endif"  videoId="{{ $video->id }}"></i></li>
+                    <li><i class="fa fa-chevron-up upvote votes-icon @if($video->my_vote == 1)upvoted @endif"  videoSlug="{{ $video->slug }}"></i></li>
                     <li>|</li>
                     <li><i class="fa fa-clock-o"></i> {{ $video->created_at }}</li>
-                    <li class="pull-right"><a href="#"><i class="fa fa-comments-o"></i> 14</a></li>
+                    <li class="pull-right"><a href="{{ action('VideosController@show', $video->slug) }}"><i class="fa fa-comments-o"></i> {{ $video->comment_count }}</a></li>
                 </ul>
             </div>
         </div>
@@ -132,13 +131,13 @@ $(".new-item").on('click', function(event){
 });
 $(".upvote").on('click', function(event){
     event.preventDefault();
-    var id = $(event.target).attr('videoId');
+    var id = $(event.target).attr('videoSlug');
     var token = $("input[name='_token']").val();
     var data = {_token: token, vote: 1};
 
     $.ajax({
         type: "POST",
-        url: "/videos/" + id,
+        url: "/videos/" + id + '/vote',
         data: data,
         success: function(diff) {
             changeVoteSum(id, diff, $(event.target));
@@ -148,13 +147,13 @@ $(".upvote").on('click', function(event){
 
 $(".downvote").on('click', function(event){
     event.preventDefault();
-    var id = $(event.target).attr('videoId');
+    var id = $(event.target).attr('videoSlug');
     var token = $("input[name='_token']").val();
     var data = {_token: token, vote: -1};
 
     $.ajax({
         type: "POST",
-        url: "/videos/" + id,
+        url: "/videos/" + id + '/vote',
         data: data,
         success: function(diff) {
             changeVoteSum(id, diff, $(event.target));
@@ -185,8 +184,8 @@ $(document).on('submit', '#new-video-form', function(event){
     });
 });
 
-function changeVoteSum(videoId, diff, dom){
-    var sumDom = $(".vote-sum[videoId='" + videoId + "']");
+function changeVoteSum(videoSlug, diff, dom){
+    var sumDom = $(".vote-sum[videoSlug='" + videoSlug + "']");
     var lastSum = parseInt(sumDom.html());
     console.log(lastSum);
     var newSum = lastSum + parseInt(diff);
@@ -194,7 +193,7 @@ function changeVoteSum(videoId, diff, dom){
 
     if(diff == 2){
         dom.addClass("upvoted");
-        $('.downvote[videoId="' + videoId + '"]').removeClass("downvoted");
+        $('.downvote[videoSlug="' + videoSlug + '"]').removeClass("downvoted");
     }
     else if(diff == 1){
         if(dom.hasClass("downvoted"))
@@ -210,7 +209,7 @@ function changeVoteSum(videoId, diff, dom){
     }
     else if(diff == -2){
         dom.addClass("downvoted");
-        $('.upvote[videoId="' + videoId + '"]').removeClass("upvoted");
+        $('.upvote[videoSlug="' + videoSlug + '"]').removeClass("upvoted");
     }
 }
 </script>

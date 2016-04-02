@@ -3,7 +3,6 @@
 @section('meta')
 <title>Wizard-Poker | Hearthstone Pages</title>
 <meta property="og:title" content="Wizard-Poker Hearthstone related pages" />
-<meta property="og:url" content="{{ action('PagesController@index') }}" />
 <meta name="twitter:title" content="Community posted hearthstone related pages" />
 <meta name="twitter:description" content="If one boom bot is good, two are better. Pages with hearthstone advice and stuff" />
 @stop
@@ -111,16 +110,16 @@
                 <h3 style="overflow:hidden;"><a href="{{ $page->url }}" target="_blank">{{ $page->title }}</a></h3>
                 <p style="overflow:hidden;">{{ $page->description }}</p>
                 <ul class="list-inline news-v1-info">
-                    <li><i class="fa fa-chevron-down downvote votes-icon @if($page->my_vote == -1)downvoted @endif" pageId="{{ $page->id }}"></i></li>
+                    <li><i class="fa fa-chevron-down downvote votes-icon @if($page->my_vote == -1)downvoted @endif" pageSlug="{{ $page->slug }}"></i></li>
                     <li>                            
-                        <div class="vote-sum" pageId="{{ $page->id }}">
+                        <div class="vote-sum" pageSlug="{{ $page->slug }}">
                         {{ $page->vote_sum }}
                         </div>
                     </li>
-                    <li><i class="fa fa-chevron-up upvote votes-icon @if($page->my_vote == 1)upvoted @endif"  pageId="{{ $page->id }}"></i></li>
+                    <li><i class="fa fa-chevron-up upvote votes-icon @if($page->my_vote == 1)upvoted @endif"  pageSlug="{{ $page->slug }}"></i></li>
                     <li>|</li>
                     <li><i class="fa fa-clock-o"></i> {{ $page->created_at }}</li>
-                    <li class="pull-right"><a href="#"><i class="fa fa-comments-o"></i> 14</a></li>
+                    <li class="pull-right"><a href="{{ action('PagesController@show', $page->slug) }}"><i class="fa fa-comments-o"></i> {{ $page->comment_count }}</a></li>
                 </ul>
             </div>
         </div>
@@ -139,13 +138,13 @@ $(".new-item").on('click', function(event){
 });
 $(".upvote").on('click', function(event){
     event.preventDefault();
-    var id = $(event.target).attr('pageId');
+    var id = $(event.target).attr('pageSlug');
     var token = $("input[name='_token']").val();
     var data = {_token: token, vote: 1};
 
     $.ajax({
         type: "POST",
-        url: "/pages/" + id,
+        url: "/pages/" + id + '/vote',
         data: data,
         success: function(diff) {
             changeVoteSum(id, diff, $(event.target));
@@ -155,13 +154,13 @@ $(".upvote").on('click', function(event){
 
 $(".downvote").on('click', function(event){
     event.preventDefault();
-    var id = $(event.target).attr('pageId');
+    var id = $(event.target).attr('pageSlug');
     var token = $("input[name='_token']").val();
     var data = {_token: token, vote: -1};
 
     $.ajax({
         type: "POST",
-        url: "/pages/" + id,
+        url: "/pages/" + id + '/vote',
         data: data,
         success: function(diff) {
             changeVoteSum(id, diff, $(event.target));
@@ -192,8 +191,8 @@ $(document).on('submit', '#new-page-form', function(event){
     });
 });
 
-function changeVoteSum(pageId, diff, dom){
-    var sumDom = $(".vote-sum[pageId='" + pageId + "']");
+function changeVoteSum(pageSlug, diff, dom){
+    var sumDom = $(".vote-sum[pageSlug='" + pageSlug + "']");
     var lastSum = parseInt(sumDom.html());
     console.log(lastSum);
     var newSum = lastSum + parseInt(diff);
@@ -201,7 +200,7 @@ function changeVoteSum(pageId, diff, dom){
 
     if(diff == 2){
         dom.addClass("upvoted");
-        $('.downvote[pageId="' + pageId + '"]').removeClass("downvoted");
+        $('.downvote[pageSlug="' + pageSlug + '"]').removeClass("downvoted");
     }
     else if(diff == 1){
         if(dom.hasClass("downvoted"))
@@ -217,7 +216,7 @@ function changeVoteSum(pageId, diff, dom){
     }
     else if(diff == -2){
         dom.addClass("downvoted");
-        $('.upvote[pageId="' + pageId + '"]').removeClass("upvoted");
+        $('.upvote[pageSlug="' + pageSlug + '"]').removeClass("upvoted");
     }
 }
 </script>

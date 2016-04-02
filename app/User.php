@@ -38,4 +38,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Vote::class);
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

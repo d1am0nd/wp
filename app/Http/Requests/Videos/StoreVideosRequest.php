@@ -24,7 +24,7 @@ class StoreVideosRequest extends Request
     public function rules()
     {
         return [
-            'title' => 'required|max:40',
+            'title' => 'required|max:40|unique:pages,title',
             'description' => 'required|min:15|max:120',
             'url' => 'unique:videos,url|youtube',
             'tag_id' => 'required|array'

@@ -10,6 +10,7 @@ use App\Video;
 use App\Http\Requests;
 use App\Http\Requests\VoteRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CommentRequest;
 use App\Traits\Controllers\VoteTrait;
 use App\Http\Requests\Videos\StoreVideosRequest;
 
@@ -47,8 +48,12 @@ class VideosController extends Controller
      */
     public function store(StoreVideosRequest $request)
     {
+        $newVideo = array_merge(
+            $request->only('url', 'description', 'title'), 
+            ['thumbnail_path' => '/hslogo.jpg', 'slug' => str_slug($request->input('title'), '-')]
+        );
         Video::unguard();
-        $video = \Auth::user()->videos()->create($request->only('url', 'description', 'title'));
+        $video = \Auth::user()->videos()->create($newVideo);
         Video::reguard();
 
         $tag_ids = array_map('intval', $request->input('tag_id'));
@@ -68,9 +73,9 @@ class VideosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Video $video)
     {
-        //
+        return view('videos.show')->with(compact('video'));;
     }
 
     /**
@@ -105,6 +110,12 @@ class VideosController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function postComment(CommentRequest $request, Video $video)
+    {
+        $video->comment($request->input('text'));
+        return redirect()->back();
     }
 
     public function postVote(VoteRequest $request, Video $video)

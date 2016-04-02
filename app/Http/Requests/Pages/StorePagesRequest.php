@@ -24,7 +24,7 @@ class StorePagesRequest extends Request
     public function rules()
     {
         return [
-            'title' => 'required|max:40',
+            'title' => 'required|max:40|unique:pages,title',
             'description' => 'required|min:15|max:120',
             'url' => 'required|url|unique:pages,url|notYoutube',
             'tag_id' => 'required|array',

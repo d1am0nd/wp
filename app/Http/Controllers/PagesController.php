@@ -10,6 +10,7 @@ use App\Video;
 use App\Http\Requests;
 use App\Http\Requests\VoteRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CommentRequest;
 use App\Traits\Controllers\VoteTrait;
 use App\Http\Requests\Pages\StorePagesRequest;
 
@@ -25,7 +26,7 @@ class PagesController extends Controller
     {
         $filterTag = $request->input('tag');
         $filterOrderBy = $request->input('orderBy');
-        $pages = Page::filterOrderBy($filterOrderBy)->withMyVote()->whereHasTag($filterTag)->paginate(20);
+        $pages = Page::filterOrderBy($filterOrderBy)->withMyVote()->whereHasTag($filterTag)->paginate(15);
         return view('pages.index', compact('pages', 'filterTag', 'filterOrderBy'));
     }
 
@@ -47,9 +48,12 @@ class PagesController extends Controller
      */
     public function store(StorePagesRequest $request)
     {
-        $newUser = array_merge($request->only('url', 'description', 'title'), ['thumbnail_path' => '/hslogo.jpg']);
+        $newPage = array_merge(
+            $request->only('url', 'description', 'title'), 
+            ['thumbnail_path' => '/hslogo.jpg', 'slug' => str_slug($request->input('title'))]
+        );
         Video::unguard();
-        $page = \Auth::user()->pages()->create($newUser);
+        $page = \Auth::user()->pages()->create($newPage);
         Video::reguard();
 
         $tag_ids = array_map('intval', $request->input('tag_id'));
@@ -67,9 +71,9 @@ class PagesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Page $page)
     {
-        //
+        return view('pages.show')->with(compact('page'));;
     }
 
     /**
@@ -104,6 +108,12 @@ class PagesController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function postComment(CommentRequest $request, Page $page)
+    {
+        $page->comment($request->input('text'));
+        return redirect()->back();
     }
 
     public function postVote(VoteRequest $request, Page $page)

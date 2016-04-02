@@ -3,7 +3,6 @@
 @section('meta')
 <title>Wizard-Poker</title>
 <meta property="og:title" content="Wizard-Poker Hearthstone Related Content" />
-<meta property="og:url" content="{{ action('GeneralController@getHome') }}" />
 <meta name="twitter:title" content="Wizard-Poker Hearthstone Related Content" />
 <meta name="twitter:description" content="Wizard-Poker features links to best Hearthstone related content" />
 @stop

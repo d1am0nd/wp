@@ -31,11 +31,15 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('pages', 'PagesController@index');
     Route::post('pages', 'PagesController@store');
-    Route::post('pages/{page}', 'PagesController@postVote');
+    Route::get('pages/{page}', 'PagesController@show');
+    Route::post('pages/{page}/comment', 'PagesController@postComment');
+    Route::post('pages/{page}/vote', 'PagesController@postVote');
 
     Route::get('videos', 'VideosController@index');
     Route::post('videos', 'VideosController@store');
-    Route::post('videos/{video}', 'VideosController@postVote');
+    Route::get('videos/{video}', 'VideosController@show');
+    Route::post('videos/{video}/comment', 'VideosController@postComment');
+    Route::post('videos/{video}/vote', 'VideosController@postVote');
 
     /*
     Route::get('tags', 'TagsController@index');
