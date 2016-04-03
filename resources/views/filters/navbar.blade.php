@@ -28,6 +28,7 @@
         <ul class="dropdown-menu menu-rtl">
             <li><a href="{{ url_with_get(Request::segment(1),  array_diff_key(Request::input() ? Request::input() : [], ['orderBy' => ''])) }}">Best rated</a></li>
             <li><a href="{{ url_with_get(Request::segment(1),  array_merge(Request::input() ? Request::input() : [], ['orderBy' => 'newest'])) }}">Newest</a></li>
+            <li><a href="{{ url_with_get(Request::segment(1),  array_merge(Request::input() ? Request::input() : [], ['orderBy' => 'most commented'])) }}">Most Commented</a></li>
         </ul>
     </li>
 </ul>

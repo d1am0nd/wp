@@ -20,6 +20,7 @@ class Kernel extends ConsoleKernel
         Commands\UpdateRedditCustomWeekly::class,
         Commands\UpdateRedditArenaWeekly::class,
         Commands\SlugifyEvertything::class,
+        Commands\IsVideoEverything::class,
     ];
 
     /**

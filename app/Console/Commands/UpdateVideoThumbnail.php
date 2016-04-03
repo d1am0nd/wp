@@ -63,7 +63,7 @@ class UpdateVideoThumbnail extends Command
         $thumbnailUrl = $this->videoThumbnailUrl();
         if($thumbnailUrl === false){
             $thumbnailUrl = $this->channelThumbnailUrl();
-        }else{
+        }else{;
         }
 
         $this->line($thumbnailUrl);
@@ -92,6 +92,7 @@ class UpdateVideoThumbnail extends Command
         $ytId = $match[1];
         // Ugly, this should be separated 
         // TODO: this
+        $this->videoUpdateArray = array_merge($this->videoUpdateArray, ['embed_url' => 'https://www.youtube.com/embed/' . $ytId]);
         $this->videoUpdateArray = array_merge($this->videoUpdateArray, $this->videoUpdateArray($ytId));
         $thumbnailUrl = 'http://img.youtube.com/vi/' . $ytId . '/0.jpg';
         return $thumbnailUrl;

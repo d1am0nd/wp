@@ -98,7 +98,13 @@
                             <span class="img-tag label label-u label-default">{{ $tag->name }}</span>
                             @endforeach
                         </div>
+                        @if($video->is_video)
+                        <iframe height="210" width="360"
+                        src="{{ $video->embed_url }}">
+                        </iframe>
+                        @else
                         <img class="img-responsive" src="{{ $video->thumbnail_path }}" alt="">
+                        @endif
                     </div>
                 </a>
                 <h3 style="overflow:hidden;"><a href="{{ $video->url }}" target="_blank">{{ $video->title }}</a></h3>

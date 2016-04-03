@@ -66,7 +66,8 @@ trait VoteableTrait
         $table = $this->getTable();
         $associations = [
             'newest' => ['created_at', 'DESC'],
-            'top' => ['vote_sum', 'DESC']
+            'top' => ['vote_sum', 'DESC'],
+            'most commented' => ['comment_count', 'DESC']
         ];
         // If $filterOrderBy is not set or doesn't exist in $associations, we order by vote_sum
         if(!isset($filterOrderBy) || !array_key_exists($filterOrderBy, $associations))
