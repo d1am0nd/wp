@@ -24,6 +24,8 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    protected $username = 'email';
+
     public function pages()
     {
         return $this->hasMany(Page::class);

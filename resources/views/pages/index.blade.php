@@ -93,9 +93,11 @@
 </div>
 
 <div class="container content-md">
+    @foreach($pages as $key => $page)
+        @if($key % 3 == 0)
     <div class="row news-v1">
-        @foreach($pages as $page)
-        <div class="col-md-4 md-margin-bottom-40" style="height:451px">
+        @endif
+        <div class="col-md-4" style="height:451px;">
             <div class="news-v1-in">
                 <a href="{{ $page->url }}" target="_blank">
                     <div class="img-wrapper">
@@ -123,8 +125,10 @@
                 </ul>
             </div>
         </div>
-        @endforeach
+        @if($key % 4 == 3 || $key == (count($pages) - 1))
     </div>
+        @endif
+    @endforeach
 </div>
 <!-- End News v1 Gray -->
 @stop

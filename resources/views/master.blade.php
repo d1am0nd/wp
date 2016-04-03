@@ -38,6 +38,8 @@
     <link rel="stylesheet" href="/plugins/animate.css">
     <link rel="stylesheet" href="/plugins/line-icons/line-icons.css">
     <link rel="stylesheet" href="/plugins/font-awesome/css/font-awesome.min.css">
+    <!-- CSS Page Style -->
+    <link rel="stylesheet" href="/css/pages/page_log_reg_v1.css">
 
     <!-- CSS Customization -->
     <link rel="stylesheet" href="/css/custom.css">
@@ -60,6 +62,11 @@
         margin-left:auto; 
         margin-right:auto; 
         max-width:380px; 
+        padding:15px;
+        border-radius: 3px;
+    }
+    .modal-container-two{
+        background-color: white;
         padding:15px;
         border-radius: 3px;
     }
@@ -121,8 +128,8 @@
                     <div class="col-md-12">
                         <ul class="list-inline top-v1-data">
                             @if(!Auth::check())
-                            <li><a href="" id="login-click">Login</a></li>
-                            <li><a href="" id="register-click">Register</a></li>
+                            <li><a href="" class="toggle-login">Login</a></li>
+                            <li><a href="" class="toggle-register">Register</a></li>
                             @else
                             @if(Request::url() == action('PagesController@index'))
                             <li><a href="" class="new-item"><strong>Add new page</strong></a></li>
@@ -268,83 +275,104 @@
 @if(!Auth::check())
 <!-- Modal -->
 <div id="myModalLogin" class="modal fade" role="dialog">
-    <div class="modal-container">
-        {!! Form::open(['class'=>'reg-page', 'action' => 'Auth\\AuthController@postLogin', 'id' => 'login-form']) !!}
-            <div class="reg-header">
-                <h2>Login to your account</h2>
-            </div>
+    <!--=== Content Part ===-->
+    <div class="container content">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
+                {!! Form::open(['class'=>'reg-page', 'action' => 'Auth\\AuthController@postLogin', 'id' => 'login-form']) !!}
+                    <div class="reg-header">
+                        <h2>Login to your account</h2>
+                    </div>
 
-            <div class="has-error">
-                <label class="control-label" style="display:none;" login-error="email"></label>
-            </div>
-            <div class="input-group margin-bottom-20">
-                <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                <input type="text" name="email" placeholder="Email" class="form-control">
-            </div>
+                    <div class="has-error">
+                        <label class="control-label" style="display:none;" login-error="email"></label>
+                    </div>
+                    <div class="input-group margin-bottom-20">
+                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                        <input type="email" name="email" placeholder="Email" class="form-control">
+                    </div>
+                    <div class="has-error">
+                        <label class="control-label" style="display:none;" login-error="password"></label>
+                    </div>
+                    <div class="input-group margin-bottom-20">
+                        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                        <input type="password" name="password" placeholder="Password" class="form-control">
+                    </div>
 
-            <div class="has-error">
-                <label class="control-label" style="display:none;" login-error="password"></label>
-            </div>
-            <div class="input-group margin-bottom-20">
-                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                <input type="password" name="password" placeholder="Password" class="form-control">
-            </div>
+                    <hr>
 
-            <div class="row">
-                <div class="col-md-12">
-                    <button class="btn-u pull-right" type="submit" id="login-submit">Login</button>
-                </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <button class="btn toggle-login" type="button">Cancel</button>
+                        </div>
+                        <div class="col-xs-6">
+                            <button class="btn-u pull-right" type="submit" id="login-submit">Login</button>
+                        </div>
+                    </div>
+                    <!--
+                    <h4>Forget your Password ?</h4>
+                    <p>no worries, <a class="color-green" href="#">click here</a> to reset your password.</p>
+                    -->
+                {!! Form::close() !!}
             </div>
-        {!! Form::close() !!}
-    </div>
+        </div><!--/row-->
+    </div><!--/container-->
 </div>
 <!-- Modal -->
 <div id="myModalRegister" class="modal fade" role="dialog">
-    <div class="modal-container">
-    {!! Form::open(['class'=>'reg-page', 'action' => 'Auth\\AuthController@postRegister', 'id' => 'register-form']) !!}
-        <div class="reg-header">
-            <h2>Register a new account</h2>
-        </div>
-
-        <div class="has-error">
-            <label class="control-label" style="display:none;" register-error="username"></label>
-        </div>
-        <div class="input-group margin-bottom-20">
-            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-            <input type="text" name="username" placeholder="Username" class="form-control">
-        </div>
-
-        <div class="has-error">
-            <label class="control-label" style="display:none;" register-error="email"></label>
-        </div>
-        <div class="input-group margin-bottom-20">
-            <span class="input-group-addon"><i class="fa fa-user"></i></span>
-            <input type="text" name="email" placeholder="Email" class="form-control">
-        </div>
-
-        <div class="has-error">
-            <label class="control-label" style="display:none;" register-error="password"></label>
-        </div>
-        <div class="input-group margin-bottom-20">
-            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-            <input type="password" name="password" placeholder="Password" class="form-control">
-        </div>
-
-        <div class="has-error">
-            <label class="control-label" style="display:none;" register-error="password_confirmation"></label>
-        </div>
-        <div class="input-group margin-bottom-20">
-            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-            <input type="password" name="password_confirmation" placeholder="Password confirmation" class="form-control">
-        </div>
-
+    <!--=== Content Part ===-->
+    <div class="container content">
         <div class="row">
-            <div class="col-md-12">
-                <button class="btn-u pull-right" type="submit" id="register-submit">Register</button>
+            <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                {!! Form::open(['class'=>'reg-page', 'action' => 'Auth\\AuthController@postRegister', 'id' => 'register-form']) !!}
+                    <div class="reg-header">
+                        <h2>Register a new account</h2>
+                        <!--<p>Already Signed Up? Click <a href="page_login.html" class="color-green">Sign In</a> to login your account.</p>-->
+                    </div>
+
+                    <label>Username</label>
+                    <div class="has-error">
+                        <label class="control-label" style="display:none;" register-error="username"></label>
+                    </div>
+                    <input type="text" name="username" class="form-control margin-bottom-20">
+
+                    <label>Email</label>
+                    <div class="has-error">
+                        <label class="control-label" style="display:none;" register-error="email"></label>
+                    </div>
+                    <input type="text" name="email" class="form-control margin-bottom-20">
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label>Password <span class="color-red">*</span></label>
+                            <div class="has-error">
+                                <label class="control-label" style="display:none;" register-error="password"></label>
+                            </div>
+                            <input type="password" name="password" class="form-control margin-bottom-20">
+                        </div>
+                        <div class="col-sm-6">
+                            <label>Confirm Password <span class="color-red">*</span></label>
+                            <div class="has-error">
+                                <label class="control-label" style="display:none;" register-error="password"></label>
+                            </div>
+                            <input type="password" name="password_confirmation" class="form-control margin-bottom-20">
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <button class="btn toggle-register" type="button">Cancel</button>
+                        </div>
+                        <div class="col-xs-6 text-right">
+                            <button class="btn-u" type="submit">Register</button>
+                        </div>
+                    </div>
+                {!! Form::close() !!} 
             </div>
         </div>
-    {!! Form::close() !!}    
-    </div>
+    </div><!--/container-->
 </div>
 @endif
 <!-- JS Global Compulsory -->
@@ -387,11 +415,11 @@ $('.tags-filter-cancel').on('click', function(event){
 <![endif]-->
 @if(!Auth::check())
 <script>
-$("#login-click").on('click', function(event){
+$(".toggle-login").on('click', function(event){
     event.preventDefault();
     $("#myModalLogin").modal("toggle");
 });
-$("#register-click").on('click', function(event){
+$(".toggle-register").on('click', function(event){
     event.preventDefault();
     $("#myModalRegister").modal("toggle");
 });
@@ -416,12 +444,13 @@ $(document).on('submit', '#register-form', function(event){
         }
     });
 });
+
 $(document).on('submit', '#login-form', function(event){
     event.preventDefault();
     $("#login-form").ajaxSubmit({
         complete: function(data){
             response = data.responseJSON;
-            console.log(response);
+            console.log(data);
             jQuery.each(response, function(i, val){
                 var dom = $("[login-error='" + i + "']");
                 dom.html(val[0]);
@@ -431,7 +460,7 @@ $(document).on('submit', '#login-form', function(event){
                 }, 5000);
             });
         },
-        success: function(){
+        success: function(xhr, status, error){
             location.reload();
         }
     });
