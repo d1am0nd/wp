@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 class Video extends Model
 {
     use TaggableTrait, VoteableTrait, CommentableTrait, NiceTimestampAccTrait;
+    protected $fillable = ['published_at', 'is_video'];
 
     public function user()
     {

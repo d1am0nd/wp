@@ -58,13 +58,13 @@ class UpdateVideoThumbnail extends Command
         $this->url = $this->argument('url');
         $this->videoUpdateArray = [];
 
-        $this->line($this->videoThumbnailUrl());
-
         // If video thumbnail is found use this
         // else find channel thumbnail
         $thumbnailUrl = $this->videoThumbnailUrl();
-        if($thumbnailUrl === false)
+        if($thumbnailUrl === false){
             $thumbnailUrl = $this->channelThumbnailUrl();
+        }else{
+        }
 
         $this->line($thumbnailUrl);
         
@@ -76,7 +76,11 @@ class UpdateVideoThumbnail extends Command
         $img = \Image::make($absolutePath)->resize(480, 280);
         $img->save($absolutePath);
 
-        Video::where('id', $this->id)->update(array_merge(['thumbnail_path' => $fileName], $this->videoUpdateArray));
+        $this->videoUpdateArray = array_merge($this->videoUpdateArray, ['thumbnail_path' => $fileName]);
+
+        $this->info(print_r($this->videoUpdateArray));
+
+        Video::where('id', $this->id)->update($this->videoUpdateArray);
     }
 
     protected function videoThumbnailUrl()
@@ -86,6 +90,9 @@ class UpdateVideoThumbnail extends Command
         if(!isset($match[1]))
             return false;
         $ytId = $match[1];
+        // Ugly, this should be separated 
+        // TODO: this
+        $this->videoUpdateArray = array_merge($this->videoUpdateArray, $this->videoUpdateArray($ytId));
         $thumbnailUrl = 'http://img.youtube.com/vi/' . $ytId . '/0.jpg';
         return $thumbnailUrl;
     }
@@ -93,13 +100,15 @@ class UpdateVideoThumbnail extends Command
     protected function videoUpdateArray($ytId)
     {
         // Gets publishedAt attribute with Youtube API
+        $returnArray = [];
         $video = new Youtube();
         $result = $video->getVideoInfo($ytId);
-        $this->line('1');
-        $this->line(print_r($result));
         $publishedAt = $result->snippet->publishedAt;
-        $publishedAt = \Carbon\Carbon::parse($publishedAt);
-        return ['published_at' => $publishedAt];
+        if(isset($publishedAt)){
+            $publishedAt = \Carbon\Carbon::parse($publishedAt);
+            $returnArray = array_merge($returnArray, ['published_at' => $publishedAt]);
+        }
+        return $returnArray;
     }
 
     protected function channelThumbnailUrl()
