@@ -5,14 +5,14 @@ namespace App\Console\Commands;
 use App\SiteUpdate;
 use Illuminate\Console\Command;
 
-class UpdateRedditCustomWeekly extends Command
+class UpdateRedditArenaWeekly extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'twitter:updateRedditCustomWeekly
+    protected $signature = 'twitter:updateRedditArenaWeekly
     {--queue=default}';
 
     private $url, $master_url;
@@ -22,7 +22,7 @@ class UpdateRedditCustomWeekly extends Command
      *
      * @var string
      */
-    protected $description = 'Checks if there is new "Top 5 cards of the week from r/CustomHearthstone". Update Twitter accordingly';
+    protected $description = 'Checks if there is new "Top 10 Arena Streamers". Update Twitter accordingly';
 
     /**
      * Create a new command instance.
@@ -43,9 +43,9 @@ class UpdateRedditCustomWeekly extends Command
     {
         // Reddit get api
         // Returns json of last post that has "Top scoring cards of the week from r/CustomHearthstone" in it
-        $this->master_url = 'https://www.reddit.com/r/hearthstone/search.json?q=%22Top%205%20Scoring%20Cards%20of%20the%20Week%20from%20r/CustomHearthstone%22&sort=new&limit=1';
+        $this->master_url = 'https://www.reddit.com/r/hearthstone/search.json?q=%22Top%2010%20Arena%20Streamers&sort=new%22&limit=1';
         $this->url = $this->getLastUrl();
-        $identifier = 'top-scoring-custom';
+        $identifier = 'top-scoring-arena';
 
         $su = SiteUpdate::where('identifier', $identifier)->first();
         if(isset($su)){
@@ -77,7 +77,7 @@ class UpdateRedditCustomWeekly extends Command
 
     private function sendTwitterMessage()
     {
-        \Twitter::postTweet(['status' => 'Cool new cards from r/CustomHearthstone ' . $this->url, 'format' => 'json']);
+        \Twitter::postTweet(['status' => 'Check out top arena players this week ' . $this->url, 'format' => 'json']);
     }
 
     private function checkIfUrlIsDifferent($su)

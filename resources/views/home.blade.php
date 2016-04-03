@@ -86,13 +86,9 @@
 
 @section('foot')
 <!-- JS Implementing Plugins -->
-<script type="text/javascript" src="/plugins/back-to-top.js"></script>
-<script type="text/javascript" src="/plugins/jquery.parallax.js"></script>
-<script type="text/javascript" src="/plugins/counter/waypoints.min.js"></script>
 <script type="text/javascript" src="/plugins/counter/jquery.counterup.min.js"></script>
 <script type="text/javascript" src="/plugins/revolution-slider/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
 <script type="text/javascript" src="/plugins/revolution-slider/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
-<script type="text/javascript" src="/js/app.js"></script>
 <script type="text/javascript" src="/js/plugins/revolution-slider.js"></script>
 <script type="text/javascript">
     jQuery(document).ready(function() {
