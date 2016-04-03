@@ -95,8 +95,8 @@
 <div class="container content-md">
     <div class="row news-v1">
         @foreach($pages as $page)
-        <div class="col-md-4 md-margin-bottom-40">
-            <div class="news-v1-in" style="height:451px">
+        <div class="col-md-4 md-margin-bottom-40" style="height:451px">
+            <div class="news-v1-in">
                 <a href="{{ $page->url }}" target="_blank">
                     <div class="img-wrapper">
                         <div class="img-tags">

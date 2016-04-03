@@ -129,7 +129,7 @@
                             @elseif(Request::url() == action('VideosController@index'))
                             <li><a href="" class="new-item"><strong>Add new video</strong></a></li>
                             @endif
-                            <li><a href="{{action('Auth\AuthController@getLogout')}}">Logout {{Auth::user()->email}}</a></li>
+                            <li><a href="{{action('Auth\AuthController@getLogout')}}">Logout {{Auth::user()->username}}</a></li>
                             @endif
                         </ul>
                     </div>
