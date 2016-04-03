@@ -9,21 +9,30 @@
        <image:caption>Wizard-Poker Hearthstone Related Content</image:caption>
     </image:image>
   </url>
+  @foreach($pages as $page)
   <url> 
-    <loc>http://www.wizard-poker.com/pages</loc>
-    @foreach($pages as $page)
+    <loc>http://www.wizard-poker.com/pages/{{ $page->slug }}</loc>
     <image:image>
-       <image:loc>http://www.wizard-poker.com{{$page->thumbnail_path}}</image:loc>
-       <image:caption>{{$page->title}}</image:caption>
+       <image:loc>http://www.wizard-poker.com{{ $page->thumbnail_path }}</image:loc>
+       <image:caption>{{ $page->title }}</image:caption>
     </image:image>
-    @endforeach
   </url>
+  @endforeach
+  @foreach($videos as $video)
+  <url> 
+    <loc>http://www.wizard-poker.com/videos/{{ $video->slug }}</loc>
+    <image:image>
+       <image:loc>http://www.wizard-poker.com{{ $video->thumbnail_path }}</image:loc>
+       <image:caption>{{ $video->title }}</image:caption>
+    </image:image>
+  </url>
+  @endforeach
   <url> 
     <loc>http://www.wizard-poker.com/videos</loc>
     @foreach($videos as $video)
     <image:image>
        <image:loc>http://www.wizard-poker.com{{$video->thumbnail_path}}</image:loc>
-       <image:caption>{{$video->title}}</image:caption>
+       <image:caption>{{ $video->title }}</image:caption>
     </image:image>
     @endforeach
   </url>
