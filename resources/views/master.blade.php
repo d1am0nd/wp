@@ -7,7 +7,7 @@
     <!-- Meta -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Community-generated repository for useful and/or funny hearthstone content">
+    <meta name="description" content="Wizard-Poker - Share awesome Hearthstone related content!">
     <meta name="google-site-verification" content="dbZm6GFuvEGRol9FGnF-6D5vofQHk5Z6mTSy4s_-23w" />
     @if(isset($filterTag) || isset($filterOrderBy))
     <meta name="robots" content="noindex,follow"/>
