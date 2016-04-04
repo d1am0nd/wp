@@ -99,7 +99,7 @@
                             @endforeach
                         </div>
                         @if(isset($video->embed_url))
-                        <iframe height="210" width="360"
+                        <iframe height="210" width="360" allowfullscreen="true"
                         src="{{ $video->embed_url }}">
                         </iframe>
                         @else
