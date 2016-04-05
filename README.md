@@ -6,9 +6,9 @@ It is built on top of amazing framework Laravel 5.2 and equally amazing template
 
 ## Cool features
 
-* Automatad page (og tag) and youtube (youtube thumbnail) thumbnail updates
+* Automatad page and youtube link thumbnail updates
 * Automated checking if the youtube link is channel or video. Links to iframe accordingly
-* Automated Twitter updated within 30 minutes of some blog/reddit updates
+* Automated Twitter updates within 30 minutes of some blog/reddit updates
 * Copypastable Taggable, Voteable and Commentable traits
 
 ## Installation

@@ -43,7 +43,7 @@ class UpdateRedditArenaWeekly extends Command
     {
         // Reddit get api
         // Returns json of last post that has "Top scoring cards of the week from r/CustomHearthstone" in it
-        $this->master_url = 'https://www.reddit.com/r/hearthstone/search.json?q=%22Top%2010%20Arena%20Streamers&sort=new%22&limit=1';
+        $this->master_url = 'https://www.reddit.com/r/hearthstone/search.json?q=%22Top%2010%20Arena%20Streamers%22&sort=new&limit=1';
         $this->url = $this->getLastUrl();
         $identifier = 'top-scoring-arena';
 
