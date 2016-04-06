@@ -116,20 +116,21 @@ trait VoteableTrait
     // Left joins current users vote as my_vote
     public function scopeWithMyVote($query)
     {
+        if(!Auth::check())
+            return $query;
+        
         // Example: 'App\Page'
         $model = get_class();
         // Example: 'pages'
         $table = $this->getTable();
 
         // Add my_vote column to the query with user's vote on the imte
-        if(Auth::check()){
-            $query->leftJoin('votes as my_vote', function($join) use($model, $table)
-            {
-                $join->on('my_vote.voteable_id', '=', $table . '.id')
-                    ->where('my_vote.voteable_type', '=', $model)
-                    ->where('my_vote.user_id', '=', Auth::user()->id);
-            })->addSelect('*', $table . '.id', 'my_vote.vote as my_vote');
-        }
+        $query->leftJoin('votes as my_vote', function($join) use($model, $table)
+        {
+            $join->on('my_vote.voteable_id', '=', $table . '.id')
+                ->where('my_vote.voteable_type', '=', $model)
+                ->where('my_vote.user_id', '=', Auth::user()->id);
+        })->addSelect('*', $table . '.id', 'my_vote.vote as my_vote');
         
         return $query;
     }
