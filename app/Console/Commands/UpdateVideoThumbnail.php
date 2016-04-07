@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Video;
 use App\Classes\Youtube;
 use Illuminate\Console\Command;
+use App\Classes\Parser\HtmlParser;
 
 class UpdateVideoThumbnail extends Command
 {
@@ -16,7 +17,7 @@ class UpdateVideoThumbnail extends Command
     protected $signature = 'video:updateThumbnail {id : Id of the video database record} 
     {url : URL of the new video}
     {--queue=default}';
-    private $arrContextOptions, $id, $url;
+    private $arrContextOptions, $id, $url, $videoId;
 
     /**
      * The console command description.
@@ -42,9 +43,6 @@ class UpdateVideoThumbnail extends Command
      */
     public function handle()
     {
-
-        $this->url = $this->argument('url');
-
         // Set global variables
         if(!env('VERIFY_SSL', true)){
             $this->arrContextOptions=array(
@@ -56,83 +54,76 @@ class UpdateVideoThumbnail extends Command
         }
         $this->id = $this->argument('id');
         $this->url = $this->argument('url');
-        $this->videoUpdateArray = [];
+        $this->videoId = $this->getVideoId();
 
         // If video thumbnail is found use this
         // else find channel thumbnail
-        $thumbnailUrl = $this->videoThumbnailUrl();
-        if($thumbnailUrl === false){
+        if($this->videoId === false)
             $thumbnailUrl = $this->channelThumbnailUrl();
-        }else{;
+        else{
+            $thumbnailUrl = $this->videoThumbnailUrl();
         }
-
-        $this->line($thumbnailUrl);
         
         $fileName = '/thumbnails/videos/' . $this->id . '.jpg';
         $absolutePath = public_path() . $fileName;
+
+        $this->videoUpdateArray = ['thumbnail_path' => $fileName];
 
         // Save thumbnail to public/thumbnails
         file_put_contents($absolutePath, file_get_contents($thumbnailUrl, false, stream_context_create($this->arrContextOptions)));
         $img = \Image::make($absolutePath)->resize(480, 280);
         $img->save($absolutePath);
 
-        $this->videoUpdateArray = array_merge($this->videoUpdateArray, ['thumbnail_path' => $fileName]);
-
-        $this->info(print_r($this->videoUpdateArray));
+        $this->videoUpdateArray = array_merge($this->videoUpdateArray, $this->videoUpdateArray());
 
         Video::where('id', $this->id)->update($this->videoUpdateArray);
     }
 
-    protected function videoThumbnailUrl()
+    private function videoThumbnailUrl()
     {
-        // Get thumbnail url from video
-        preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $this->url, $match);
-        if(!isset($match[1]))
+        if($this->videoId === false)
             return false;
-        $ytId = $match[1];
-        // Ugly, this should be separated 
-        // TODO: this
-        $this->videoUpdateArray = array_merge($this->videoUpdateArray, ['embed_url' => 'https://www.youtube.com/embed/' . $ytId]);
-        $this->videoUpdateArray = array_merge($this->videoUpdateArray, $this->videoUpdateArray($ytId));
-        $thumbnailUrl = 'http://img.youtube.com/vi/' . $ytId . '/0.jpg';
+        $thumbnailUrl = 'http://img.youtube.com/vi/' . $this->videoId . '/0.jpg';
         return $thumbnailUrl;
     }
 
-    protected function videoUpdateArray($ytId)
+    // Get youtube id from video or false if url is not video
+    private function getVideoId()
     {
-        // Gets publishedAt attribute with Youtube API
+        preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $this->url, $match);
+        if(!isset($match[1]))
+            return false;
+        return $match[1];
+    }
+
+    private function videoUpdateArray()
+    {
+        if($this->videoId === false)
+            return [];
+
         $returnArray = [];
-        $video = new Youtube();
-        $result = $video->getVideoInfo($ytId);
-        $publishedAt = $result->snippet->publishedAt;
-        if(isset($publishedAt)){
-            $publishedAt = \Carbon\Carbon::parse($publishedAt);
+
+        $publishedAt = $this->getVideoPublishedAt();
+        if($publishedAt !== false)
             $returnArray = array_merge($returnArray, ['published_at' => $publishedAt]);
-        }
+        $returnArray = array_merge($returnArray, ['embed_url' => 'https://www.youtube.com/embed/' . $this->videoId]);
         return $returnArray;
     }
 
-    protected function channelThumbnailUrl()
+    private function getVideoPublishedAt()
     {
-        try{
-            // Get og tags from url
-            libxml_use_internal_errors(true);
-            $doc = new \DomDocument();
-            $doc->loadHTML(file_get_contents($this->url, false, stream_context_create($this->arrContextOptions)));
-            $xpath = new \DOMXPath($doc);
-            $query = '//*/meta[starts-with(@property, \'og:image\')]';
-            $metas = $xpath->query($query);
+        // Gets publishedAt attribute with Youtube API
+        $video = new Youtube();
+        $result = $video->getVideoInfo($this->videoId);
+        $publishedAt = $result->snippet->publishedAt;
+        if(isset($publishedAt))
+            return \Carbon\Carbon::parse($publishedAt);
+        return false;
+    }
 
-            foreach ($metas as $meta) {
-                $property = $meta->getAttribute('property');
-                if($property == "og:image"){
-                    $thumbnailUrl = $meta->getAttribute('content');
-                    return $thumbnailUrl;
-                }
-            }
-        }
-        catch(\Exception $e){
-            $this->info($e->getMessage());
-        }
+    private function channelThumbnailUrl()
+    {
+        $htmlParser = new HtmlParser($this->url);
+        return $htmlParser->getDomAttVal('meta', 'property', 'og:image', 'content');
     }
 }

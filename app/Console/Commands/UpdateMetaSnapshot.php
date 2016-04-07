@@ -49,7 +49,7 @@ class UpdateMetaSnapshot extends Command
             // Update twitter and db record if url is new (different)
             // and new url starts with 'https://tempostorm.com/hearthstone/meta-snapshot/'
             $this->info($this->url);
-            if($this->checkIfUrlIsDifferent($su) && $this->startsWith($this->url, $su->master_url . '/')){
+            if($this->checkIfUrlIsDifferent($su) && starts_with($this->url, $su->master_url . '/')){
                 $this->info('Sending');
                 $this->sendTwitterMessage();
             }
