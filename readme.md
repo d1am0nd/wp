@@ -34,12 +34,15 @@ After a new page is posted command 'page:updateThumbnail {id} {url}' is ran, whi
 ### Twitter updates
 
 app/Console/Commands/UpdateRedditCustomWeekly.php
+
 Command 'twitter:updateRedditCustomWeekly' checks reddit api for latest "Top 5 Scoring Cards of the Week from r/CustomHearthstone" post. If the post is different than the one in the database it posts on Twitter.
 
 app/Console/Commands/UpdateArenaCustomWeekly.php
+
 Command 'twitter:updateRedditArenaWeekly' checks reddit api for latest "Top 5 Arena Streamers" post. If the post is different than the one in the database it posts on Twitter.
 
 app/Console/Commands/UpdateMetaSnapshot.php
+
 Command 'snapshot:updateUrl' checks https://tempostorm.com/hearthstone/meta-snapshot for the latest Tempostorm Hearthstone Meta Snapshot. If it's different than the one in the database it posts on Twitter.
 
 ## Traits
