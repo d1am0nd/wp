@@ -23,11 +23,13 @@ The website was built mainly because I snatched the domain early after the "wiza
 
 ### Youtube Thumbnail updates
 
-Ater a new youtube link is posted command 'video:updateThumbnail {id} {url}' (app/Console/Commands/UpdateVideoThumbnail.php) is ran, which then checks if the link is a video - in which case it gets the embedded url and thumbnail image. Otherwise, if it's a channel, it gets thumbnail from og:image tag. The image is then resized and saved to the server. The path to the image is updated in the database
+app/Console/Commands/UpdateVideoThumbnail.php
+Ater a new youtube link is posted command 'video:updateThumbnail {id} {url}' is ran, which then checks if the link is a video - in which case it gets the embedded url and thumbnail image. Otherwise, if it's a channel, it gets thumbnail from og:image tag. The image is then resized and saved to the server. The path to the image is updated in the database
 
 ### Page Thumbnail updates
 
-After a new page is posted command 'page:updateThumbnail {id} {url}' (app/Console/Commands/UpdatePageThumbnail.php) is ran, which then gets the thumbnail image for the website from og:image tag.
+app/Console/Commands/UpdatePageThumbnail.php
+After a new page is posted command 'page:updateThumbnail {id} {url}' is ran, which then gets the thumbnail image for the website from og:image tag.
 
 ### Twitter updates
 
@@ -47,7 +49,7 @@ app/Traits
 ### TaggableTrait
 
 Adds next methods to a model:
-* tags() - Polymorphic relationship
+* tags() - Polymorphic relationship defined
 * scopeWhereHasTags($tags) - Filters by parent models that have all of the $tags tags
 * scopeWhereHasTag($tag) - Filters by parent models that have $tag tag
 
