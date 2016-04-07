@@ -12,11 +12,11 @@
 <link rel="stylesheet" href="/plugins/sky-forms-pro/skyforms/custom/custom-sky-forms.css">
 <!-- CSS Customization -->
     <!-- CSS Implementing Plugins -->
-    <link rel="stylesheet" href="/plugins/animate.css">
-    <link rel="stylesheet" href="/plugins/line-icons/line-icons.css">
-    <link rel="stylesheet" href="/plugins/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/plugins/fancybox/source/jquery.fancybox.css">
-    <link rel="stylesheet" href="/css/custom.css">
+<link rel="stylesheet" href="/plugins/animate.css">
+<link rel="stylesheet" href="/plugins/line-icons/line-icons.css">
+<link rel="stylesheet" href="/plugins/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/plugins/fancybox/source/jquery.fancybox.css">
+<link rel="stylesheet" href="/css/custom.css">
 @stop
 
 @section('filters')
@@ -172,29 +172,6 @@ $(".downvote").on('click', function(event){
     });
 });
 
-$(document).on('submit', '#new-page-form', function(event){
-    event.preventDefault();
-    $(event.target).ajaxSubmit({
-        complete: function(data){
-            response = data.responseJSON;
-            console.log(response);
-            jQuery.each(response, function(i, val){
-                var dom = $("[page-error='" + i + "']");
-                dom.addClass('has-error')
-                dom.html(val[0]);
-                dom.show();
-                setTimeout(function(){
-                    dom.removeClass('has-error');
-                    dom.hide();
-                }, 5000);
-            });
-        },
-        success: function(){
-            location.reload();
-        }
-    });
-});
-
 function changeVoteSum(pageSlug, diff, dom){
     var sumDom = $(".vote-sum[pageSlug='" + pageSlug + "']");
     var lastSum = parseInt(sumDom.html());
@@ -223,6 +200,29 @@ function changeVoteSum(pageSlug, diff, dom){
         $('.upvote[pageSlug="' + pageSlug + '"]').removeClass("upvoted");
     }
 }
+
+$(document).on('submit', '#new-page-form', function(event){
+    event.preventDefault();
+    $(event.target).ajaxSubmit({
+        complete: function(data){
+            response = data.responseJSON;
+            console.log(response);
+            jQuery.each(response, function(i, val){
+                var dom = $("[page-error='" + i + "']");
+                dom.addClass('has-error')
+                dom.html(val[0]);
+                dom.show();
+                setTimeout(function(){
+                    dom.removeClass('has-error');
+                    dom.hide();
+                }, 5000);
+            });
+        },
+        success: function(){
+            location.reload();
+        }
+    });
+});
 </script>
 @endif
 @include('_votes')

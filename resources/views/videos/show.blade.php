@@ -43,12 +43,21 @@
             @endif
             @foreach($video->comments as $comment)
                 <div class="profile-blog">
-                    <div class="name-location">
-                        <strong>{{ $comment->user->username }}</strong> - {{ $comment->created_at->diffForHumans() }}
-                    </div>
                     <div class="clearfix margin-bottom-20"></div>
                     <p>{{ $comment->text }}</p>
-                    <hr>
+                    <ul class="list-inline news-v1-info">
+                    <li><i class="fa fa-chevron-down downvote votes-icon @if($comment->my_vote == -1)downvoted @endif" commentId="{{ $comment->id }}"></i></li>
+                    <li>                            
+                        <div class="vote-sum" commentId="{{ $comment->id }}">
+                        {{ $comment->vote_sum}}
+                        </div>
+                    </li>
+                    <li><i class="fa fa-chevron-up upvote votes-icon @if($comment->my_vote == 1)upvoted @endif" commentId="{{ $comment->id }}"></i></li>
+                    <li>|</li>
+                    <li><i class="fa fa-user"></i> {{ $comment->user->username }} </li>
+                    <li>|</li>
+                    <li><i class="fa fa-clock-o"></i> {{ $comment->created_at->diffForHumans() }}</li>
+                </ul>
                 </div>
             @endforeach
             </div>
@@ -57,4 +66,68 @@
 @stop
 
 @section('foot')
+<script>
+$(".upvote").on('click', function(event){
+    event.preventDefault();
+    var commentId = $(event.target).attr('commentId');
+    var token = $("input[name='_token']").val();
+    var data = {_token: token, vote: 1};
+
+    $.ajax({
+        type: "POST",
+        url: "/comments/" + commentId + '/vote',
+        data: data,
+        success: function(diff) {
+            console.log(diff);
+            changeVoteSum(commentId, diff, $(event.target));
+        }
+    });
+});
+
+$(".downvote").on('click', function(event){
+    event.preventDefault();
+    var commentId = $(event.target).attr('commentId');
+    var token = $("input[name='_token']").val();
+    var data = {_token: token, vote: -1};
+
+    $.ajax({
+        type: "POST",
+        url: "/comments/" + commentId + '/vote',
+        data: data,
+        success: function(diff) {
+            console.log(diff);
+            changeVoteSum(commentId, diff, $(event.target));
+        }
+    });
+});
+
+function changeVoteSum(commentId, diff, dom){
+    var sumDom = $(".vote-sum[commentId='" + commentId + "']");
+    var lastSum = parseInt(sumDom.html());
+    console.log(lastSum);
+    var newSum = lastSum + parseInt(diff);
+    sumDom.html("" + newSum);
+
+    if(diff == 2){
+        dom.addClass("upvoted");
+        $('.downvote[commentId="' + commentId + '"]').removeClass("downvoted");
+    }
+    else if(diff == 1){
+        if(dom.hasClass("downvoted"))
+            dom.removeClass("downvoted");
+        else
+            dom.addClass("upvoted");
+    }
+    else if(diff == -1){
+        if(dom.hasClass("upvoted"))
+            dom.removeClass("upvoted");
+        else
+            dom.addClass("downvoted");
+    }
+    else if(diff == -2){
+        dom.addClass("downvoted");
+        $('.upvote[commentId="' + commentId + '"]').removeClass("upvoted");
+    }
+}
+</script>
 @stop

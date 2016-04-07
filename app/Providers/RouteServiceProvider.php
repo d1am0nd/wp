@@ -24,10 +24,15 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        //
-
         parent::boot($router);
-        
+        \DB::enableQueryLog();
+        $router->bind('page', function ($value) {
+            return \App\Page::with([
+                'comments' => function($q){
+                    return $q->withMyVote();
+                }
+            ])->where('slug', $value)->first();
+        });
     }
 
     /**

@@ -73,7 +73,7 @@ class PagesController extends Controller
      */
     public function show(Page $page)
     {
-        return view('pages.show')->with(compact('page'));;
+        return view('pages.show')->with(compact('page'));
     }
 
     /**
@@ -118,6 +118,6 @@ class PagesController extends Controller
 
     public function postVote(VoteRequest $request, Page $page)
     {
-        return $this->vote($request, $page);
+        return $page->vote($request->input('vote'));
     }
 }
