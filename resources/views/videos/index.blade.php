@@ -87,9 +87,10 @@
 </div>
 
 <div class="container content-md">
+    @foreach(array_chunk($videos->getCollection()->all(), 3) as $row)
     <div class="row news-v1">
-        @foreach($videos as $video)
-        <div class="col-md-4 md-margin-bottom-40" style="height:451px">
+        @foreach($row as $video)
+        <div class="col-md-4 md-margin-bottom-40">
             <div class="news-v1-in">
                 <a href="{{ $video->url }}" target="_blank">
                     <div class="img-wrapper">
@@ -125,6 +126,7 @@
         </div>
         @endforeach
     </div>
+    @endforeach
 </div>
 @stop
 
@@ -172,7 +174,6 @@ $(document).on('submit', '#new-video-form', function(event){
     $(event.target).ajaxSubmit({
         complete: function(data){
             response = data.responseJSON;
-            console.log(response);
             jQuery.each(response, function(i, val){
                 var dom = $("[video-error='" + i + "']");
                 dom.addClass('has-error')

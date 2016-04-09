@@ -23,8 +23,7 @@
 @include('filters.navbar')
 @stop
 
-@section('content')<!--=== Team v1 ===-->
-
+@section('content')
 <div id="myModalNewItem" class="modal fade" role="dialog">
     <div class="container modal-container-new-item">
         {!! Form::open(['action' => 'PagesController@store', 'class' => 'sky-form', 'id' => 'new-page-form', "style" => "margin-bottom:20px"]) !!}
@@ -93,11 +92,10 @@
 </div>
 
 <div class="container content-md">
-    @foreach($pages as $key => $page)
-        @if($key % 3 == 0)
+    @foreach(array_chunk($pages->getCollection()->all(), 3) as $row)
     <div class="row news-v1">
-        @endif
-        <div class="col-md-4" style="height:451px;">
+        @foreach($row as $page)
+        <div class="col-md-4 md-margin-bottom-40">
             <div class="news-v1-in">
                 <a href="{{ $page->url }}" target="_blank">
                     <div class="img-wrapper">
@@ -106,14 +104,20 @@
                             <span class="img-tag label label-u label-default">{{ $tag->name }}</span>
                             @endforeach
                         </div>
+                        @if(isset($page->embed_url))
+                        <iframe height="210" width="360" allowfullscreen="true"
+                        src="{{ $page->embed_url }}">
+                        </iframe>
+                        @else
                         <img class="img-responsive" src="{{ $page->thumbnail_path }}" alt="">
+                        @endif
                     </div>
                 </a>
                 <h3 style="overflow:hidden;"><a href="{{ $page->url }}" target="_blank">{{ $page->title }}</a></h3>
-                <p style="overflow:hidden;">{{ $page->description }}</p>
+                <p style="overflow:hidden;" >{{ $page->description }}</p>
                 <ul class="list-inline news-v1-info">
                     <li><i class="fa fa-chevron-down downvote votes-icon @if($page->my_vote == -1)downvoted @endif" pageSlug="{{ $page->slug }}"></i></li>
-                    <li>                            
+                    <li>
                         <div class="vote-sum" pageSlug="{{ $page->slug }}">
                         {{ $page->vote_sum }}
                         </div>
@@ -125,12 +129,10 @@
                 </ul>
             </div>
         </div>
-        @if($key % 4 == 3 || $key == (count($pages) - 1))
+        @endforeach
     </div>
-        @endif
     @endforeach
 </div>
-<!-- End News v1 Gray -->
 @stop
 
 @section('foot')
@@ -206,7 +208,6 @@ $(document).on('submit', '#new-page-form', function(event){
     $(event.target).ajaxSubmit({
         complete: function(data){
             response = data.responseJSON;
-            console.log(response);
             jQuery.each(response, function(i, val){
                 var dom = $("[page-error='" + i + "']");
                 dom.addClass('has-error')
