@@ -130,7 +130,7 @@ trait VoteableTrait
             $join->on('my_vote.voteable_id', '=', $table . '.id')
                 ->where('my_vote.voteable_type', '=', $model)
                 ->where('my_vote.user_id', '=', Auth::user()->id);
-        })->addSelect('*', $table . '.id', 'my_vote.vote as my_vote');
+        })->addSelect($table . '.*', $table . '.id', 'my_vote.vote as my_vote');
         
         return $query;
     }

@@ -71,8 +71,13 @@ class PagesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Page $page)
+    public function show($pageSlug)
     {
+        $page = Page::with([
+            'comments' => function($q) use($pageSlug) {
+                return $q->withMyVote();
+            }
+        ])->where('slug', $pageSlug)->first();
         return view('pages.show')->with(compact('page'));
     }
 

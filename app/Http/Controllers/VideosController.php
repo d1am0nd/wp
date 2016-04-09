@@ -73,8 +73,13 @@ class VideosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Video $video)
+    public function show($videoSlug)
     {
+        $video = Video::with([
+            'comments' => function($q) use($videoSlug) {
+                return $q->withMyVote();
+            }
+        ])->where('slug', $videoSlug)->first();
         return view('videos.show')->with(compact('video'));;
     }
 

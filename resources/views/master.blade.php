@@ -9,9 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Wizard-Poker - Share awesome Hearthstone related content!">
     <meta name="google-site-verification" content="dbZm6GFuvEGRol9FGnF-6D5vofQHk5Z6mTSy4s_-23w" />
-    @if(isset($filterTag) || isset($filterOrderBy))
-    <meta name="robots" content="noindex,follow"/>
-    @endif
+    {!! Request::input() ? '<meta name="robots" content="noindex,follow"/>' : '' !!}
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="@WizardPokerCom" />
     <meta name="twitter:image" content="http://www.wizard-poker.com/hslogo.png" />
@@ -210,8 +208,10 @@
                 <div class="row">
                     <div class="col-md-3 col-sm-6 column-one md-margin-bottom-50">
                         <span>Site under construction</span>
-                        <p>Uses cookies for login and google analytics. <a href="{{ action('GeneralController@getTos') }}#privacy">More</a>. <small>Beware</small></p>
+                        <p>Uses cookies for login and google analytics. <a href="{{ action('GeneralController@getTos') }}#privacy" title="Follow Wizard-Poker.com on Twitter">More</a>. <small>Beware</small></p>
                         <a href="https://twitter.com/WizardPokerCom"><i class="fa fa-twitter fa-2x"></i> @WizardPokerCom</a>
+                        <br>
+                        <a href="https://www.facebook.com/Wizard-Pokercom-939793112737015/" title="Follow Wizard-Poker.com on Facebook"><i class="fa fa-facebook fa-2x"></i> Wizard-Poker.com</a>
                     </div>
 
                     <div class="col-md-3 col-sm-6 md-margin-bottom-50">
@@ -219,7 +219,7 @@
                         <!-- Tag Links v4 -->
                         <ul class="tags-v4 margin-bottom-40">
                             @foreach($tags as $tag)
-                            <li><a class="sqaare-4x filter-tag" href="{{ url_with_get(Request::segment(1),  array_merge(Request::input() ? Request::input() : [], ['tag' => $tag->name])) }}">{{ $tag->name }}</a></li>
+                            <li><a class="sqaare-4x filter-tag" href="{{ url_with_get(Request::url(),  array_merge(Request::input() ? Request::input() : [], ['tag' => $tag->name])) }}">{{ $tag->name }}</a></li>
                             @endforeach
                         </ul>
                         <!-- End Tag Links v4 -->

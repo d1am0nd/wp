@@ -46,18 +46,18 @@
                     <div class="clearfix margin-bottom-20"></div>
                     <p>{{ $comment->text }}</p>
                     <ul class="list-inline news-v1-info">
-                    <li><i class="fa fa-chevron-down downvote votes-icon @if($comment->my_vote == -1)downvoted @endif" commentId="{{ $comment->id }}"></i></li>
-                    <li>                            
-                        <div class="vote-sum" commentId="{{ $comment->id }}">
-                        {{ $comment->vote_sum}}
-                        </div>
-                    </li>
-                    <li><i class="fa fa-chevron-up upvote votes-icon @if($comment->my_vote == 1)upvoted @endif" commentId="{{ $comment->id }}"></i></li>
-                    <li>|</li>
-                    <li><i class="fa fa-user"></i> {{ $comment->user->username }} </li>
-                    <li>|</li>
-                    <li><i class="fa fa-clock-o"></i> {{ $comment->created_at->diffForHumans() }}</li>
-                </ul>
+                        <li><i class="fa fa-chevron-down downvote votes-icon @if($comment->my_vote == -1)downvoted @endif" commentId="{{ $comment->id }}"></i></li>
+                        <li>                            
+                            <div class="vote-sum" commentId="{{ $comment->id }}">
+                            {{ $comment->vote_sum}}
+                            </div>
+                        </li>
+                        <li><i class="fa fa-chevron-up upvote votes-icon @if($comment->my_vote == 1)upvoted @endif" commentId="{{ $comment->id }}"></i></li>
+                        <li>|</li>
+                        <li><i class="fa fa-user"></i> {{ $comment->user->username }} </li>
+                        <li>|</li>
+                        <li><i class="fa fa-clock-o"></i> {{ $comment->created_at->diffForHumans() }}</li>
+                    </ul>
                 </div>
             @endforeach
             </div>
