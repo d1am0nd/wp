@@ -30,10 +30,25 @@
   <url> 
     <loc>http://www.wizard-poker.com/videos</loc>
     @foreach($videos as $video)
+    @if($video->is_video == 1)
+    <video:video>
+      <video:player_loc allow_embed="yes">
+        {{ $video->embed_url }}
+      </video:player_loc>
+      <video:thumbnail_loc>
+        {{ $video->thumbnail_path }}
+      </video:thumbnail_loc>
+      <video:title>{{ $video->title }}</video:title>  
+      <video:description>
+        {{ $video->description }}
+      </video:description>
+    </video:video>
+    @else
     <image:image>
        <image:loc>http://www.wizard-poker.com{{$video->thumbnail_path}}</image:loc>
        <image:caption>{{ $video->title }}</image:caption>
     </image:image>
+    @endif
     @endforeach
   </url>
 </urlset>
