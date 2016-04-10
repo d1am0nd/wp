@@ -77,7 +77,7 @@ class AuthController extends Controller
             return $authUser;
         }
         
-        return User::forceCeate([
+        return User::forceCreate([
             'username' => $fbUser->name,
             'email' => $fbUser->email,
             'facebook_id' => $fbUser->id
