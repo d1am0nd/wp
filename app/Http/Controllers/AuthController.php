@@ -45,9 +45,9 @@ class AuthController extends Controller
      *
      * @return Response
      */
-    public function facebookRedirectToProvider()
+    public function redirectToProvider($provider)
     {
-        return Socialite::driver('facebook')->redirect();
+        return Socialite::driver($provider)->redirect();
     }
 
     /**
@@ -55,15 +55,15 @@ class AuthController extends Controller
      *
      * @return Response
      */
-    public function facebookHandleProviderCallback(Request $request)
+    public function providerCallback($provider)
     {
         try {
-            $user = Socialite::driver('facebook')->user();
+            $user = Socialite::driver($provider)->user();
         } catch (Exception $e) {
-            return redirect(action('AuthController@facebookRedirectToProvider'));
+            return redirect(action('AuthController@redirectToProvider'));
         }
 
-        $authUser = $this->findOrCreateUser($user, $request);
+        $authUser = $this->findOrCreateUser($user, $provider);
 
         Auth::login($authUser, true);
 
@@ -76,18 +76,16 @@ class AuthController extends Controller
      * @param $fbUser
      * @return User
      */
-    private function findOrCreateUser($fbUser, $request)
+    private function findOrCreateUser($user, $provider)
     {
-        if ($authUser = User::where('facebook_id', $fbUser->id)->first()) {
+        if ($authUser = User::where($provider . '_id', $user->id)->first()) {
             return $authUser;
         }
-        
-        $request->session()->flash('info', 'If you wish to change your username click <a href="' . action('AuthController@getUsernameEdit') . '">here.</a>');
 
         return User::forceCreate([
-            'username' => $fbUser->name,
-            'email' => $fbUser->email,
-            'facebook_id' => $fbUser->id
+            'username' => $user->name,
+            'email' => $user->email,
+            $provider . '_id' => $user->id
         ]);
     }
 }

@@ -28,10 +28,10 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('logout', 'Auth\AuthController@getLogout');
     Route::post('login', 'Auth\AuthController@postLogin');
     Route::post('register', 'Auth\AuthController@postRegister');
-    Route::get('account/username/edit', 'AuthController@getUsernameEdit');
+    // Route::get('account/username/edit', 'AuthController@getUsernameEdit');
 
-    Route::get('auth/facebook', 'AuthController@facebookRedirectToProvider');
-    Route::get('auth/facebook/callback', 'AuthController@facebookHandleProviderCallback');
+    Route::get('auth/{provider}', 'AuthController@redirectToProvider');
+    Route::get('auth/{provider}/callback', 'AuthController@handleProviderCallback');
 
     Route::get('pages', 'PagesController@index');
     Route::post('pages', 'PagesController@store');
