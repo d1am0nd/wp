@@ -13,7 +13,7 @@ class AddFbId extends Migration
     public function up()
     {
         Schema::table('users', function ($table) {
-            $table->integer('facebook_id')->unsigned();
+            $table->bigInteger('facebook_id')->unsigned();
         });
     }
 
