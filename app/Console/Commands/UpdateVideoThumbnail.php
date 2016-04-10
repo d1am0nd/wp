@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use App\Video;
 use App\Classes\Youtube;
 use Illuminate\Console\Command;
-use App\Classes\Parser\HtmlParser;
+use App\Classes\Parsers\HtmlParser;
 
 class UpdateVideoThumbnail extends Command
 {
