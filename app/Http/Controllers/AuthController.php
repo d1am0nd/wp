@@ -67,7 +67,7 @@ class AuthController extends Controller
 
         Auth::login($authUser, true);
 
-        return redirect()->back();
+        return redirect(action('GeneralController@getHome'));
     }
 
     /**
