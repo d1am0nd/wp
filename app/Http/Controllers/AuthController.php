@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\User;
+use Socialite;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -31,5 +32,55 @@ class AuthController extends Controller
     public function __construct()
     {
         //$this->middleware('guest', ['except' => 'logout']);
+    }
+
+    /**
+     * Redirect the user to the Facebook authentication page.
+     *
+     * @return Response
+     */
+    public function facebookRedirectToProvider()
+    {
+        return Socialite::driver('facebook')->redirect();
+    }
+
+    /**
+     * Obtain the user information from Facebook.
+     *
+     * @return Response
+     */
+    public function facebookHandleProviderCallback()
+    {
+        try {
+            $user = Socialite::driver('facebook')->user();
+        } catch (Exception $e) {
+            return redirect(action('AuthController@facebookRedirectToProvider'));
+        }
+
+        $authUser = $this->findOrCreateUser($user);
+
+        Auth::login($authUser, true);
+
+        return redirect()->back();
+    }
+
+    /**
+     * Return user if exists; create and return if doesn't
+     *
+     * @param $fbUser
+     * @return User
+     */
+    private function findOrCreateUser($fbUser)
+    {
+        if ($authUser = User::where('github_id', $fbUser->id)->first()) {
+            return $authUser;
+        }
+
+        return User::create([
+            'username' => $fbUser->username,
+            'email' => $fbUser->email,
+            'facebook_id' => $fbUser->id,
+            'avatar' => $fbUser->avatar
+        ]);
     }
 }

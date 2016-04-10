@@ -29,6 +29,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('login', 'Auth\AuthController@postLogin');
     Route::post('register', 'Auth\AuthController@postRegister');
 
+    Route::get('auth/facebook', 'AuthController@facebookRedirectToProvider');
+    Route::get('auth/facebook/callback', 'AuthController@facebookHandleProviderCallback');
+
     Route::get('pages', 'PagesController@index');
     Route::post('pages', 'PagesController@store');
     Route::get('pages/{pageSlug}', 'PagesController@show');

@@ -299,16 +299,20 @@
                         <input type="password" name="password" placeholder="Password" class="form-control">
                     </div>
 
+                    <h4>Or:</h4>
+                    <h4><a href="{{ action('AuthController@facebookRedirectToProvider') }}"><i class="fa fa-facebook"></i>Login with Facebook</a></h4>
+
                     <hr>
 
                     <div class="row">
                         <div class="col-xs-6">
-                            <button class="btn toggle-login" type="button">Cancel</button>
+                            <button class="btn-u" type="submit" id="login-submit">Login</button>
                         </div>
                         <div class="col-xs-6">
-                            <button class="btn-u pull-right" type="submit" id="login-submit">Login</button>
+                            <button class="btn pull-right toggle-login" type="button">Cancel</button>
                         </div>
                     </div>
+
                     <!--
                     <h4>Forget your Password ?</h4>
                     <p>no worries, <a class="color-green" href="#">click here</a> to reset your password.</p>
@@ -363,10 +367,10 @@
 
                     <div class="row">
                         <div class="col-xs-6">
-                            <button class="btn toggle-register" type="button">Cancel</button>
+                            <button class="btn-u" type="button">Register</button>
                         </div>
                         <div class="col-xs-6 text-right">
-                            <button class="btn-u" type="submit">Register</button>
+                            <button class="btn toggle-register" type="submit">Cancel</button>
                         </div>
                     </div>
                 {!! Form::close() !!} 

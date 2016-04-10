@@ -164,6 +164,8 @@ return [
         App\Providers\ComposerServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Thujohn\Twitter\TwitterServiceProvider::class,
+        Laravel\Socialite\SocialiteServiceProvider::class,
+
     ],
 
     /*
@@ -213,7 +215,7 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Twitter' => Thujohn\Twitter\Facades\Twitter::class,
-
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
     ],
 
 ];
