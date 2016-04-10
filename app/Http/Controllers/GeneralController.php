@@ -10,7 +10,7 @@ use App\Http\Requests;
 
 class GeneralController extends Controller
 {
-    public function getHome()
+    public function getHome(Request $request)
     {
         return view('home');
     }

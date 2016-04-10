@@ -166,7 +166,6 @@
                     </button>
                 </div>
             </div>
-
             <div class="clearfix"></div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse mega-menu navbar-collapse navbar-responsive-collapse">
@@ -196,8 +195,15 @@
         </div>
         <!-- End Navbar -->
     </div>
+    @if(Session::has('info'))
     <!--=== End Header v4 ===-->
-
+    <div class="alert-container container content">
+        <div class="alert alert-warning fade in">
+            <button aria-hidden="true" class="close close-alert" type="button">×</button>
+            <strong>Info!</strong> {!! Session::get('info') !!}
+        </div>
+    </div>
+    @endif
     @yield('content')
 
      <!--=== Footer Version 1 ===-->
@@ -299,11 +305,6 @@
                         <input type="password" name="password" placeholder="Password" class="form-control">
                     </div>
 
-                    <h4>Or:</h4>
-                    <h4><a href="{{ action('AuthController@facebookRedirectToProvider') }}"><i class="fa fa-facebook"></i>Login with Facebook</a></h4>
-
-                    <hr>
-
                     <div class="row">
                         <div class="col-xs-6">
                             <button class="btn-u" type="submit" id="login-submit">Login</button>
@@ -312,6 +313,11 @@
                             <button class="btn pull-right toggle-login" type="button">Cancel</button>
                         </div>
                     </div>
+
+                    <hr>
+
+                    <h4>Or:</h4>
+                    <h4><a href="{{ action('AuthController@facebookRedirectToProvider') }}"><i class="fa fa-facebook"></i>Login with Facebook</a></h4>
 
                     <!--
                     <h4>Forget your Password ?</h4>
@@ -469,6 +475,11 @@ $(document).on('submit', '#login-form', function(event){
         }
     });
 });
+@if(Session::has('info'))
+$('.close-alert').on('click', function(event){
+    $(event.target).closest('.alert-container').hide(200);
+});
+@endif
 </script>
 @endif
 @yield('foot')
