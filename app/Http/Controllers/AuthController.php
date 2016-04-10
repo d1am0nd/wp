@@ -72,7 +72,7 @@ class AuthController extends Controller
      */
     private function findOrCreateUser($fbUser)
     {
-        if ($authUser = User::where('github_id', $fbUser->id)->first()) {
+        if ($authUser = User::where('facebook_id', $fbUser->id)->first()) {
             return $authUser;
         }
 
