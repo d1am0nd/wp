@@ -29,7 +29,7 @@
             <h3>Comments</h3>
             @if(Auth::check())
             <div class="profile-blog">
-                {{ Form::open(['action' => ['PagesController@postComment', $page->slug]]) }}
+                {{ Form::open(['action' => ['PagesController@postComment', $page->slug], 'autocomplete' => 'off']) }}
                 <div class="form-group">
                     <label for="text">Post a comment</label>
                     <input type="text" name="text" class="form-control" rows="5"></textarea>
