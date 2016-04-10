@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Auth;
 use App\User;
 use Socialite;
 use Validator;
@@ -75,12 +76,11 @@ class AuthController extends Controller
         if ($authUser = User::where('facebook_id', $fbUser->id)->first()) {
             return $authUser;
         }
-
+        
         return User::create([
-            'username' => $fbUser->username,
+            'username' => $fbUser->name,
             'email' => $fbUser->email,
-            'facebook_id' => $fbUser->id,
-            'avatar' => $fbUser->avatar
+            'facebook_id' => $fbUser->id
         ]);
     }
 }
