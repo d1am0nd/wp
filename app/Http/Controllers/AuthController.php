@@ -47,6 +47,13 @@ class AuthController extends Controller
      */
     public function redirectToProvider($provider)
     {
+        if($provider == 'google'){
+            // Only request the info we need
+            $scopes = [
+                'https://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/userinfo.profile'
+            ];
+            return Socialite::driver($provider)->scopes($scopes)->redirect();
+        }
         return Socialite::driver($provider)->redirect();
     }
 
