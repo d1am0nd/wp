@@ -317,6 +317,7 @@
                     <hr>
 
                     <h4>Or:</h4>
+                    <h4><a href="{{ action('AuthController@redirectToProvider', ['provider' => 'google']) }}"><i class="fa fa-google"></i>Login with Google</a></h4>
                     <h4><a href="{{ action('AuthController@redirectToProvider', ['provider' => 'facebook']) }}"><i class="fa fa-facebook"></i>Login with Facebook</a></h4>
                     <h4><a href="{{ action('AuthController@redirectToProvider', ['provider' => 'twitter']) }}"><i class="fa fa-twitter"></i>Login with Twitter</a></h4>
 
