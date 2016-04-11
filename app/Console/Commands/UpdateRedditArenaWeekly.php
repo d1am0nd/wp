@@ -15,7 +15,7 @@ class UpdateRedditArenaWeekly extends Command
     protected $signature = 'twitter:updateRedditArenaWeekly
     {--queue=default}';
 
-    private $url, $master_url;
+    private $url, $master_url, $json;
 
     /**
      * The console command description.
@@ -44,8 +44,13 @@ class UpdateRedditArenaWeekly extends Command
         // Reddit get api
         // Returns json of last post that has "Top scoring cards of the week from r/CustomHearthstone" in it
         $this->master_url = 'https://www.reddit.com/r/hearthstone/search.json?q=%22Top%2010%20Arena%20Streamers%22&sort=new&limit=1';
+        $this->json = $this->getJson();
         $this->url = $this->getLastUrl();
         $identifier = 'top-scoring-arena';
+        $subreddit = $this->getSubreddit();
+
+        if($subreddit != 'hearthstone')
+            return null;
 
         $su = SiteUpdate::where('identifier', $identifier)->first();
         if(isset($su)){
@@ -66,13 +71,20 @@ class UpdateRedditArenaWeekly extends Command
         $su->save();
     }
 
+    private function getSubreddit()
+    {
+        return $this->json->data->children[0]->data->subreddit;
+    }
+
+    private function getJson()
+    {
+        return json_decode(file_get_contents($this->master_url));
+    }
+
     private function getLastUrl()
     {
-        $query = $this->master_url;
-        $json = json_decode(file_get_contents($query));
         // json->data->children->data->url = url of the last post that matched the query
-        $url = $json->data->children[0]->data->url;
-        return $url;
+        return $this->json->data->children[0]->data->url;
     }
 
     private function sendTwitterMessage()
