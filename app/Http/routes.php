@@ -55,4 +55,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('terms-of-service', 'GeneralController@getTos');
 
     Route::get('sitemap.xml', 'GeneralController@getSitemapXml');
+
+    Route::get('zohoverify/verifyforzoho.html', function()
+    {
+        return response('1460414100837')->header('Content-Type', 'text/html');
+    });
 });
