@@ -213,8 +213,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-3 col-sm-6 column-one md-margin-bottom-50">
-                        <span>Site under construction</span>
-                        <p>Uses cookies for login and google analytics. <a href="{{ action('GeneralController@getTos') }}#privacy" title="Follow Wizard-Poker.com on Twitter">More</a>. <small>Beware</small></p>
+                        <p><a href="{{ action('GeneralController@getTos') }}">Terms of Service</a></p>
+                        <p>Contact: info@wizard-poker.com</p>
+                        <span>Social networks:</span>
                         <a href="https://twitter.com/WizardPokerCom"><i class="fa fa-twitter fa-2x"></i> @WizardPokerCom</a>
                         <br>
                         <a href="https://www.facebook.com/Wizard-Pokercom-939793112737015/" title="Follow Wizard-Poker.com on Facebook"><i class="fa fa-facebook fa-2x"></i> Wizard-Poker.com</a>
@@ -318,7 +319,7 @@
 
                     <h4>Or:</h4>
                     <h4><a href="{{ action('AuthController@redirectToProvider', ['provider' => 'google']) }}"><i class="fa fa-google"></i>Login with Google</a></h4>
-                    <h4><a href="{{ action('AuthController@redirectToProvider', ['provider' => 'facebook']) }}"><i class="fa fa-facebook"></i>Login with Facebook</a></h4>
+                    <h4><a href="{{ action('AuthController@redirectToProvider', ['provider' => 'facebook']) }}"><i class=" icon-social-facebook "></i>Login with Facebook</a></h4>
                     <h4><a href="{{ action('AuthController@redirectToProvider', ['provider' => 'twitter']) }}"><i class="fa fa-twitter"></i>Login with Twitter</a></h4>
 
                     <!--
