@@ -34,11 +34,6 @@ class AuthController extends Controller
     {
         $this->middleware('auth', ['only' => 'getUsernameEdit']);
     }
-    
-    public function getUsernameEdit()
-    {
-        return view('editUsername');
-    }
 
     /**
      * Redirect the user to the Facebook authentication page.
@@ -92,7 +87,8 @@ class AuthController extends Controller
         return User::forceCreate([
             'username' => $user->name,
             'email' => $user->email,
-            $provider . '_id' => $user->id
+            $provider . '_id' => $user->id,
+            'needs_new_username' => 1
         ]);
     }
 }

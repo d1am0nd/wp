@@ -74,7 +74,7 @@ class PagesController extends Controller
     public function show($pageSlug)
     {
         $page = Page::with([
-            'comments' => function($q) use($pageSlug) {
+            'comments' => function($q){
                 return $q->withMyVote();
             }
         ])->where('slug', $pageSlug)->first();

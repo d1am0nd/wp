@@ -19,7 +19,7 @@
     @yield('meta')
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="shortcut icon" href="/favicon.ico">
 
     <!-- Web Fonts -->
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600&amp;subset=cyrillic,latin">
@@ -129,6 +129,9 @@
                             <li><a href="" class="toggle-login">Login</a></li>
                             <li><a href="" class="toggle-register">Register</a></li>
                             @else
+                            @if(Auth::check() && Auth::user()->needs_new_username)
+                            <li><a class="text-danger" href="{{ action('AccountsController@getUsernameEdit') }}">Change your username or confirm this one!</a></li>
+                            @endif
                             @if(Request::url() == action('PagesController@index'))
                             <li><a href="" class="new-item"><strong>Add new page</strong></a></li>
                             @elseif(Request::url() == action('VideosController@index'))

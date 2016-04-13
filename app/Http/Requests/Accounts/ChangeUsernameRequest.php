@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Authentication;
+namespace App\Http\Requests\Accounts;
 
+use Auth;
 use App\Http\Requests\Request;
 
-class RegisterRequest extends Request
+class ChangeUsernameRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,6 +14,8 @@ class RegisterRequest extends Request
      */
     public function authorize()
     {
+        if(!Auth::check() || Auth::user()->needs_new_username == 0)
+            return false;
         return true;
     }
 
@@ -23,10 +26,10 @@ class RegisterRequest extends Request
      */
     public function rules()
     {
+        if(Request::method() == 'GET')
+            return [];
         return [
             'username' => 'required|max:30|unique:users,username',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|confirmed|min:6',
         ];
     }
 }
