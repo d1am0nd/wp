@@ -128,6 +128,7 @@ class CreateCardTables extends Migration
         Schema::create('card_card_mechanic', function ( Blueprint $table){
             $table->integer('card_mechanic_id')->unsigned();
             $table->integer('card_id')->unsigned();
+            $table->integer('value');
 
             $table->foreign('card_mechanic_id')
                 ->references('id')

@@ -21,6 +21,7 @@ class Kernel extends ConsoleKernel
         Commands\UpdateRedditArenaWeekly::class,
         Commands\SlugifyEvertything::class,
         Commands\IsVideoEverything::class,
+        Commands\ParseCardsJson::class,
     ];
 
     /**

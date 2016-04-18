@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Card extends Model
 {
+
     // Card has many
     public function cardTexts()
     {
@@ -42,5 +43,11 @@ class Card extends Model
     public function cardType()
     {
         return $this->hasOne(CardType::class);
+    }
+
+    // Has many through
+    public function languages()
+    {
+        return $this->hasManyThrough(CardLanguage::class, CardText::class);
     }
 }
