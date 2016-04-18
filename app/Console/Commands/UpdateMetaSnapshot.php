@@ -89,7 +89,7 @@ class UpdateMetaSnapshot extends Command
 
     private function sendTwitterMessage()
     {
-        \Twitter::postTweet(['status' => 'New Tempostorm meta snapshot is out! ' . $this->url . ' @Tempo_Storm', 'format' => 'json']);
+        \Twitter::postTweet(['status' => 'New Tempostorm meta snapshot is out! #Hearthstone' . $this->url . ' @Tempo_Storm', 'format' => 'json']);
     }
 
     private function startsWith($haystack, $needle){

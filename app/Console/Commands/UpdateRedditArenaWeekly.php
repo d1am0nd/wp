@@ -89,7 +89,7 @@ class UpdateRedditArenaWeekly extends Command
 
     private function sendTwitterMessage()
     {
-        \Twitter::postTweet(['status' => 'Check out top arena players this week ' . $this->url, 'format' => 'json']);
+        \Twitter::postTweet(['status' => 'Check out top arena players this week #Hearthstone ' . $this->url, 'format' => 'json']);
     }
 
     private function checkIfUrlIsDifferent($su)

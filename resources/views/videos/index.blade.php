@@ -194,7 +194,6 @@ $(document).on('submit', '#new-video-form', function(event){
 function changeVoteSum(videoSlug, diff, dom){
     var sumDom = $(".vote-sum[videoSlug='" + videoSlug + "']");
     var lastSum = parseInt(sumDom.html());
-    console.log(lastSum);
     var newSum = lastSum + parseInt(diff);
     sumDom.html("" + newSum);
 

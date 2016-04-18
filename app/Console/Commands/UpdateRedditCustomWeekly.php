@@ -90,7 +90,7 @@ class UpdateRedditCustomWeekly extends Command
 
     private function sendTwitterMessage()
     {
-        \Twitter::postTweet(['status' => 'Cool new cards from r/CustomHearthstone ' . $this->url, 'format' => 'json']);
+        \Twitter::postTweet(['status' => 'Cool new cards from r/CustomHearthstone #Hearthstone ' . $this->url, 'format' => 'json']);
     }
 
     private function checkIfUrlIsDifferent($su)
