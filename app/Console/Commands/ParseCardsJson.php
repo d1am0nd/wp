@@ -27,7 +27,7 @@ class ParseCardsJson extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Parses json card collection and inserts in db x<';
 
     // $key = json key, $value = database column name
     protected $cardAttributes = [
@@ -39,6 +39,19 @@ class ParseCardsJson extends Command
         'attack' => 'atk',
     ];
 
+    protected $cardHasMany = [
+        'cardTexts',
+        'cardMechanics',
+        'cardPlayReqs',
+    ];
+
+    protected $cardHasOne = [
+        'cardClass',
+        'cardRarity',
+        'cardSet',
+        'cardType'
+    ];
+
     private $json,
             $cards,
             $classes,
@@ -47,7 +60,18 @@ class ParseCardsJson extends Command
             $playReqs,
             $rarities,
             $sets,
-            $types;
+            $types,
+            $texts;
+
+    private $allCards,
+            $allClasses,
+            $allLanguages,
+            $allMechanics,
+            $allPlayReqs,
+            $allRarities,
+            $allSets,
+            $allTypes,
+            $allTexts;
 
     /**
      * Create a new command instance.
@@ -56,7 +80,9 @@ class ParseCardsJson extends Command
      */
     public function __construct()
     {
+        $this->json = json_decode(file_get_contents(storage_path() . '/cards.json'));
         $this->cards = [];
+        $this->cardIds = [];
         $this->classes = [];
         $this->languages = [];
         $this->mechanics = [];
@@ -64,6 +90,7 @@ class ParseCardsJson extends Command
         $this->rarities = [];
         $this->sets = [];
         $this->types = [];
+        $this->texts = [];
         parent::__construct();
     }
 
@@ -74,18 +101,19 @@ class ParseCardsJson extends Command
      */
     public function handle()
     {
-        $this->json = json_decode(file_get_contents(storage_path() . '/cards.json'));
         $this->getLanguages();
+        $this->insertLanguages();
 
         foreach($this->json as $card){
+            array_push($this->cardIds, $card->id);
             $this->appendTypes($card);
             $this->appendSets($card);
             $this->appendRarities($card);
             $this->appendPlayReqs($card);
             $this->appendMechanics($card);
             $this->appendClasses($card);
-            $this->appendCards($card);
         }
+        /*
         $this->info(print_r($this->cards));
         $this->info(print_r($this->classes));
         $this->info(print_r($this->languages));
@@ -94,6 +122,7 @@ class ParseCardsJson extends Command
         $this->info(print_r($this->rarities));
         $this->info(print_r($this->sets));
         $this->info(print_r($this->types));
+        */
 
         $this->insertTypes();
         $this->insertSets();
@@ -101,6 +130,31 @@ class ParseCardsJson extends Command
         $this->insertPlayReqs();
         $this->insertMechanics();
         $this->insertClasses();
+
+        $this->allClasses = CardClass::lists('id', 'name')->toArray();
+        $this->allLanguages = CardLanguage::lists('id', 'name')->toArray();
+        $this->allMechanics = CardMechanic::lists('id', 'name')->toArray();
+        $this->allPlayReqs = CardPlayReq::lists('id', 'name')->toArray();
+        $this->allRarities = CardRarity::lists('id', 'name')->toArray();
+        $this->allSets = CardSet::lists('id', 'name')->toArray();
+        $this->allTypes = CardType::lists('id', 'name')->toArray();
+        $this->allLanguages = CardLanguage::lists('id', 'name')->toArray();
+
+        $this->appendCards();
+        $this->insertCards();
+
+        $this->allCards = Card::lists('id', 'card_id')->toArray();
+
+        // Sync relations
+        foreach($this->json as $card){
+            $this->appendTexts($card);
+        }
+        //$this->info(print_r($this->texts));
+        CardText::truncate();
+        foreach(array_chunk($this->texts, 500) as $key => $smallTexts){
+            CardText::insert($smallTexts);
+            $this->info('Chunk ' . $key . ' inserted');
+        }
 
         $this->info('Cards count: ' . count($this->json));
     }
@@ -147,20 +201,69 @@ class ParseCardsJson extends Command
         }
     }
 
-    private function appendCards($card)
+    private function appendCards()
     {
-        $tmp = [];
-        foreach($this->cardAttributes as $key => $val){
-            $item = null;
-            if(isset($card->$key))
-                $item = $card->$key;
-            if(isset($item))
-                $tmp[$val] = $item;
-        }
-        if(isset($card->playRequirements))
-            $tmp['playRequirements'] = $card->playRequirements;
+        foreach($this->json as $card){
+            $tmp = [];
+            foreach($this->cardAttributes as $key => $val){
+                $item = null;
+                if(isset($card->$key))
+                    $item = $card->$key;
+                if(isset($item))
+                    $tmp[$val] = $item;
+                else
+                    $tmp[$val] = '';
+            }
+            // Append cclass_id
+            if(isset($card->playerClass)){
+                $className = $card->playerClass;
+                $classId = $this->allClasses[$className];
+                $tmp['class_id'] = $classId;
+            }
 
-        array_push($this->cards, $tmp);
+            // Append card_type_id
+            $typeName = $card->type;
+            $typeId = $this->allTypes[$typeName];
+            $tmp['card_type_id'] = $typeId;
+
+            // Append card_set_id
+            $setName = $card->set;
+            $setId = $this->allSets[$setName];
+            $tmp['card_set_id'] = $setId;
+
+            // Append card_rarity_id
+            $rarityName = $card->rarity;
+            $rarityId = $this->allRarities[$rarityName];
+            $tmp['card_rarity_id'] = $rarityId;
+
+            array_push($this->cards, $tmp);
+        }
+    }
+
+    private function appendTexts($card)
+    {
+        $cardId = $this->allCards[$card->id];
+        if(!isset($cardId))
+            return null;
+
+        foreach($card->name as $lang => $name){
+            if(isset($card->text))
+                $text = $card->text->$lang;
+            else
+                $text = '';
+            $langId = $this->allLanguages[$lang];
+
+            if(isset($langId) && isset($name)){
+                $tmpArray = [
+                    'card_id' => (int)$cardId,
+                    'card_language_id' => (int)$langId,
+                    'name' => (string)$name,
+                    'text' => (string)$text
+                ];
+                array_push($this->texts, $tmpArray);
+                // CardText::create($tmpArray);
+            }
+        }
     }
 
     private function appendIfNew($card, $itemName, $arrayName)
@@ -252,23 +355,55 @@ class ParseCardsJson extends Command
         $this->info(count($insertItems) . ' classes inserted.');
     }
 
+    private function insertLanguages()
+    {
+        $dbItems = CardLanguage::whereIn('lang_id', $this->languages)->lists('lang_id')->toArray();
+        $insertItems = array_diff($this->languages, $dbItems);
+        // $this->info(print_r($this->insertItems));
+        $insertArray = $this->makeInsertArray($insertItems, 'lang_id');
+
+        CardLanguage::insert($insertArray);
+
+        $this->info(count($insertItems) . ' languages inserted.');
+    }
+
+    private function insertCards()
+    {
+        $dbItems = Card::whereIn('card_id', $this->cardIds)->lists('card_id')->toArray();
+        $insertArray = $this->unsetCardsAlreadyInDb($dbItems, $this->cards);
+
+        // Wierd error when trying to mass insert, so yeah
+        foreach($insertArray as $card){
+            Card::insert($card);
+        }
+
+        $this->info(count($insertArray) . ' cards inserted.');
+    }
+
+    private function unsetCardsAlreadyInDb($dbItemIds, $cardsArray)
+    {   
+        $tmpArray = [];
+        foreach($cardsArray as $card){
+            if(!in_array($card['card_id'], $dbItemIds))
+                array_push($tmpArray, $card);
+        }
+        return $tmpArray;
+    }
+
     private function makeInsertArray($itemsArray, $columnName, $mergeArray = [])
     {
         $insertArray = [];
         foreach($itemsArray as $item){
             $tmpArray = array_merge([$columnName => $item], $mergeArray);
-            array_push($insertArray, [
-                    'name' => $item
-                ]);
+            array_push($insertArray, $tmpArray);
         }
         return $insertArray;
     }
 
-    private function unsetByVal($array, $val)
+
+    private function getCardRelations()
     {
-        if(($key = array_search($val, $array)) !== false) {
-            unset($array[$key]);
-        }
-        return $array;
+
     }
+
 }

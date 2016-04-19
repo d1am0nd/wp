@@ -110,7 +110,8 @@ class CreateCardTables extends Migration
         // Card has Many
         Schema::create('card_texts', function (Blueprint $table){
             $table->increments('id');
-            $table->string('text');
+            $table->string('name');
+            $table->string('text')->nullable();
             $table->integer('card_id')->unsigned();
             $table->integer('card_language_id')->unsigned();
             $table->timestamps();

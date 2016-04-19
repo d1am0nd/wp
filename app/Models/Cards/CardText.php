@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class CardText extends Model
 {
+    protected $fillable = ['name', 'text', 'card_id', 'card_language_id'];
+
     public function card()
     {
         return $this->hasOne(Card::class);
