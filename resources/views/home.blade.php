@@ -1,7 +1,7 @@
 @extends('master')
 
 @section('meta')
-<title>Wizard-Poker</title>
+<title>Wizard-Poker | Hearthstone Related Content</title>
 <meta property="og:title" content="Wizard-Poker Hearthstone Related Content" />
 <meta name="twitter:title" content="Wizard-Poker Hearthstone Related Content" />
 <meta name="twitter:description" content="Wizard-Poker features links to best Hearthstone related content" />
