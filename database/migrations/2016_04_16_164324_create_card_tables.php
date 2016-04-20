@@ -129,7 +129,6 @@ class CreateCardTables extends Migration
         Schema::create('card_card_mechanic', function ( Blueprint $table){
             $table->integer('card_mechanic_id')->unsigned();
             $table->integer('card_id')->unsigned();
-            $table->integer('value');
 
             $table->foreign('card_mechanic_id')
                 ->references('id')
@@ -139,12 +138,13 @@ class CreateCardTables extends Migration
                 ->references('id')
                 ->on('cards');
 
-            $table->primary('card_mechanic_id', 'card_id');
+            $table->primary(['card_mechanic_id', 'card_id']);
         });
 
         Schema::create('card_card_play_req', function ( Blueprint $table){
             $table->integer('card_play_req_id')->unsigned();
             $table->integer('card_id')->unsigned();
+            $table->integer('value');
 
             $table->foreign('card_play_req_id')
                 ->references('id')
@@ -154,7 +154,7 @@ class CreateCardTables extends Migration
                 ->references('id')
                 ->on('cards');
 
-            $table->primary('card_play_req_id', 'card_id');
+            $table->primary(['card_play_req_id', 'card_id']);
         });
     }
 

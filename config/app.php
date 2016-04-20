@@ -162,8 +162,13 @@ return [
         App\Providers\ValidatorServiceProvider::class,
         // Adds top videos/pages to all views
         App\Providers\ComposerServiceProvider::class,
+        // Binds repositories to interfaces
+        App\Providers\BackendServiceProvider::class,
+        // Image manipulation package
         Intervention\Image\ImageServiceProvider::class,
+        // Twitter API package
         Thujohn\Twitter\TwitterServiceProvider::class,
+        // Package for login with social networks
         Laravel\Socialite\SocialiteServiceProvider::class,
 
     ],

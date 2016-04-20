@@ -63,4 +63,6 @@ Route::group(['middleware' => ['web']], function () {
     {
         return response('1460414100837')->header('Content-Type', 'text/html');
     });
+
+    // Route::get('test', 'CardsController@getCardsByRarityJson');
 });

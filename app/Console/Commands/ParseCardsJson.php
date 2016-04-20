@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use DB;
 use App\Models\Cards\Card;
 use App\Models\Cards\CardSet;
 use App\Models\Cards\CardText;
@@ -73,6 +74,9 @@ class ParseCardsJson extends Command
             $allTypes,
             $allTexts;
 
+    private $mechanicPivot,
+            $playReqPivot;
+
     /**
      * Create a new command instance.
      *
@@ -101,8 +105,15 @@ class ParseCardsJson extends Command
      */
     public function handle()
     {
+        // 14 is the number of all languages or something is wrong
+        $languagesCount = CardLanguage::get()->count();
         $this->getLanguages();
-        $this->insertLanguages();
+        
+        if($languagesCount != 14){
+            DB::table('card_texts')->delete();
+            DB::table('card_languages')->delete();
+            $this->insertLanguages();
+        }
 
         foreach($this->json as $card){
             array_push($this->cardIds, $card->id);
@@ -132,23 +143,29 @@ class ParseCardsJson extends Command
         $this->insertClasses();
 
         $this->allClasses = CardClass::lists('id', 'name')->toArray();
-        $this->allLanguages = CardLanguage::lists('id', 'name')->toArray();
         $this->allMechanics = CardMechanic::lists('id', 'name')->toArray();
         $this->allPlayReqs = CardPlayReq::lists('id', 'name')->toArray();
         $this->allRarities = CardRarity::lists('id', 'name')->toArray();
         $this->allSets = CardSet::lists('id', 'name')->toArray();
         $this->allTypes = CardType::lists('id', 'name')->toArray();
-        $this->allLanguages = CardLanguage::lists('id', 'name')->toArray();
+        $this->allLanguages = CardLanguage::lists('id', 'lang_id')->toArray();
+
+        $this->info(print_r($this->allLanguages));
 
         $this->appendCards();
         $this->insertCards();
 
         $this->allCards = Card::lists('id', 'card_id')->toArray();
 
+        DB::table('card_card_mechanic')->delete();
+        DB::table('card_card_play_req')->delete();
         // Sync relations
         foreach($this->json as $card){
             $this->appendTexts($card);
+            $this->insertMechanicPivots($card);
+            $this->insertPlayReqPivots($card);
         }
+
         //$this->info(print_r($this->texts));
         CardText::truncate();
         foreach(array_chunk($this->texts, 500) as $key => $smallTexts){
@@ -235,6 +252,9 @@ class ParseCardsJson extends Command
             $rarityName = $card->rarity;
             $rarityId = $this->allRarities[$rarityName];
             $tmp['card_rarity_id'] = $rarityId;
+
+            // Append img url from http://wow.zamimg.com/images/hearthstone/cards/enus/original/{id}.png
+            $tmp['image_path'] = 'http://wow.zamimg.com/images/hearthstone/cards/enus/original/' . $card->id . '.png';
 
             array_push($this->cards, $tmp);
         }
@@ -357,14 +377,11 @@ class ParseCardsJson extends Command
 
     private function insertLanguages()
     {
-        $dbItems = CardLanguage::whereIn('lang_id', $this->languages)->lists('lang_id')->toArray();
-        $insertItems = array_diff($this->languages, $dbItems);
-        // $this->info(print_r($this->insertItems));
-        $insertArray = $this->makeInsertArray($insertItems, 'lang_id');
+        $insertArray = $this->makeInsertArray($this->languages, 'lang_id');
 
         CardLanguage::insert($insertArray);
 
-        $this->info(count($insertItems) . ' languages inserted.');
+        $this->info(count($this->languages) . ' languages inserted.');
     }
 
     private function insertCards()
@@ -378,6 +395,47 @@ class ParseCardsJson extends Command
         }
 
         $this->info(count($insertArray) . ' cards inserted.');
+    }
+
+    private function insertMechanicPivots($card)
+    {
+        if(!isset($card->mechanics))
+            return null;
+        $tmpArray = [];
+        foreach($card->mechanics as $mechanic){
+            $cardId = $this->allCards[$card->id];
+            $mechanicId = $this->allMechanics[$mechanic];
+
+            $pivot = [
+                'card_id' => $cardId,
+                'card_mechanic_id' => $mechanicId
+            ];
+
+            array_push($tmpArray, $pivot);
+        }
+
+        DB::table('card_card_mechanic')->insert($tmpArray);
+    }
+
+    private function insertPlayReqPivots($card)
+    {
+        if(!isset($card->playRequirements))
+            return null;
+        $tmpArray = [];
+        foreach($card->playRequirements as $pr => $val){
+            $cardId = $this->allCards[$card->id];
+            $playReqId = $this->allPlayReqs[$pr];
+
+            $pivot = [
+                'card_id' => $cardId,
+                'card_play_req_id' => $playReqId,
+                'value' => $val
+            ];
+
+            array_push($tmpArray, $pivot);
+        }
+
+        DB::table('card_card_play_req')->insert($tmpArray);
     }
 
     private function unsetCardsAlreadyInDb($dbItemIds, $cardsArray)
@@ -398,12 +456,6 @@ class ParseCardsJson extends Command
             array_push($insertArray, $tmpArray);
         }
         return $insertArray;
-    }
-
-
-    private function getCardRelations()
-    {
-
     }
 
 }

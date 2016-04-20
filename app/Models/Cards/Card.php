@@ -27,22 +27,22 @@ class Card extends Model
     // Card has one
     public function cardClass()
     {
-        return $this->hasOne(CardClass::class);
+        return $this->belongsTo(CardClass::class);
     }
 
     public function cardRarity()
     {
-        return $this->hasOne(CardRarity::class);
+        return $this->belongsTo(CardRarity::class);
     }
 
     public function cardSet()
     {
-        return $this->hasOne(CardSet::class);
+        return $this->belongsTo(CardSet::class);
     }
 
     public function cardType()
     {
-        return $this->hasOne(CardType::class);
+        return $this->belongsTo(CardType::class);
     }
 
     // Has many through
