@@ -13,6 +13,9 @@ interface CardRepositoryInterface {
      * They return associative array where key is
      * id of the card in the database and 
      * value is path to the card image
+     *
+     * Return example: 
+     * ['42' => 'someurl/somename.png', '56' => 'someurl/somenamae2.png', ...]
      */
     
     /**
@@ -42,9 +45,9 @@ interface CardRepositoryInterface {
 
 
     /**
-     * getTooltipById($id)
+     * Method getTooltipById($id)
      *
-     * Parameter $id is id of the card in the db
+     * Parameter $id is the id of the card in the db
      * 
      * It returns data neccessary for showing the
      * tooltip on card (on hover usually)

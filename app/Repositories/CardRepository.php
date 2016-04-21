@@ -13,17 +13,17 @@ class CardRepository implements CardRepositoryInterface
 
     public function getImagesByMechanic($mechanic)
     {
-        return $this->getImagesByAtt($rarity, 'cardMechanic');
+        return $this->getImagesByAtt($mechanic, 'cardMechanic');
     }
 
     public function getImagesBySet($set)
     {
-        return $this->getImagesByAtt($rarity, 'cardSet');
+        return $this->getImagesByAtt($set, 'cardSet');
     }
 
     public function getImagesByType($type)
     {
-        return $this->getImagesByAtt($rarity, 'cardType');
+        return $this->getImagesByAtt($type, 'cardType');
     }
 
     public function getTooltipById($id)
@@ -33,9 +33,12 @@ class CardRepository implements CardRepositoryInterface
 
     private function getImagesByAtt($needle, $attName)
     {
+        if($needle == 'all')
+            return Card::select('id', 'image_path')->lists('image_path', 'id');
+
         return Card::select('id', 'image_path')
-        ->whereHas($attName, function ($q) use($needle) {
-            $q->where('name', $needle);
-        })->lists('image_path', 'id');
+            ->whereHas($attName, function ($q) use($needle) {
+                $q->where('name', $needle);
+            })->lists('image_path', 'id');
     }
 }
