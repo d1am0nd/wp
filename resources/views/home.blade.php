@@ -2,6 +2,7 @@
 
 @section('meta')
 <title>Wizard-Poker | Hearthstone Related Content</title>
+<meta name="description" content="Wizard-Poker - Hearthstone card collection, pages, videosn and more">
 <meta property="og:title" content="Wizard-Poker Hearthstone Related Content" />
 <meta name="twitter:title" content="Wizard-Poker Hearthstone Related Content" />
 <meta name="twitter:description" content="Wizard-Poker features links to best Hearthstone related content" />
@@ -71,8 +72,9 @@
                     data-endeasing="Power1.easeIn"
                     data-captionhidden="off"
                     style="z-index: 6">
-                    <a href="{{ action('PagesController@index') }}" class="btn-u btn-u-lg re-btn-brd margin-right-5">Hearthstone Pages</a>
-                    <a href="{{ action('VideosController@index') }}" class="btn-u btn-u-lg re-btn-brd margin-right-5">Hearthstone Videos</a>
+                    <a href="{{ action('CardsController@index') }}" class="btn-u btn-u-lg re-btn-brd margin-right-5">Cards</a>
+                    <a href="{{ action('PagesController@index') }}" class="btn-u btn-u-lg re-btn-brd margin-right-5">Pages</a>
+                    <a href="{{ action('VideosController@index') }}" class="btn-u btn-u-lg re-btn-brd margin-right-5">Videos</a>
                 </div>
                 <!-- END LAYER -->
             </li>
