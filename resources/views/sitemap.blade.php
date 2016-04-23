@@ -9,6 +9,15 @@
        <image:caption>Wizard-Poker Hearthstone Related Content</image:caption>
     </image:image>
   </url>
+  <url> 
+    <loc>http://www.wizard-poker.com/cards</loc>
+    @foreach($cards as $card)
+    <image:image>
+       <image:loc>{{ $card->image_path }}</image:loc>
+       <image:caption>{{ $card->name }}</image:caption>
+    </image:image>
+    @endforeach
+  </url>
   @foreach($pages as $page)
   <url> 
     <loc>http://www.wizard-poker.com/pages/{{ $page->slug }}</loc>
