@@ -18,6 +18,7 @@ return [
         'EPIC',
         'FREE'
     ],
+    /*
     'mechanics' => [
         'AURA',
         'SECRET',
@@ -41,6 +42,7 @@ return [
         'ADJACENT_BUFF',
         'InvisibleDeathrattle',
     ],
+    */
     'sets' => [
         'TGT',
         'NAXX',

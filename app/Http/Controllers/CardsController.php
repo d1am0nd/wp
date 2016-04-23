@@ -32,4 +32,9 @@ class CardsController extends Controller
     {
          return $this->cards->getCardsWithInfo()->toJson();
     }
+
+    public function getCardAttributesJson()
+    {
+        return json_encode(config('cardattributes'));
+    }
 }

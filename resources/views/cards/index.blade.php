@@ -1,10 +1,10 @@
 @extends('master')
 
 @section('meta')
-<title>Wizard-Poker | Hearthstone Pages</title>
-<meta property="og:title" content="Wizard-Poker Hearthstone related pages" />
-<meta name="twitter:title" content="Community posted hearthstone related pages" />
-<meta name="twitter:description" content="If one boom bot is good, two are better. Pages with hearthstone advice and stuff" />
+<title>Wizard-Poker | Hearthstone Card Collection</title>
+<meta property="og:title" content="Wizard-Poker - Hearthstone Card Collection" />
+<meta name="twitter:title" content="Wizard-Poker - Hearhtstone Card Collection" />
+<meta name="twitter:description" content="A quick responsive card search for collectable Hearthstone cards" />
 @stop
 
 @section('head')
@@ -25,43 +25,51 @@
                 <div class="col-md-12">
                     <h3>Rarities</h3>
                 </div>
-                @foreach($cardAttributes['rarities'] as $rarity)
                 <div class="col-sm-4 col-xs-4">
                     <div class="margin-bottom-15">
-                        <button class="btn btn-u" data-ng-model="rarities">{{ $rarity }}</button>
+                        <button class="btn btn-u btn-u-dark" ng-click="search.rarity = ''">Clear</button>
                     </div>
                 </div>
-                @endforeach
-                <div data-ng-repeat="rarity in rarities">@{{ rarity }}</div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <h3>Sets</h3>
-                </div>
-                @foreach($cardAttributes['sets'] as $set)
-                <div class="col-sm-4 col-xs-4">
+                <div class="col-sm-4 col-xs-4" data-ng-repeat="name in cardAttributes.rarities">
                     <div class="margin-bottom-15">
-                        <button class="btn btn-u">{{ $set }}</button>
+                        <button class="btn btn-u" ng-click="search.rarity = name">@{{ name }}</button>
                     </div>
                 </div>
-                @endforeach
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <h3>Classes</h3>
                 </div>
-                @foreach($cardAttributes['classes'] as $class)
                 <div class="col-sm-4 col-xs-4">
                     <div class="margin-bottom-15">
-                        <button class="btn btn-u">{{ $class }}</button>
+                        <button class="btn btn-u btn-u-dark" ng-click="search.class = ''">Clear</button>
                     </div>
                 </div>
-                @endforeach
+                <div class="col-sm-4 col-xs-4" data-ng-repeat="name in cardAttributes.classes">
+                    <div class="margin-bottom-15">
+                        <button class="btn btn-u" ng-click="search.class = name">@{{ name }}</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>Sets</h3>
+                </div>
+                <div class="col-sm-4 col-xs-4">
+                    <div class="margin-bottom-15">
+                        <button class="btn btn-u btn-u-dark" ng-click="search.set = ''">Clear</button>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-xs-4" data-ng-repeat="name in cardAttributes.sets">
+                    <div class="margin-bottom-15">
+                        <button class="btn btn-u" ng-click="search.set = name">@{{ name }}</button>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-md-8">
             <div class="row">
-                <div class="col-sm-3 col-xs-6" data-ng-repeat="card in cards | filter:search | filter:rarities | limitTo:28 | orderBy:'name'">
+                <div class="col-sm-3 col-xs-6" data-ng-repeat="card in cards | filter:search | limitTo:28 | orderBy:'name'">
                     <img class="img-responsive" src="@{{ card.image_path }}">
                 </div>
             </div>
@@ -73,15 +81,23 @@
 @section('foot')
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <script>
-url = "http://localhost:8000/cards";
+cardsUrl = "http://localhost:8000/api/cards";
+attributesUrl = "http://localhost:8000/api/cardattributes";
+
 var cardsApp = angular.module('cardsApp', []);
 
 cardsApp.factory('cardService', function($http) {
     return {
         getCards: function() {
              //return the promise directly.
-            return $http.get(url)
+            return $http.get(cardsUrl)
                 //resolve the promise as the data
+                .then(function(result) {
+                    return result.data;
+                });
+        },
+        getAttributes: function() {
+            return $http.get(attributesUrl)
                 .then(function(result) {
                     return result.data;
                 });
@@ -90,8 +106,17 @@ cardsApp.factory('cardService', function($http) {
 });
 
 cardsApp.controller('SimpleController', function ($scope, cardService){
+    cardService.getAttributes().then(function(cardAttributes){
+        $scope.cardAttributes = cardAttributes;
+    });
     cardService.getCards().then(function(cards){
         $scope.cards = cards;
     });
+
+    $scope.search = { 
+        "set" : "" ,
+        "rarity" : "",
+        "class" : "",
+    };
 });
 </script>

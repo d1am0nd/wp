@@ -177,17 +177,22 @@
                         <!-- Home -->
                         <li title="Home" @if(Request::url() == action('GeneralController@getHome'))class="active" @endif>
                             <a href="{{ action('GeneralController@getHome') }}" title="Home">
-                                <span class="icon-home"></span> Home
+                                Home
+                            </a>
+                        </li>
+                        <li title="Cards" @if(Request::url() == action('CardsController@index'))class="active" @endif>
+                            <a href="{{ action('CardsController@index') }}" title="Hearthstone cards">
+                               Cards
                             </a>
                         </li>
                         <li title="Pages" @if(Request::url() == action('PagesController@index'))class="active" @endif>
                             <a href="{{ action('PagesController@index') }}" title="Pages">
-                                <span class="icon-link"></span> Pages
+                               Pages
                             </a>
                         </li>
                         <li title="Videos" @if(Request::url() == action('VideosController@index'))class="active" @endif>
                             <a href="{{ action('VideosController@index') }}" title="Videos">
-                               <span class="icon-social-youtube"></span> Videos
+                               Videos
                             </a>
                         </li>
                         <!-- End Home -->

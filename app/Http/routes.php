@@ -64,6 +64,7 @@ Route::group(['middleware' => ['web']], function () {
         return response('1460414100837')->header('Content-Type', 'text/html');
     });
 
-    Route::get('test', 'CardsController@index');
-    Route::get('cards', 'CardsController@getCardsJson');
+    Route::get('cards', 'CardsController@index');
+    Route::get('api/cards', 'CardsController@getCardsJson');
+    Route::get('api/cardattributes', 'CardsController@getCardAttributesJson');
 });
