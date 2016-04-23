@@ -12,11 +12,11 @@ return [
     */
 
     'rarities' => [
-        'RARE',
-        'COMMON',
-        'LEGENDARY',
-        'EPIC',
-        'FREE'
+        'RARE' => 'RARE',
+        'COMMON' => 'COMMON',
+        'LEGENDARY' => 'LEGENDARY',
+        'EPIC' => 'EPIC',
+        'FREE' => 'FREE'
     ],
     /*
     'mechanics' => [
@@ -44,26 +44,30 @@ return [
     ],
     */
     'sets' => [
-        'TGT',
-        'NAXX',
-        'LOE',
-        'CORE',
-        'GVG',
-        'BRM',
-        'EXPERT1',
-        'PROMO',
-        'HERO_SKINS',
-        'REWARD',
+        'TGT' => 'TGT',
+        'NAXX' => 'NAXX',
+        'LOE' => 'LOE',
+        'CORE' => 'CORE',
+        'GVG' => 'GVG',
+        'BRM' => 'BRM',
+        'EXPERT1' => 'CLASSIC',
+        'HERO_SKINS' => 'HERO SKINS',
     ],
     'classes' => [
-        'HUNTER',
-        'PALADIN',
-        'MAGE',
-        'PRIEST',
-        'WARRIOR',
-        'ROGUE',
-        'DRUID',
-        'WARLOCK',
-        'SHAMAN'
+        'HUNTER' => 'HUNTER',
+        'PALADIN' => 'PALADIN',
+        'MAGE' => 'MAGE',
+        'PRIEST' => 'PRIEST',
+        'WARRIOR' => 'WARRIOR',
+        'ROGUE' => 'ROGUE',
+        'DRUID' => 'DRUID',
+        'WARLOCK' => 'WARLOCK',
+        'SHAMAN' => 'SHAMAN',
+    ],
+    'types' => [
+        'SPELL' => 'SPELL',
+        'MINION' => 'MINION',
+        'WEAPON' => 'WEAPON',
+        'HERO' => 'HERO',
     ],
 ];
