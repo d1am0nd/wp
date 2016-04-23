@@ -42,6 +42,18 @@ interface CardRepositoryInterface {
      */
     public function getImagesByType($type);
 
+    /**
+     * Method getCardsWtihIfo()
+     *
+     * Returns collection of all cards with all 
+     * card attributes
+     */
+
+    /**
+     * @return EloquentCollection
+     */
+    public function getCardsWithInfo();
+
 
 
     /**

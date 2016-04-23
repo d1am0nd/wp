@@ -31,6 +31,35 @@ class CardRepository implements CardRepositoryInterface
         return Card::with('cardRarity', 'cardMechanics', 'cardSet', 'cardType')->findOrFail($id);
     }
 
+    public function getCardsWithInfo()
+    {
+        return Card::leftJoin('card_rarities', 'cards.card_rarity_id', '=', 'card_rarities.id')
+        ->leftJoin('card_sets', 'cards.card_set_id', '=', 'card_sets.id')
+        ->leftJoin('card_types', 'cards.card_type_id', '=', 'card_types.id')
+        ->leftJoin('card_texts', 'cards.id', '=', 'card_texts.card_id')
+        ->join('card_languages', function($q){
+            $q->on('card_texts.card_language_id', '=', 'card_languages.id')
+                ->where('card_languages.lang_id', '=', 'enUS');
+        })
+        ->select([
+            'cards.id',
+            'cards.card_id',
+            'cards.image_path',
+            'cards.cost',
+            'cards.hp',
+            'cards.atk',
+            'card_rarities.name as rarity',
+            'card_sets.name as set',
+            'card_types.name as type',
+            'card_texts.name as name',
+            'card_texts.text as text'
+            ])
+        ->with(['cardMechanics' => function($q){
+            $q->select('id', 'name');
+        }])
+        ->get();
+    }
+
     private function getImagesByAtt($needle, $attName)
     {
         if($needle == 'all')

@@ -10,11 +10,11 @@ class CardText extends Model
 
     public function card()
     {
-        return $this->hasOne(Card::class);
+        return $this->belongsTo(Card::class);
     }
 
-    public function language()
+    public function cardLanguage()
     {
-        return $this->hasOne(CardLanguage::class);
+        return $this->belongsTo(CardLanguage::class);
     }
 }

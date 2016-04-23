@@ -13,6 +13,11 @@ class Card extends Model
         return $this->hasMany(CardText::class);
     }
 
+    public function cardText()
+    {
+        return $this->hasOne(CardText::class);
+    }
+
     // Many to many
     public function cardMechanics()
     {

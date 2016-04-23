@@ -18,14 +18,18 @@ class CardsController extends Controller
 
     public function index(Request $request)
     {
-        $rarities = $this->attributes->getRarities();
-        $filterRarity = $request->has('rarity') ? $request->input('rarity') : 'all';
-        $cards = $this->cards->getImagesByRarity($filterRarity);
-        return view('cards.index', compact('rarities', 'cards'));
+        $cards = $this->cards->getCardsWithInfo();
+        $cardAttributes = collect(config('cardattributes'));
+        return view('cards.index', compact('cardAttributes'));
     }
 
     public function getCardsByRarityJson()
     {
         return $this->cards->getImagesByRarity('RARE');
+    }
+
+    public function getCardsJson()
+    {
+         return $this->cards->getCardsWithInfo()->toJson();
     }
 }

@@ -65,4 +65,5 @@ Route::group(['middleware' => ['web']], function () {
     });
 
     Route::get('test', 'CardsController@index');
+    Route::get('cards', 'CardsController@getCardsJson');
 });
