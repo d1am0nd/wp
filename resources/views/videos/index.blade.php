@@ -2,9 +2,10 @@
 
 @section('meta')
 <title>Wizard-Poker | Hearthstone Videos</title>
-<meta property="og:title" content="Wizard-Poker Hearthstone related videos" />
-<meta name="twitter:title" content="Community posted hearthstone related videos" />
-<meta name="twitter:description" content="Blood salt and tears in hearthstone videos" />
+<meta name="description" content="Wizard-Poker Videos - Community picked best Hearthstone youtube videos">
+<meta property="og:title" content="Wizard-Poker Videos - Community picked best Hearthstone youtube videos" />
+<meta name="twitter:title" content="Wizard-Poker Videos" />
+<meta name="twitter:description" content="Community picked best Hearthstone youtube videos" />
 @stop
 
 @section('head')

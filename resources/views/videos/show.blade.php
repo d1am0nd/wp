@@ -1,8 +1,9 @@
 @extends('master')
 
 @section('meta')
-<title>Wizard-Poker | Hearthstone Videos</title>
-<meta property="og:title" content="Wizard-Poker Hearthstone related videos" />
+<title>Wizard-Poker | {{ $video->title }}</title>
+<meta name="description" content="Wizard-Poker Website Discussion - {{ $video->title }}">
+<meta property="og:title" content="{{ $video->title }}" />
 <meta name="twitter:title" content="{{ $video->title }}" />
 <meta name="twitter:description" content="{{ $video->description }}" />
 @stop

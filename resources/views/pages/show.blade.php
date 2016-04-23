@@ -1,8 +1,9 @@
 @extends('master')
 
 @section('meta')
-<title>Wizard-Poker | Hearthstone Pages</title>
-<meta property="og:title" content="Wizard-Poker Hearthstone related pages" />
+<title>Wizard-Poker | {{ $page->title }}</title>
+<meta name="description" content="Wizard-Poker Website Discussion - {{ $page->title }}">
+<meta property="og:title" content="{{ $page->title }}" />
 <meta name="twitter:title" content="{{ $page->title }}" />
 <meta name="twitter:description" content="{{ $page->description }}" />
 @stop

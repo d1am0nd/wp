@@ -2,9 +2,10 @@
 
 @section('meta')
 <title>Wizard-Poker | Hearthstone Pages</title>
-<meta property="og:title" content="Wizard-Poker Hearthstone related pages" />
-<meta name="twitter:title" content="Community posted hearthstone related pages" />
-<meta name="twitter:description" content="If one boom bot is good, two are better. Pages with hearthstone advice and stuff" />
+<meta name="description" content="Wizard-Poker Pages - Community picked best Hearthstone websites">
+<meta property="og:title" content="Wizard-Poker Pages - Community picked best Hearthstone websites" />
+<meta name="twitter:title" content="Wizard-Poker Pages" />
+<meta name="twitter:description" content="Community picked best Hearthstone websites" />
 @stop
 
 @section('head')

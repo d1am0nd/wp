@@ -7,7 +7,6 @@
     <!-- Meta -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Wizard-Poker - Share awesome Hearthstone related content!">
     <meta name="google-site-verification" content="dbZm6GFuvEGRol9FGnF-6D5vofQHk5Z6mTSy4s_-23w" />
     {!! Request::input() ? '<meta name="robots" content="noindex,follow"/>' : '' !!}
     <meta name="twitter:card" content="summary" />
@@ -38,6 +37,9 @@
     <link rel="stylesheet" href="/plugins/font-awesome/css/font-awesome.min.css">
     <!-- CSS Page Style -->
     <link rel="stylesheet" href="/css/pages/page_log_reg_v1.css">
+    <link rel="stylesheet" href="/plugins/brand-buttons/brand-buttons-inversed.css">
+    <link rel="stylesheet" href="/plugins/brand-buttons/brand-buttons.css">
+    <link rel="stylesheet" href="/plugins/animate.css">
 
     <!-- CSS Customization -->
     <link rel="stylesheet" href="/css/custom.css">
@@ -126,7 +128,7 @@
                     <div class="col-md-12">
                         <ul class="list-inline top-v1-data">
                             @if(!Auth::check())
-                            <li><a href="" class="toggle-login">Login</a></li>
+                            <li><a href="" class="toggle-login"><i class="fa fa-twitter"></i> <i class="fa fa-facebook"></i> <i class="fa fa-google-plus"></i> Login</a></li>
                             <li><a href="" class="toggle-register">Register</a></li>
                             @else
                             @if(Auth::check() && Auth::user()->needs_new_username)
@@ -186,12 +188,12 @@
                             </a>
                         </li>
                         <li title="Pages" @if(Request::url() == action('PagesController@index'))class="active" @endif>
-                            <a href="{{ action('PagesController@index') }}" title="Pages">
+                            <a href="{{ action('PagesController@index') }}" title="Hearthstone Pages">
                                Pages
                             </a>
                         </li>
                         <li title="Videos" @if(Request::url() == action('VideosController@index'))class="active" @endif>
-                            <a href="{{ action('VideosController@index') }}" title="Videos">
+                            <a href="{{ action('VideosController@index') }}" title="Hearthstone Videos">
                                Videos
                             </a>
                         </li>
@@ -292,7 +294,7 @@
 <div id="myModalLogin" class="modal fade" role="dialog">
     <!--=== Content Part ===-->
     <div class="container content">
-        <div class="row">
+        <div class="row brand-page">
             <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
                 {!! Form::open(['class'=>'reg-page', 'action' => 'Auth\\AuthController@postLogin', 'id' => 'login-form']) !!}
                     <div class="reg-header">
@@ -326,10 +328,16 @@
                     <hr>
 
                     <h4>Or:</h4>
-                    <h4><a href="{{ action('AuthController@redirectToProvider', ['provider' => 'google']) }}"><i class="fa fa-google"></i>Login with Google</a></h4>
-                    <h4><a href="{{ action('AuthController@redirectToProvider', ['provider' => 'facebook']) }}"><i class=" icon-social-facebook "></i>Login with Facebook</a></h4>
-                    <h4><a href="{{ action('AuthController@redirectToProvider', ['provider' => 'twitter']) }}"><i class="fa fa-twitter"></i>Login with Twitter</a></h4>
-
+                    <a href="{{ action('AuthController@redirectToProvider', ['provider' => 'twitter']) }}" class="btn btn-block btn-lg btn-twitter-inversed">
+                      <i class="fa fa-twitter"></i> Connect with Twitter
+                    </a>
+                    <a href="{{ action('AuthController@redirectToProvider', ['provider' => 'facebook']) }}" class="btn btn-block btn-lg btn-facebook-inversed">
+                      <i class="fa fa-facebook"></i> Connect with Facebook
+                    </a>                    
+                    <a href="{{ action('AuthController@redirectToProvider', ['provider' => 'google']) }}" class="btn btn-block btn-lg btn-google-inversed">
+                      <i class="fa fa-google"></i> Connect with Google
+                    </a>
+                        
                     <!--
                     <h4>Forget your Password ?</h4>
                     <p>no worries, <a class="color-green" href="#">click here</a> to reset your password.</p>
