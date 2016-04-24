@@ -19,7 +19,7 @@
             <div class="row margin-bottom-10">
                 <div class="col-md-12">
                     <h3>Search by name:</h3>
-                    <input type="text" data-ng-model="search.name" />
+                    <input type="text" data-ng-model="search.name" ng-change="updateFiltered()"/>
                 </div>
             </div>
             <div class="row">
@@ -85,19 +85,13 @@
         </div>
         <div class="col-md-8">
             <div class="row">
-                <div class="col-sm-3 col-xs-6" data-ng-repeat="card in filtered = (cards | orderBy:'name' | filter:search | limitTo:limit)">
+                <div class="col-sm-3 col-xs-6" data-ng-repeat="card in filteredCards | orderBy:'name' | limitTo:limit">
                     <img title="@{{ card.name }}" class="img-responsive" src="@{{ card.image_path }}">
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-3 col-md-offset-2">
+                <div class="col-xs-4 col-xs-offset-4">
                     <button class="btn btn-u btn-u-sea btn-u-lg" type="button" ng-click="increaseLimit()">Show more</button>
-                </div>
-                <div class="col-md-3">
-                    <button class="btn btn-u btn-u-green btn-u-lg" type="button" ng-click="decreaseLimit()">Show less</button>
-                </div>
-                <div class="col-md-3">
-                    <button class="btn btn-u btn-u-orange btn-u-lg" type="button" ng-click="limit = 28">Default</button>
                 </div>
             </div>
         </div>

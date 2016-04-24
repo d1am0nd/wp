@@ -16,6 +16,10 @@ cardsApp.factory('cardService', function($http) {
                     return result.data;
                 });
         },
+        /**
+         * Inits attributeClasses object. Sets all classes
+         * to empty string.
+         */
         getAttributeClasses: function(attributes, picked = null) {
             var attributeClasses = {};
             console.log(attributes);
@@ -33,7 +37,7 @@ cardsApp.factory('cardService', function($http) {
     }
 });
 
-cardsApp.controller('SimpleController', function ($scope, cardService){
+cardsApp.controller('SimpleController', function ($scope, $filter, cardService){
 
     $scope.limit = 28;
 
@@ -41,32 +45,35 @@ cardsApp.controller('SimpleController', function ($scope, cardService){
      * Checks sessionStorage for cardAttributes. If none is found
      * fetch them from db
      */
-    if (sessionStorage.getItem("cardAttributes") === null) {
+    //if (sessionStorage.getItem("cardAttributes") === null) {
         cardService.getAttributes().then(function(cardAttributes){
             $scope.cardAttributes = cardAttributes;
             $scope.cardAttributeClasses = cardService.getAttributeClasses(cardAttributes);
             sessionStorage.setItem("cardAttributes", JSON.stringify(cardAttributes));
         });
-        
+        /*
     }else{
         $scope.cardAttributes = JSON.parse(sessionStorage.getItem("cardAttributes"));
         $scope.cardAttributeClasses = cardService.getAttributeClasses($scope.cardAttributes);
     }
-    
+    */
+
     /**
      * Checks sessionStorage for cards. If none is found
      * fetch them from db
      */
-    if (sessionStorage.getItem("cards") === null) {
+    //if (sessionStorage.getItem("cards") === null) {
         cardService.getCards().then(function(cards){
             $scope.cards = cards;
+            $scope.filteredCards = cards;
             sessionStorage.setItem("cards", JSON.stringify(cards));
         });
-        
+      /*  
     }else{
         $scope.cards = JSON.parse(sessionStorage.getItem("cards"));
+        $scope.filteredCards = $scope.cards;
     }
-
+    */
     /**
      * Sets all attribute's classes to "", unless 2nd var is passed 
      * in which case set this class to "sea" color, indicating that
@@ -79,17 +86,23 @@ cardsApp.controller('SimpleController', function ($scope, cardService){
             else
                 $scope.cardAttributeClasses[attribute][dbName] = "";
         });
+        $scope.updateFiltered();
     }
     /**
      * Simple helpers for increasing/decreasing number of cards visible
      */
     $scope.increaseLimit = function(){
         $scope.limit += 20;
+        var maxNumber = $scope.filteredCards.length;
+        if($scope.limit > maxNumber)
+            $scope.limit = maxNumber;
     }
-    $scope.decreaseLimit = function(){
-        var newLimit = $scope.limit - 20;
-        if(newLimit < 0) newLimit = 0;
-        $scope.limit = newLimit;
+    /**
+     * Filter cards and reset limit.
+     */
+    $scope.updateFiltered = function(){
+        $scope.filteredCards = $filter('filter')($scope.cards, $scope.search);
+        $scope.limit = 28;
     }
 
     /**
