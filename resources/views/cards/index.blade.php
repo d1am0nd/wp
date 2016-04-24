@@ -28,7 +28,7 @@
                 </div>
                 <div class="col-sm-4 col-xs-4">
                     <div class="margin-bottom-15">
-                        <button class="btn-u btn-u-green" style="width:100;" ng-click="search.rarity = ''; setAttributeClass('rarities');">ALL</button>
+                        <button class="btn-u btn-u-green" style="width:100;" ng-click="search.rarity = undefined; setAttributeClass('rarities');">ALL</button>
                     </div>
                 </div>
                 <div class="col-sm-4 col-xs-4" data-ng-repeat="(searchTerm, name) in cardAttributes.rarities">
@@ -43,7 +43,7 @@
                 </div>
                 <div class="col-sm-4 col-xs-4">
                     <div class="margin-bottom-15">
-                        <button class="btn-u btn-u-green" style="width:100;" ng-click="search.class = ''; setAttributeClass('classes');">ALL</button>
+                        <button class="btn-u btn-u-green" style="width:100;" ng-click="search.class = undefined; setAttributeClass('classes');">ALL</button>
                     </div>
                 </div>
                 <div class="col-sm-4 col-xs-4" data-ng-repeat="(searchTerm, name) in cardAttributes.classes">
@@ -58,7 +58,7 @@
                 </div>
                 <div class="col-sm-4 col-xs-4">
                     <div class="margin-bottom-15">
-                        <button class="btn-u btn-u-green" style="width:100;" ng-click="search.set = ''; setAttributeClass('sets');">ALL</button>
+                        <button class="btn-u btn-u-green" style="width:100;" ng-click="search.set = undefined; setAttributeClass('sets');">ALL</button>
                     </div>
                 </div>
                 <div class="col-sm-4 col-xs-4" data-ng-repeat="(searchTerm, name) in cardAttributes.sets">
@@ -73,7 +73,7 @@
                 </div>
                 <div class="col-sm-4 col-xs-4">
                     <div class="margin-bottom-15">
-                        <button class="btn-u btn-u-green" style="width:100;" ng-click="search.type = ''; setAttributeClass('types');">ALL</button>
+                        <button class="btn-u btn-u-green" style="width:100;" ng-click="search.type = undefined; setAttributeClass('types');">ALL</button>
                     </div>
                 </div>
                 <div class="col-sm-4 col-xs-4" data-ng-repeat="(searchTerm, name) in cardAttributes.types">

@@ -109,9 +109,5 @@ cardsApp.controller('SimpleController', function ($scope, $filter, cardService){
      * Default search shows everything
      */
     $scope.search = { 
-        "set" : "" ,
-        "rarity" : "",
-        "class" : "",
-        "type" : "",
     };
 });
