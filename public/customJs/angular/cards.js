@@ -45,35 +45,35 @@ cardsApp.controller('SimpleController', function ($scope, $filter, cardService){
      * Checks sessionStorage for cardAttributes. If none is found
      * fetch them from db
      */
-    //if (sessionStorage.getItem("cardAttributes") === null) {
+    if (sessionStorage.getItem("cardAttributes") === null) {
         cardService.getAttributes().then(function(cardAttributes){
             $scope.cardAttributes = cardAttributes;
             $scope.cardAttributeClasses = cardService.getAttributeClasses(cardAttributes);
             sessionStorage.setItem("cardAttributes", JSON.stringify(cardAttributes));
         });
-        /*
+
     }else{
         $scope.cardAttributes = JSON.parse(sessionStorage.getItem("cardAttributes"));
         $scope.cardAttributeClasses = cardService.getAttributeClasses($scope.cardAttributes);
     }
-    */
+
 
     /**
      * Checks sessionStorage for cards. If none is found
      * fetch them from db
      */
-    //if (sessionStorage.getItem("cards") === null) {
+    if (sessionStorage.getItem("cards") === null) {
         cardService.getCards().then(function(cards){
             $scope.cards = cards;
             $scope.filteredCards = cards;
             sessionStorage.setItem("cards", JSON.stringify(cards));
         });
-      /*  
+
     }else{
         $scope.cards = JSON.parse(sessionStorage.getItem("cards"));
         $scope.filteredCards = $scope.cards;
     }
-    */
+
     /**
      * Sets all attribute's classes to "", unless 2nd var is passed 
      * in which case set this class to "sea" color, indicating that
