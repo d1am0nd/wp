@@ -7,9 +7,15 @@ use Illuminate\Http\Request;
 use App\Tag;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Repositories\TagRepositoryInterface;
 
 class TagsController extends Controller
 {
+    public function __construct(TagRepositoryInterface $tags)
+    {
+        $this->tags = $tags;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -89,4 +95,9 @@ class TagsController extends Controller
     {
         //
     }   //
+
+    public function getTagsJson()
+    {
+        return $this->tags->getTags()->toJson();
+    }
 }

@@ -2,9 +2,29 @@ var pagesApp = angular.module('pagesApp', []);
 
 pagesApp.factory('pageService', function($http) {
     return {
-        getPages: function() {
+        getPages: function(queryParams) {
+             //return the promise directly.
+            return $http({
+                    "url" : pagesUrl,
+                    "method" : "GET",
+                    "params" : queryParams
+                })
+                //resolve the promise as the data
+                .then(function(result) {
+                    return result.data;
+                });
+        },
+        getPagesByTag: function(tag) {
              //return the promise directly.
             return $http.get(pagesUrl)
+                //resolve the promise as the data
+                .then(function(result) {
+                    return result.data;
+                });
+        },
+        getTags: function() {
+             //return the promise directly.
+            return $http.get(tagsUrl)
                 //resolve the promise as the data
                 .then(function(result) {
                     return result.data;
@@ -26,10 +46,26 @@ pagesApp.factory('pageService', function($http) {
     }
 });
 
-pagesApp.controller('SimpleController', function ($scope, pageService){
-    pageService.getPages().then(function(pages){
-        $scope.pages = pages;
+pagesApp.controller('SimpleController', function ($scope, $filter, pageService){
+    $scope.queryParams = {
+        "orderBy" : null,
+        "tag" : null
+    };
+
+
+    pageService.getPages($scope.queryParams).then(function(pages){
+        $scope.filtered = pages;
     });
+    pageService.getTags().then(function(tags){
+        $scope.tags = tags;
+    });
+
+    $scope.$watch(function(scope, filter) { return scope.queryParams.tag; },
+            function(newVal, oldVal){
+                pageService.getPages($scope.queryParams).then(function(pages){
+                    $scope.filtered = pages;
+                });
+            });
 
     $scope.vote = function(pageSlug, vote){
         pageService.getVoteResult(pageSlug, vote, $scope.csrf).then(function(changeNumber){
