@@ -54,7 +54,7 @@ pagesApp.controller('SimpleController', function ($scope, $filter, pageService){
 
 
     pageService.getPages($scope.queryParams).then(function(pages){
-        $scope.filtered = pages;
+        $scope.pages = pages;
     });
     pageService.getTags().then(function(tags){
         $scope.tags = tags;
@@ -63,7 +63,7 @@ pagesApp.controller('SimpleController', function ($scope, $filter, pageService){
     $scope.$watch(function(scope, filter) { return scope.queryParams.tag; },
             function(newVal, oldVal){
                 pageService.getPages($scope.queryParams).then(function(pages){
-                    $scope.filtered = pages;
+                    $scope.pages = pages;
                 });
             });
 

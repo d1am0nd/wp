@@ -23,7 +23,7 @@
 @section('content')
 <div class="container content-md" ng-app="pagesApp" ng-controller="SimpleController" data-ng-init="csrf='{{csrf_token()}}'">
     <h1 class="margin-bottom-10">Hearthstone Card Collection</h1>
-    <div class="row news-v1">
+    <div class="row">
         <div class="col-md-4">
             <div class="row margin-bottom-10">
                 <div class="col-md-12">
@@ -49,7 +49,7 @@
         </div>
         <div class="col-md-8">
             <div class="row">
-                <div class="col-sm-4 col-xs-6" data-ng-repeat="page in filtered | filter:search">
+                <div class="col-sm-4 col-xs-6" data-ng-repeat="page in pages | filter:search">
                     <a ng-href="@{{ page.url }}" href="@{{ page.url }}" target="_blank">
                         <div class="img-wrapper">
                             <div class="img-tags" data-ng-repeat="tag in page.tags">
