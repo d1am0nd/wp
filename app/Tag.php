@@ -9,6 +9,8 @@ class Tag extends Model
 {
     protected $fillable = ['name', 'updated_at', 'created_at'];
 
+    protected $hidden = ['pivot'];
+
     public function pages()
     {
         return $this>morphedByMany(Page::class, 'taggable');

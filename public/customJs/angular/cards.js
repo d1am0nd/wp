@@ -108,6 +108,5 @@ cardsApp.controller('SimpleController', function ($scope, $filter, cardService){
     /**
      * Default search shows everything
      */
-    $scope.search = { 
-    };
+    $scope.search = {};
 });

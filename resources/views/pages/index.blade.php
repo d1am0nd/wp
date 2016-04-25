@@ -105,13 +105,7 @@
                             <span class="img-tag label label-u label-default">{{ $tag->name }}</span>
                             @endforeach
                         </div>
-                        @if(isset($page->embed_url))
-                        <iframe height="210" width="360" allowfullscreen="true"
-                        src="{{ $page->embed_url }}">
-                        </iframe>
-                        @else
                         <img class="img-responsive" src="{{ $page->thumbnail_path }}" alt="">
-                        @endif
                     </div>
                 </a>
                 <h3 style="overflow:hidden;"><a href="{{ $page->url }}" target="_blank">{{ $page->title }}</a></h3>

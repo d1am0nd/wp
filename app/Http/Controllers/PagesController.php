@@ -13,10 +13,17 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CommentRequest;
 use App\Traits\Controllers\VoteTrait;
 use App\Http\Requests\Pages\StorePagesRequest;
+use App\Repositories\PageRepositoryInterface;
 
 class PagesController extends Controller
 {
     use VoteTrait;
+
+    public function __construct(PageRepositoryInterface $pages)
+    {
+        $this->pages = $pages;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -124,5 +131,18 @@ class PagesController extends Controller
     public function postVote(VoteRequest $request, Page $page)
     {
         return $page->vote($request->input('vote'));
+    }
+
+    public function getPagesJson(Request $request)
+    {
+        $filterPage = $request->has('page') ? $request->input('page') : 1;
+        $filterTag = $request->has('tag') ?  $request->input('tag') : null;
+        $filterOrderBy = $request->input('orderBy') ? $request->input('orderBy') : null;
+        return $this->pages->getPagesWithInfo($filterPage, $filterTag, $filterOrderBy)->toJson();
+    }
+
+    public function getPages()
+    {
+        return view('pages.angindex');
     }
 }

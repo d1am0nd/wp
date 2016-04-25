@@ -65,6 +65,13 @@ Route::group(['middleware' => ['web']], function () {
     });
 
     Route::get('cards', 'CardsController@index');
+
     Route::get('api/cards', 'CardsController@getCardsJson');
     Route::get('api/cardattributes', 'CardsController@getCardAttributesJson');
+    Route::get('api/pages', 'PagesController@getPagesJson');
+
+    /**
+     * Next routes are for development purposes only
+     */
+    Route::get('ang/pages', 'PagesController@getPages');
 });
