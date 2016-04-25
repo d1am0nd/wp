@@ -32,8 +32,14 @@ pagesApp.controller('SimpleController', function ($scope, pageService){
     });
 
     $scope.vote = function(pageSlug, vote){
-        pageService.getVoteResult(pageSlug, vote, $scope.csrf).then(function(result){
-            var changeNumber = result;
+        pageService.getVoteResult(pageSlug, vote, $scope.csrf).then(function(changeNumber){
+            for(page in $scope.pages){
+                if($scope.pages[page].slug == pageSlug){
+                    $scope.pages[page].vote_sum = parseInt($scope.pages[page].vote_sum) + parseInt(changeNumber);
+                    return changeNumber;
+                }
+            }
+            return changeNumber;
         });
     }
 });
