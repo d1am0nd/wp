@@ -24,6 +24,21 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
+                    <h3>Formats</h3>
+                </div>
+                <div class="col-sm-4 col-xs-4">
+                    <div class="margin-bottom-15">
+                        <button class="btn-u btn-u-green" style="width:100;" ng-class="search.isStd === undefinded ? 'btn-u-sea' : ''" ng-click="search.isStd = undefined; updateFiltered();">ALL</button>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-xs-4">
+                    <div class="margin-bottom-15">
+                        <button class="btn-u" style="width:100;" ng-class="search.isStd ? 'btn-u-sea' : ''" ng-click="search.isStd = 1; updateFiltered();">STANDARD</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
                     <h3>Rarities</h3>
                 </div>
                 <div class="col-sm-4 col-xs-4">
@@ -91,7 +106,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-4 col-xs-offset-4">
-                    <button class="btn btn-u btn-u-sea btn-u-lg" type="button" ng-click="increaseLimit()">Show more</button>
+                    <button class="btn btn-u btn-u-sea btn-u-lg" type="button" style="width:100%;" ng-click="increaseLimit()">Show more</button>
                 </div>
             </div>
         </div>

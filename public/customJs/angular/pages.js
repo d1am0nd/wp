@@ -102,6 +102,7 @@ pagesApp.controller('SimpleController', function ($scope, $filter, pageService){
             for(page in $scope.pages){
                 if($scope.pages[page].slug == pageSlug){
                     $scope.pages[page].vote_sum = parseInt($scope.pages[page].vote_sum) + parseInt(changeNumber);
+                    $scope.pages[page].my_vote = parseInt($scope.pages[page].my_vote) + parseInt(changeNumber);
                     return changeNumber;
                 }
             }
@@ -109,14 +110,20 @@ pagesApp.controller('SimpleController', function ($scope, $filter, pageService){
         });
     }
 
-    $scope.getByTitle = function(){
-        var query = $scope.queryParams;
-        query.title = $scope.search.title;
-        $scope.search.title = 'Loading...';
+    $scope.clearTitleSearch = function(){
+        $scope.search.title = '';
+        $scope.queryParams.title = '';
 
-        pageService.getPages(query).then(function(pages){
+        pageService.getPages($scope.queryParams).then(function(pages){
             $scope.pages = pages;
-            $scope.search.title = '';
+        });
+    }
+
+    $scope.getByTitle = function(){
+        $scope.queryParams.title = $scope.search.title;
+
+        pageService.getPages($scope.queryParams).then(function(pages){
+            $scope.pages = pages;
         });
     }
 });

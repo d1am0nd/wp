@@ -35,7 +35,8 @@ class PageRepository implements PageRepositoryInterface{
             'pages.created_at',
             'comment_count',
             'slug',
-            'url'
+            'url',
+            'my_vote.vote as my_vote'
         ])
         ->get();
     }

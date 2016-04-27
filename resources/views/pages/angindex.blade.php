@@ -31,7 +31,7 @@
                     <form method="GET" ng-submit="getByTitle(search.name);">
                         <input type="text" data-ng-model="search.title"/> @{{ search.name }}</input>
                         <br>
-                        <small>Press enter to search all</small>
+                        <small ng-show="queryParams.title"><i class="icon-close" ng-click="clearTitleSearch()"></i> Searched for: @{{ queryParams.title }}</small>
                     </form>
                 </div>
             </div>
@@ -76,13 +76,13 @@
                     <p style="overflow:hidden;"><a href="@{{ page.url }}" target="_blank">@{{ page.title }}</a></p>
                     <p style="overflow:hidden;"  style="margin-bottom:5px!important">@{{ page.description }}</p>
                     <ul class="list-inline news-v1-info">
-                        <li><i class="fa fa-chevron-down downvote votes-icon" ng-class="page.vote_sum == -1 ? 'downvoted' : ''" ng-click="vote(page.slug, -1);"></i></li>
+                        <li><i class="fa fa-chevron-down downvote votes-icon" ng-class="page.my_vote == -1 ? 'downvoted' : ''" ng-click="vote(page.slug, -1);"></i></li>
                         <li>
                             <div class="vote-sum">
                             @{{ page.vote_sum }}
                             </div>
                         </li>
-                        <li><i class="fa fa-chevron-up upvote votes-icon" ng-class="page.vote_sum == 1 ? 'upvoted' : ''" ng-click="vote(page.slug, 1);"></i></li>
+                        <li><i class="fa fa-chevron-up upvote votes-icon" ng-class="page.my_vote == 1 ? 'upvoted' : ''" ng-click="vote(page.slug, 1);"></i></li>
                         <br>
                         <li><i class="fa fa-clock-o"></i> @{{ page.created_at }}</li>
                         <li class="pull-right"><a href="/pages/@{{ page.slug }}"><i class="fa fa-comments-o"></i> @{{ page.comment_count }}</a></li>
