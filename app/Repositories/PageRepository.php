@@ -8,10 +8,24 @@ class PageRepository implements PageRepositoryInterface{
 
     public function getPagesWithInfo($forPage = 1, $tag = null, $orderBy = null)
     {
-        return Page::filterOrderBy($orderBy)
+        $query = Page::filterOrderBy($orderBy)
+        ->withMyVote()
+        ->whereHasTag($tag);
+        return $this->selectImportant($query, $forPage);
+    }
+
+    public function getPagesWithInfoByTitle($title, $forPage = 1, $tag = null, $orderBy = null)
+    {
+        $query = Page::filterOrderBy($orderBy)
         ->withMyVote()
         ->whereHasTag($tag)
-        ->forPage($forPage, 15)
+        ->where('title', 'LIKE', '%' . $title . '%');
+        return $this->selectImportant($query, $forPage);
+    }
+
+    private function selectImportant(&$query, $forPage)
+    {
+        return $query->forPage($forPage, 15)
         ->select([
             'pages.id',
             'title',

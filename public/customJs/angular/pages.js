@@ -30,6 +30,14 @@ pagesApp.factory('pageService', function($http) {
                     return result.data;
                 });
         },
+        getOrderBy: function() {
+             //return the promise directly.
+            return $http.get(orderByUrl)
+                //resolve the promise as the data
+                .then(function(result) {
+                    return result.data;
+                });
+        },
         getVoteResult: function(pageSlug, vote, csrf) {
             var voteUrl = '/pages/' + pageSlug + '/vote';
             var data = {
@@ -48,19 +56,41 @@ pagesApp.factory('pageService', function($http) {
 
 pagesApp.controller('SimpleController', function ($scope, $filter, pageService){
     $scope.queryParams = {
-        "orderBy" : null,
-        "tag" : null
+        "orderBy" : 'top',
+        "tag" : null,
     };
+    $scope.orderByFilter = 'top';
 
+    if (sessionStorage.getItem("orderBy") === null) {
+        pageService.getOrderBy().then(function(orderBy){
+            $scope.orderBy = orderBy;
+            sessionStorage.setItem("orderBy", JSON.stringify(orderBy));
+        });
+    }else{
+        $scope.orderBy = JSON.parse(sessionStorage.getItem("orderBy"));
+    }
+
+    if (sessionStorage.getItem("tags") === null) {
+        pageService.getTags().then(function(tags){
+            $scope.tags = tags;
+            sessionStorage.setItem("tags", JSON.stringify(tags));
+        });
+    }else{
+        $scope.tags = JSON.parse(sessionStorage.getItem("tags"));
+    }
 
     pageService.getPages($scope.queryParams).then(function(pages){
         $scope.pages = pages;
     });
-    pageService.getTags().then(function(tags){
-        $scope.tags = tags;
-    });
 
     $scope.$watch(function(scope, filter) { return scope.queryParams.tag; },
+            function(newVal, oldVal){
+                pageService.getPages($scope.queryParams).then(function(pages){
+                    $scope.pages = pages;
+                });
+            });
+
+    $scope.$watch(function(scope, filter) { return scope.queryParams.orderBy; },
             function(newVal, oldVal){
                 pageService.getPages($scope.queryParams).then(function(pages){
                     $scope.pages = pages;
@@ -76,6 +106,17 @@ pagesApp.controller('SimpleController', function ($scope, $filter, pageService){
                 }
             }
             return changeNumber;
+        });
+    }
+
+    $scope.getByTitle = function(){
+        var query = $scope.queryParams;
+        query.title = $scope.search.title;
+        $scope.search.title = 'Loading...';
+
+        pageService.getPages(query).then(function(pages){
+            $scope.pages = pages;
+            $scope.search.title = '';
         });
     }
 });

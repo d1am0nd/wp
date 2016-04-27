@@ -70,6 +70,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('api/cardattributes', 'CardsController@getCardAttributesJson');
     Route::get('api/pages', 'PagesController@getPagesJson');
     Route::get('api/tags', 'TagsController@getTagsJson');
+    Route::get('api/orderBy', 'GeneralController@getOrderByJson');
 
     /**
      * Next routes are for development purposes only

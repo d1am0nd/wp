@@ -34,4 +34,9 @@ class GeneralController extends Controller
         $content = view('sitemap', compact('videos', 'pages', 'cards'))->render();
         return response($content)->header('Content-Type', 'application/xml');
     }
+
+    public function getOrderByJson()
+    {
+        return config('misc.orderByJson');
+    }
 }

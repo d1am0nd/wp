@@ -64,11 +64,7 @@ trait VoteableTrait
     {
         // Example: 'pages'
         $table = $this->getTable();
-        $associations = [
-            'newest' => ['created_at', 'DESC'],
-            'top' => ['vote_sum', 'DESC'],
-            'most commented' => ['comment_count', 'DESC']
-        ];
+        $associations = config('misc.orderBy');
         // If $filterOrderBy is not set or doesn't exist in $associations, we order by vote_sum
         if(!isset($filterOrderBy) || !array_key_exists($filterOrderBy, $associations))
             return $query->orderByVoteSum();

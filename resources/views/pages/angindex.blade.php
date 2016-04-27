@@ -28,21 +28,35 @@
             <div class="row margin-bottom-10">
                 <div class="col-md-12">
                     <h3>Search by name:</h3>
-                    <input type="text" data-ng-model="search.title"/> @{{ search.name }}
+                    <form method="GET" ng-submit="getByTitle(search.name);">
+                        <input type="text" data-ng-model="search.title"/> @{{ search.name }}</input>
+                        <br>
+                        <small>Press enter to search all</small>
+                    </form>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <h3>Types</h3>
+                    <h3>Tags</h3>
                 </div>
                 <div class="col-sm-4 col-xs-4">
                     <div class="margin-bottom-15">
-                        <button class="btn-u btn-u-green" style="width:100;" ng-class="queryParams.tag == null ? 'btn-u-sea' : ''" ng-click="queryParams.tag = undefined; setAttributeClass('types');">ALL</button>
+                        <button class="btn-u btn-u-green" style="width:100%;" ng-class="queryParams.tag == null ? 'btn-u-sea' : ''" ng-click="queryParams.tag = undefined;">ALL</button>
                     </div>
                 </div>
                 <div class="col-sm-4 col-xs-4" data-ng-repeat="tag in tags">
                     <div class="margin-bottom-15">
-                        <button class="btn-u" style="width:100;" ng-class="queryParams.tag == tag.name ? 'btn-u-sea' : ''" ng-click="queryParams.tag = tag.name">@{{ tag.name }}</button>
+                        <button class="btn-u" style="width:100%;" ng-class="queryParams.tag == tag.name ? 'btn-u-sea' : ''" ng-click="queryParams.tag = tag.name">@{{ tag.name }}</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>Order by</h3>
+                </div>
+                <div class="col-sm-4 col-xs-4" data-ng-repeat="(ob, array) in orderBy">
+                    <div class="margin-bottom-15">
+                        <button class="btn-u" style="width:100%;" ng-class="queryParams.orderBy == ob ? 'btn-u-sea' : ''" ng-click="queryParams.orderBy = ob">@{{ array.pretty }}</button>
                     </div>
                 </div>
             </div>
@@ -84,6 +98,7 @@
 <script>
 pagesUrl = "{{ action('PagesController@getPagesJson') }}";
 tagsUrl = "{{ action('TagsController@getTagsJson') }}";
+orderByUrl = "{{ action('GeneralController@getOrderByJson') }}";
 </script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 {!! Html::script('customJs/angular/pages.js') !!}

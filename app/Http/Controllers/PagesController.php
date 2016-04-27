@@ -138,6 +138,9 @@ class PagesController extends Controller
         $filterPage = $request->has('page') ? $request->input('page') : 1;
         $filterTag = $request->has('tag') ?  $request->input('tag') : null;
         $filterOrderBy = $request->input('orderBy') ? $request->input('orderBy') : null;
+        $filterTitle = $request->input('title') ? $request->input('title') : null;
+        if(isset($filterTitle))
+            return $this->pages->getPagesWithInfoByTitle($filterTitle, $filterPage, $filterTag, $filterOrderBy)->toJson();
         return $this->pages->getPagesWithInfo($filterPage, $filterTag, $filterOrderBy)->toJson();
     }
 
