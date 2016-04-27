@@ -51,6 +51,7 @@ class CardRepository implements CardRepositoryInterface
             'cards.atk',
             'card_rarities.name as rarity',
             'card_sets.name as set',
+            'card_sets.is_standard as isStd',
             'card_types.name as type',
             'card_texts.name as name',
             'card_texts.text as text',
@@ -59,6 +60,7 @@ class CardRepository implements CardRepositoryInterface
         ->with(['cardMechanics' => function($q){
             $q->select('id', 'name');
         }])
+        ->where('card_types.name', '!=', 'HERO')
         ->get();
     }
 

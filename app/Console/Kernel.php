@@ -22,6 +22,7 @@ class Kernel extends ConsoleKernel
         Commands\SlugifyEvertything::class,
         Commands\IsVideoEverything::class,
         Commands\ParseCardsJson::class,
+        Commands\SetIsStd::class,
     ];
 
     /**

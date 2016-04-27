@@ -51,7 +51,8 @@ return [
         'GVG' => 'GVG',
         'BRM' => 'BRM',
         'EXPERT1' => 'CLASSIC',
-        'HERO_SKINS' => 'HERO SKINS',
+        'OG' => 'WotOG'
+        // 'HERO_SKINS' => 'HERO SKINS',
     ],
     'classes' => [
         'HUNTER' => 'HUNTER',
