@@ -12,11 +12,18 @@ use App\Http\Requests\VoteRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CommentRequest;
 use App\Traits\Controllers\VoteTrait;
+use App\Repositories\VideoRepositoryInterface;
 use App\Http\Requests\Videos\StoreVideosRequest;
 
 class VideosController extends Controller
 {
     use VoteTrait;
+
+    public function __construct(VideoRepositoryInterface $videos)
+    {
+        $this->videos = $videos;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -24,10 +31,19 @@ class VideosController extends Controller
      */
     public function index(Request $request)
     {
+
+        return view('videos.angindex');
+        
+        /**
+         * Old implementation
+         */
+        
+        /*
         $filterTag = $request->input('tag');
         $filterOrderBy = $request->input('orderBy');
         $videos = Video::filterOrderBy($filterOrderBy)->withMyVote()->whereHasTag($filterTag)->paginate(20);
         return view('videos.index', compact('videos', 'filterTag', 'filterOrderBy'));
+        */
     }
 
     /**
@@ -126,5 +142,21 @@ class VideosController extends Controller
     public function postVote(VoteRequest $request, Video $video)
     {
         return $this->vote($request, $video);
+    }
+
+    public function getVideosJson(Request $request)
+    {
+        $filterPage = $request->has('page') ? $request->input('page') : 1;
+        $filterTag = $request->has('tag') ?  $request->input('tag') : null;
+        $filterOrderBy = $request->input('orderBy') ? $request->input('orderBy') : null;
+        $filterTitle = $request->input('title') ? $request->input('title') : null;
+        if(isset($filterTitle))
+            return $this->videos->getVideosWithInfoByTitle($filterTitle, $filterPage, $filterTag, $filterOrderBy)->toJson();
+        return $this->videos->getVideosWithInfo($filterPage, $filterTag, $filterOrderBy)->toJson();
+    }
+
+    public function getVideos()
+    {
+        return view('videos.angindex');
     }
 }

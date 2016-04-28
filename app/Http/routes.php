@@ -69,11 +69,13 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('api/cards', 'CardsController@getCardsJson');
     Route::get('api/cardattributes', 'CardsController@getCardAttributesJson');
     Route::get('api/pages', 'PagesController@getPagesJson');
+    Route::get('api/videos', 'VideosController@getVideosJson');
     Route::get('api/tags', 'TagsController@getTagsJson');
     Route::get('api/orderBy', 'GeneralController@getOrderByJson');
 
     /**
      * Next routes are for development purposes only
      */
-    Route::get('ang/pages', 'PagesController@getPages');
+    // Route::get('ang/pages', 'PagesController@getPages');
+    // Route::get('ang/videos', 'VideosController@getVideos');
 });

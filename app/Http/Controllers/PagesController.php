@@ -25,16 +25,23 @@ class PagesController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * 
      *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {
+    {        
+        return view('pages.angindex');
+        
+        /**
+         * Old implementation
+         */
+        /*
         $filterTag = $request->input('tag');
         $filterOrderBy = $request->input('orderBy');
         $pages = Page::filterOrderBy($filterOrderBy)->withMyVote()->whereHasTag($filterTag)->paginate(15);
         return view('pages.index', compact('pages', 'filterTag', 'filterOrderBy'));
+        */
     }
 
     /**

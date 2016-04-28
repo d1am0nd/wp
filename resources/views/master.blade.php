@@ -146,7 +146,7 @@
                             @endif
                             @if(Request::url() == action('PagesController@index') || Request::url() == action('PagesController@getPages'))
                             <li><a href="" class="new-item"><strong>Add new page</strong></a></li>
-                            @elseif(Request::url() == action('VideosController@index'))
+                            @elseif(Request::url() == action('VideosController@index') || Request::url() == action('VideosController@getVideos'))
                             <li><a href="" class="new-item"><strong>Add new video</strong></a></li>
                             @endif
                             <li><a href="{{action('Auth\AuthController@getLogout')}}">Logout {{Auth::user()->username}}</a></li>
