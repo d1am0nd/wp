@@ -114,6 +114,16 @@
     }
     </style>
 
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-74992400-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
     @yield('head')
 </head>
 
@@ -134,7 +144,7 @@
                             @if(Auth::check() && Auth::user()->needs_new_username)
                             <li><a class="text-danger" href="{{ action('AccountsController@getUsernameEdit') }}">Change your username or confirm this one!</a></li>
                             @endif
-                            @if(Request::url() == action('PagesController@index'))
+                            @if(Request::url() == action('PagesController@index') || Request::url() == action('PagesController@getPages'))
                             <li><a href="" class="new-item"><strong>Add new page</strong></a></li>
                             @elseif(Request::url() == action('VideosController@index'))
                             <li><a href="" class="new-item"><strong>Add new video</strong></a></li>
@@ -502,15 +512,6 @@ $('.close-alert').on('click', function(event){
 </script>
 @endif
 @yield('foot')
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-74992400-1', 'auto');
-  ga('send', 'pageview');
-</script>
 <!-- Begin Cookie Consent plugin by Silktide - http://silktide.com/cookieconsent -->
 <script type="text/javascript">
     window.cookieconsent_options = {"message":"This website uses Google cookies to ensure you get the best experience on our website","dismiss":"Got it!","learnMore":"More info","link":"{{ action('GeneralController@getTos') }}#privacy","theme":"dark-floating"};

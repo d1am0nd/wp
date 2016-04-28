@@ -25,6 +25,43 @@
 @stop
 
 @section('content')
+<div class="container content-md">
+    @foreach(array_chunk($pages->getCollection()->all(), 3) as $row)
+    <div class="row news-v1">
+        @foreach($row as $page)
+        <div class="col-md-4 md-margin-bottom-40">
+            <div class="news-v1-in">
+                <a href="{{ $page->url }}" target="_blank">
+                    <div class="img-wrapper">
+                        <div class="img-tags">
+                            @foreach($page->tags as $tag)
+                            <span class="img-tag label label-u label-default">{{ $tag->name }}</span>
+                            @endforeach
+                        </div>
+                        <img class="img-responsive" src="{{ $page->thumbnail_path }}" alt="">
+                    </div>
+                </a>
+                <h3 style="overflow:hidden;"><a href="{{ $page->url }}" target="_blank">{{ $page->title }}</a></h3>
+                <p style="overflow:hidden;" >{{ $page->description }}</p>
+                <ul class="list-inline news-v1-info">
+                    <li><i class="fa fa-chevron-down downvote votes-icon @if($page->my_vote == -1)downvoted @endif" pageSlug="{{ $page->slug }}"></i></li>
+                    <li>
+                        <div class="vote-sum" pageSlug="{{ $page->slug }}">
+                        {{ $page->vote_sum }}
+                        </div>
+                    </li>
+                    <li><i class="fa fa-chevron-up upvote votes-icon @if($page->my_vote == 1)upvoted @endif"  pageSlug="{{ $page->slug }}"></i></li>
+                    <li>|</li>
+                    <li><i class="fa fa-clock-o"></i> {{ $page->created_at }}</li>
+                    <li class="pull-right"><a href="{{ action('PagesController@show', $page->slug) }}"><i class="fa fa-comments-o"></i> {{ $page->comment_count }}</a></li>
+                </ul>
+            </div>
+        </div>
+        @endforeach
+    </div>
+    @endforeach
+</div>
+
 <div id="myModalNewItem" class="modal fade" role="dialog">
     <div class="container modal-container-new-item">
         {!! Form::open(['action' => 'PagesController@store', 'class' => 'sky-form', 'id' => 'new-page-form', "style" => "margin-bottom:20px"]) !!}
@@ -91,52 +128,11 @@
         {!! Form::close() !!}
     </div>
 </div>
-
-<div class="container content-md">
-    @foreach(array_chunk($pages->getCollection()->all(), 3) as $row)
-    <div class="row news-v1">
-        @foreach($row as $page)
-        <div class="col-md-4 md-margin-bottom-40">
-            <div class="news-v1-in">
-                <a href="{{ $page->url }}" target="_blank">
-                    <div class="img-wrapper">
-                        <div class="img-tags">
-                            @foreach($page->tags as $tag)
-                            <span class="img-tag label label-u label-default">{{ $tag->name }}</span>
-                            @endforeach
-                        </div>
-                        <img class="img-responsive" src="{{ $page->thumbnail_path }}" alt="">
-                    </div>
-                </a>
-                <h3 style="overflow:hidden;"><a href="{{ $page->url }}" target="_blank">{{ $page->title }}</a></h3>
-                <p style="overflow:hidden;" >{{ $page->description }}</p>
-                <ul class="list-inline news-v1-info">
-                    <li><i class="fa fa-chevron-down downvote votes-icon @if($page->my_vote == -1)downvoted @endif" pageSlug="{{ $page->slug }}"></i></li>
-                    <li>
-                        <div class="vote-sum" pageSlug="{{ $page->slug }}">
-                        {{ $page->vote_sum }}
-                        </div>
-                    </li>
-                    <li><i class="fa fa-chevron-up upvote votes-icon @if($page->my_vote == 1)upvoted @endif"  pageSlug="{{ $page->slug }}"></i></li>
-                    <li>|</li>
-                    <li><i class="fa fa-clock-o"></i> {{ $page->created_at }}</li>
-                    <li class="pull-right"><a href="{{ action('PagesController@show', $page->slug) }}"><i class="fa fa-comments-o"></i> {{ $page->comment_count }}</a></li>
-                </ul>
-            </div>
-        </div>
-        @endforeach
-    </div>
-    @endforeach
-</div>
 @stop
 
 @section('foot')
 @if(Auth::check())
 <script>
-$(".new-item").on('click', function(event){
-    event.preventDefault();
-    $("#myModalNewItem").modal("toggle");
-});
 $(".upvote").on('click', function(event){
     event.preventDefault();
     var id = $(event.target).attr('pageSlug');
@@ -198,6 +194,10 @@ function changeVoteSum(pageSlug, diff, dom){
     }
 }
 
+$(".new-item").on('click', function(event){
+    event.preventDefault();
+    $("#myModalNewItem").modal("toggle");
+});
 $(document).on('submit', '#new-page-form', function(event){
     event.preventDefault();
     $(event.target).ajaxSubmit({
