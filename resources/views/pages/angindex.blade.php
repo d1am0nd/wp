@@ -64,7 +64,7 @@
         <div class="col-md-8">
             <div class="row">
                 <div class="col-sm-4 col-xs-6" data-ng-repeat="page in pages | filter:search">
-                    <a ng-href="@{{ page.url }}" href="@{{ page.url }}" target="_blank">
+                    <a ng-href="@{{ page.url }}" href="@{{ page.url }}" target="_blank" title="@{{ page.title }}">
                         <div class="img-wrapper">
                             <div class="img-tags" data-ng-repeat="tag in page.tags">
                                 <span class="img-tag label label-u label-default">@{{ tag.name }}</span>
