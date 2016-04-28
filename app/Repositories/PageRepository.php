@@ -2,6 +2,8 @@
 
 namespace App\Repositories;
 
+use DB;
+use Auth;
 use App\Page;
 
 class PageRepository implements PageRepositoryInterface{
@@ -36,7 +38,7 @@ class PageRepository implements PageRepositoryInterface{
             'comment_count',
             'slug',
             'url',
-            'my_vote.vote as my_vote'
+            Auth::check() ? 'my_vote.vote as my_vote' : DB::raw('COALESCE(0) as my_vote'),
         ])
         ->get();
     }
