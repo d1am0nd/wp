@@ -144,9 +144,9 @@
                             @if(Auth::check() && Auth::user()->needs_new_username)
                             <li><a class="text-danger" href="{{ action('AccountsController@getUsernameEdit') }}">Change your username or confirm this one!</a></li>
                             @endif
-                            @if(Request::url() == action('PagesController@index') || Request::url() == action('PagesController@getPages'))
+                            @if(Request::url() == action('PagesController@index'))
                             <li><a href="" class="new-item"><strong>Add new page</strong></a></li>
-                            @elseif(Request::url() == action('VideosController@index') || Request::url() == action('VideosController@getVideos'))
+                            @elseif(Request::url() == action('VideosController@index'))
                             <li><a href="" class="new-item"><strong>Add new video</strong></a></li>
                             @endif
                             <li><a href="{{action('Auth\AuthController@getLogout')}}">Logout {{Auth::user()->username}}</a></li>

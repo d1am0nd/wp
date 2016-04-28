@@ -154,7 +154,7 @@ class VideosController extends Controller
             return $this->videos->getVideosWithInfoByTitle($filterTitle, $filterPage, $filterTag, $filterOrderBy)->toJson();
         return $this->videos->getVideosWithInfo($filterPage, $filterTag, $filterOrderBy)->toJson();
     }
-
+    
     public function getVideos()
     {
         return view('videos.angindex');
