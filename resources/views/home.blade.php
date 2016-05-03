@@ -2,7 +2,7 @@
 
 @section('meta')
 <title>Wizard-Poker | Hearthstone Related Content</title>
-<meta name="description" content="Wizard-Poker - Hearthstone card collection, pages, videosn and more">
+<meta name="description" content="Wizard-Poker - Hearthstone card collection, pages, videos and more">
 <meta property="og:title" content="Wizard-Poker Hearthstone Related Content" />
 <meta name="twitter:title" content="Wizard-Poker Hearthstone Related Content" />
 <meta name="twitter:description" content="Wizard-Poker features links to best Hearthstone related content" />

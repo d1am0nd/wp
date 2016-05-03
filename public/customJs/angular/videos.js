@@ -1,4 +1,32 @@
-var videosApp = angular.module('videosApp', []);
+var videosApp = angular.module('videosApp', ['ui.router']);
+
+videosApp.config(function($stateProvider, $urlRouterProvider){
+    $urlRouterProvider.otherwise('filter');
+
+    $stateProvider
+    .state('home', {
+        url: '',
+        templateUrl: "/templates/videos/index",
+        controller: "SimpleController"
+    })
+    .state('filter', {
+        url: '/search?page&tag&orderBy&search',
+        templateUrl: "/templates/videos/index",
+        controller: "SimpleController"
+    });
+});
+
+videosApp.filter('range', function() {
+  return function(input, start, total) {
+    total = parseInt(total);
+
+    for (var i=start; i<total; i++) {
+      input.push(i);
+    }
+
+    return input;
+  };
+});
 
 videosApp.factory('videoService', function($http) {
     return {
@@ -54,15 +82,21 @@ videosApp.factory('videoService', function($http) {
     }
 });
 
-videosApp.controller('SimpleController', function ($scope, $filter, videoService){
+videosApp.controller('SimpleController', ['$scope', '$filter', '$stateParams', '$state', 'videoService', function ($scope, $filter, $stateParams, $state, videoService){
     $scope.queryParams = {
-        "orderBy" : 'top',
-        "tag" : null,
+        "orderBy" : $stateParams.orderBy,
+        "tag" : $stateParams.tag,
+        "page" : $stateParams.page,
+        "title" : $stateParams.search
     };
     $scope.orderByFilter = 'top';
+    $scope.search = [];
+    $scope.search.title = '';
+    $scope.pagination = {};
+    $scope.pagination.videos = {};
 
     if (sessionStorage.getItem("orderBy") === null) {
-        videoService.getOrderBy().then(function(orderBy){
+        pageService.getOrderBy().then(function(orderBy){
             $scope.orderBy = orderBy;
             sessionStorage.setItem("orderBy", JSON.stringify(orderBy));
         });
@@ -81,28 +115,25 @@ videosApp.controller('SimpleController', function ($scope, $filter, videoService
 
     videoService.getVideos($scope.queryParams).then(function(videos){
         $scope.videos = videos;
+        $scope.setPaginationRange();
     });
 
-    $scope.$watch(function(scope, filter) { return scope.queryParams.tag; },
-            function(newVal, oldVal){
-                videoService.getVideos($scope.queryParams).then(function(videos){
-                    $scope.videos = videos;
-                });
-            });
-
-    $scope.$watch(function(scope, filter) { return scope.queryParams.orderBy; },
-            function(newVal, oldVal){
-                videoService.getVideos($scope.queryParams).then(function(videos){
-                    $scope.videos = videos;
-                });
-            });
+    $scope.reloadVideos = function(){
+        videoService.getVideos($scope.queryParams).then(function(videos){
+            $scope.videos = videos;
+            $setPaginationRange();
+        });
+    }
 
     $scope.vote = function(videoSlug, vote){
         videoService.getVoteResult(videoSlug, vote, $scope.csrf).then(function(changeNumber){
-            for(video in $scope.videos){
-                if($scope.videos[video].slug == videoSlug){
-                    $scope.videos[video].vote_sum = parseInt($scope.videos[video].vote_sum) + parseInt(changeNumber);
-                    $scope.videos[video].my_vote = parseInt($scope.videos[video].my_vote) + parseInt(changeNumber);
+            for(video in $scope.videos.data){
+                if($scope.videos.data[video].slug == videoSlug){
+                    $scope.videos.data[video].vote_sum = parseInt($scope.videos.data[video].vote_sum) + parseInt(changeNumber);
+                    if($scope.videos.data[video].my_vote == null)
+                        $scope.videos.data[video].my_vote = parseInt(changeNumber);
+                    else
+                        $scope.videos.data[video].my_vote = parseInt($scope.videos.data[video].my_vote) + parseInt(changeNumber);
                     return changeNumber;
                 }
             }
@@ -114,16 +145,37 @@ videosApp.controller('SimpleController', function ($scope, $filter, videoService
         $scope.search.title = '';
         $scope.queryParams.title = '';
 
-        videoService.getVideos($scope.queryParams).then(function(videos){
-            $scope.videos = videos;
-        });
+        $scope.getByTitle();
     }
 
     $scope.getByTitle = function(){
-        $scope.queryParams.title = $scope.search.title;
-
-        videoService.getVideos($scope.queryParams).then(function(videos){
-            $scope.videos = videos;
+        $state.go('filter',{
+            orderBy : $scope.queryParams.orderBy,
+            tag: $scope.queryParams.tag,
+            search: $scope.search.title,
+            page: undefined
         });
     }
-});
+
+    $scope.setPaginationRange = function(){
+        if($scope.videos.last_page < 10){
+            $scope.pagination.from = 1,
+            $scope.pagination.to = $scope.videos.last_page
+        }else {
+            // more than 10 to = l videos so calculate start and end videos
+            if ($scope.videos.current_page <= 6) {
+                $scope.pagination.from = 1,
+                $scope.pagination.to = 10
+            } else if ($scope.videos.current_page + 4 >= $scope.videos.last_page) {
+                $scope.pagination.from = $scope.videos.last_page - 9,
+                $scope.pagination.to = $scope.videos.last_page
+            } else {
+                $scope.pagination.from = $scope.videos.current_page - 5,
+                $scope.pagination.to = $scope.videos.current_page + 4
+            }
+        }
+        for(var i = $scope.pagination.from; i <= $scope.pagination.to; i++){
+            $scope.pagination.videos[i] = i;
+        }
+    }
+}]);

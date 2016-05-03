@@ -101,7 +101,7 @@
         <div class="col-md-8">
             <div class="row">
                 <div class="col-sm-3 col-xs-6" data-ng-repeat="card in filteredCards | orderBy:'name' | limitTo:limit">
-                    <img title="@{{ card.name }}" class="img-responsive" src="@{{ card.image_path }}">
+                    <img title="@{{ card.name }}" class="img-responsive" ng-src="@{{ card.image_path }}">
                 </div>
             </div>
             <div class="row">

@@ -22,7 +22,6 @@ cardsApp.factory('cardService', function($http) {
          */
         getAttributeClasses: function(attributes, picked = null) {
             var attributeClasses = {};
-            console.log(attributes);
             $.each(attributes, function(attribute, values){
                 attributeClasses[attribute] = {};
                 $.each(values, function(dbName, prettyName){
