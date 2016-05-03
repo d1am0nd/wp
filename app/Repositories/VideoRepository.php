@@ -27,7 +27,7 @@ class VideoRepository implements VideoRepositoryInterface {
 
     private function selectImportant(&$query, $forPage)
     {
-        return $query->forPage($forPage, 15)
+        return $query
         ->select([
             'videos.id',
             'title',
@@ -40,7 +40,7 @@ class VideoRepository implements VideoRepositoryInterface {
             'url',
             Auth::check() ? 'my_vote.vote as my_vote' : DB::raw('COALESCE(0) as my_vote'),
         ])
-        ->get();
+        ->paginate(15, '*', null, $forPage);
     }
 
 }

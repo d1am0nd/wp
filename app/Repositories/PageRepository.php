@@ -27,7 +27,7 @@ class PageRepository implements PageRepositoryInterface{
 
     private function selectImportant(&$query, $forPage)
     {
-        return $query->forPage($forPage, 15)
+        return $query
         ->select([
             'pages.id',
             'title',
@@ -38,9 +38,9 @@ class PageRepository implements PageRepositoryInterface{
             'comment_count',
             'slug',
             'url',
-            Auth::check() ? 'my_vote.vote as my_vote' : DB::raw('COALESCE(0) as my_vote'),
+            Auth::check() ? 'my_vote.vote as my_vote' : DB::raw('0 as my_vote'),
         ])
-        ->get();
+        ->paginate(15, '*', null, $forPage);
     }
     
 }
