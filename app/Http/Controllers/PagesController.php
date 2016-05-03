@@ -155,4 +155,9 @@ class PagesController extends Controller
     {
         return view('pages.angindex');
     }
+
+    public function getPagesTemplate()
+    {
+        return view('pages.template');
+    }
 }

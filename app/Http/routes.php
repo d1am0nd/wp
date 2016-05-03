@@ -50,6 +50,9 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::post('comments/{comment}/vote', 'CommentsController@postVote');
 
+    Route::get('templates/pages/index', 'PagesController@getPagesTemplate');
+    Route::get('templates/videos/index', 'VideosController@getVideosTemplate');
+
     /*
     Route::get('tags', 'TagsController@index');
     Route::get('tags/{tag}', 'TagsController@show');

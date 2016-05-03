@@ -159,4 +159,9 @@ class VideosController extends Controller
     {
         return view('videos.angindex');
     }
+
+    public function getVideosTemplate()
+    {
+        return view('videos.template');
+    }
 }
