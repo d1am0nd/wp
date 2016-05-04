@@ -52,6 +52,7 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('templates/pages/index', 'PagesController@getPagesTemplate');
     Route::get('templates/videos/index', 'VideosController@getVideosTemplate');
+    Route::get('templates/cards/index', 'CardsController@getCardsTemplate');
 
     /*
     Route::get('tags', 'TagsController@index');

@@ -1,4 +1,20 @@
-var cardsApp = angular.module('cardsApp', []);
+var cardsApp = angular.module('cardsApp', ['ui.router']);
+
+cardsApp.config(function($stateProvider, $urlRouterProvider){
+    $urlRouterProvider.otherwise('filter');
+
+    $stateProvider
+    .state('home', {
+        url: '',
+        templateUrl: "/templates/cards/index",
+        controller: "SimpleController"
+    })
+    .state('filter', {
+        url: '/search?standard&rarity&class&set&type&page&name',
+        templateUrl: "/templates/cards/index",
+        controller: "SimpleController"
+    });
+});
 
 cardsApp.factory('cardService', function($http) {
     return {
@@ -36,9 +52,84 @@ cardsApp.factory('cardService', function($http) {
     }
 });
 
-cardsApp.controller('SimpleController', function ($scope, $filter, cardService){
+cardsApp.controller('SimpleController', function ($scope, $filter, $state, $stateParams, cardService){
 
     $scope.limit = 28;
+
+    $scope.pagination = {};
+    $scope.pagination.currentPage = $stateParams.page ? $stateParams.page : 1;
+    $scope.pagination.pages = {};
+
+    $scope.search = {
+        "isStd" : $stateParams.standard,
+        "rarity" : $stateParams.rarity,
+        "class" : $stateParams.class,
+        "set" : $stateParams.set,
+        "type" : $stateParams.type,
+        'name' : undefined
+    }
+
+    $scope.originalSearchName = $stateParams.name;
+
+    /**
+     * Change state to new searched state
+     *
+     * Currently not in use cause more trouble than awesomeness
+     */
+    $scope.searchNameChanged = function(){
+        $state.go('filter',{
+            page : undefined, 
+            type : $scope.search.type, 
+            set: $scope.search.set, 
+            class : $scope.search.class, 
+            rarity : $scope.search.rarity, 
+            standard : $scope.search.isStd,
+            name : $scope.search.name,
+        });
+    }
+
+    /**
+     * Filter cards and reset limit.
+     */
+    $scope.updateFiltered = function(){
+        $scope.filteredCards = $filter('filter')($scope.cards, $scope.search);
+        $scope.setPaginationRange();
+        $scope.limit = 28;
+    }
+
+    /**
+     * Sets pagination range. 
+     * From, to, current page, last page
+     */
+    $scope.setPaginationRange = function(){
+        var lastPage = Math.ceil($scope.filteredCards.length / $scope.limit);
+        var currentPage = $scope.pagination.currentPage ? $scope.pagination.currentPage : 1;
+
+        $scope.pagination.lastPage = lastPage;
+        $scope.limitTo = currentPage * $scope.limit;
+        $scope.limitFrom = (currentPage - 1) * $scope.limit;
+
+
+        if(lastPage < 10){
+            $scope.pagination.from = 1,
+            $scope.pagination.to = lastPage
+        }else {
+            // more than 10 to = l pages so calculate start and end pages
+            if (currentPage <= 6) {
+                $scope.pagination.from = 1,
+                $scope.pagination.to = 10
+            } else if (currentPage + 4 >= lastPage) {
+                $scope.pagination.from = lastPage - 9,
+                $scope.pagination.to = lastPage
+            } else {
+                $scope.pagination.from = currentPage - 5,
+                $scope.pagination.to = currentPage + 4
+            }
+        }
+        for(var i = $scope.pagination.from; i <= $scope.pagination.to; i++){
+            $scope.pagination.pages[i] = i;
+        }
+    }
 
     /**
      * Checks sessionStorage for cardAttributes. If none is found
@@ -56,7 +147,6 @@ cardsApp.controller('SimpleController', function ($scope, $filter, cardService){
         $scope.cardAttributeClasses = cardService.getAttributeClasses($scope.cardAttributes);
     }
 
-
     /**
      * Checks sessionStorage for cards. If none is found
      * fetch them from db
@@ -64,48 +154,12 @@ cardsApp.controller('SimpleController', function ($scope, $filter, cardService){
     if (sessionStorage.getItem("cards") === null) {
         cardService.getCards().then(function(cards){
             $scope.cards = cards;
-            $scope.filteredCards = cards;
+            $scope.updateFiltered();
             sessionStorage.setItem("cards", JSON.stringify(cards));
         });
 
     }else{
         $scope.cards = JSON.parse(sessionStorage.getItem("cards"));
-        $scope.filteredCards = $scope.cards;
-    }
-
-    /**
-     * Sets all attribute's classes to "", unless 2nd var is passed 
-     * in which case set this class to "sea" color, indicating that
-     * cards are filtered by it
-     */
-    $scope.setAttributeClass = function(attribute, picked = null){
-        $.each($scope.cardAttributeClasses[attribute], function(dbName, prettyName){
-            if(picked == dbName)
-                $scope.cardAttributeClasses[attribute][dbName] = "btn-u-sea";
-            else
-                $scope.cardAttributeClasses[attribute][dbName] = "";
-        });
         $scope.updateFiltered();
     }
-    /**
-     * Simple helpers for increasing/decreasing number of cards visible
-     */
-    $scope.increaseLimit = function(){
-        $scope.limit += 20;
-        var maxNumber = $scope.filteredCards.length;
-        if($scope.limit > maxNumber)
-            $scope.limit = maxNumber;
-    }
-    /**
-     * Filter cards and reset limit.
-     */
-    $scope.updateFiltered = function(){
-        $scope.filteredCards = $filter('filter')($scope.cards, $scope.search);
-        $scope.limit = 28;
-    }
-
-    /**
-     * Default search shows everything
-     */
-    $scope.search = {};
 });

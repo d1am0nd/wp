@@ -37,4 +37,9 @@ class CardsController extends Controller
     {
         return json_encode(config('cardattributes'));
     }
+
+    public function getCardsTemplate()
+    {
+        return view('cards.template');
+    }
 }
