@@ -33,7 +33,7 @@
             </div>
             <div class="col-sm-4 col-xs-4" data-ng-repeat="(ob, array) in orderBy">
                 <div class="margin-bottom-15">
-                    <button class="btn-u" style="width:100%;" ng-class="queryParams.orderBy == ob ? 'btn-u-sea' : ''" ui-sref="filter({page : undefined, orderBy : ob, tag : queryParams.tag})">@{{ array.pretty }}</button>
+                    <a class="btn-u" style="width:100%;" ng-class="queryParams.orderBy == ob ? 'btn-u-sea' : ''" ui-sref="filter({page : undefined, orderBy : ob, tag : queryParams.tag})">@{{ array.pretty }}</a>
                 </div>
             </div>
         </div>
