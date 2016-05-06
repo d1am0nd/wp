@@ -242,13 +242,6 @@
                     </div>
 
                     <div class="col-md-3 col-sm-6 md-margin-bottom-50">
-                        <h2>Tags</h2>
-                        <!-- Tag Links v4 -->
-                        <ul class="tags-v4 margin-bottom-40">
-                            @foreach($tags as $tag)
-                            <li><a class="sqaare-4x filter-tag" href="{{ url_with_get(Request::url(),  array_merge(Request::input() ? Request::input() : [], ['tag' => $tag->name])) }}">{{ $tag->name }}</a></li>
-                            @endforeach
-                        </ul>
                         <!-- End Tag Links v4 -->
                     </div>
 
