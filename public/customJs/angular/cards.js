@@ -103,7 +103,7 @@ cardsApp.controller('SimpleController', function ($scope, $filter, $state, $stat
      */
     $scope.setPaginationRange = function(){
         var lastPage = Math.ceil($scope.filteredCards.length / $scope.limit);
-        var currentPage = $scope.pagination.currentPage ? $scope.pagination.currentPage : 1;
+        var currentPage = $scope.pagination.currentPage ? parseInt($scope.pagination.currentPage) : 1;
 
         $scope.pagination.lastPage = lastPage;
         $scope.limitTo = currentPage * $scope.limit;
@@ -116,19 +116,24 @@ cardsApp.controller('SimpleController', function ($scope, $filter, $state, $stat
         }else {
             // more than 10 to = l pages so calculate start and end pages
             if (currentPage <= 6) {
-                $scope.pagination.from = 1,
-                $scope.pagination.to = 10
+                $scope.pagination.from = 1;
+                $scope.pagination.to = 10;
             } else if (currentPage + 4 >= lastPage) {
-                $scope.pagination.from = lastPage - 9,
-                $scope.pagination.to = lastPage
+                $scope.pagination.from = lastPage - 9;
+                $scope.pagination.to = lastPage;
             } else {
-                $scope.pagination.from = currentPage - 5,
-                $scope.pagination.to = currentPage + 4
+                $scope.pagination.from = currentPage - 5;
+                $scope.pagination.to = currentPage + 4;
             }
         }
+    }
+
+    $scope.getPaginationPages = function(){
+        var pages = [];
         for(var i = $scope.pagination.from; i <= $scope.pagination.to; i++){
-            $scope.pagination.pages[i] = i;
+            pages.push(i);
         }
+        return pages;
     }
 
     /**

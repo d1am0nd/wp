@@ -174,8 +174,13 @@ pagesApp.controller('SimpleController', ['$scope', '$filter', '$stateParams', '$
                 $scope.pagination.to = $scope.pages.current_page + 4
             }
         }
+    }
+
+    $scope.getPaginationPages = function(){
+        var pages = [];
         for(var i = $scope.pagination.from; i <= $scope.pagination.to; i++){
-            $scope.pagination.pages[i] = i;
+            pages.push(i);
         }
+        return pages;
     }
 }]);

@@ -174,8 +174,13 @@ videosApp.controller('SimpleController', ['$scope', '$filter', '$stateParams', '
                 $scope.pagination.to = $scope.videos.current_page + 4
             }
         }
+    }
+
+    $scope.getPaginationPages = function(){
+        var pages = [];
         for(var i = $scope.pagination.from; i <= $scope.pagination.to; i++){
-            $scope.pagination.videos[i] = i;
+            pages.push(i);
         }
+        return pages;
     }
 }]);

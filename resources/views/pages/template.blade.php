@@ -82,7 +82,7 @@
                   
                   </li>
                   
-                  <li data-ng-repeat="page in pagination.pages" ng-class="pages.current_page == page ? 'active' : ''">
+                  <li data-ng-repeat="page in getPaginationPages()" ng-class="pages.current_page == page ? 'active' : ''">
                   
                   <a ui-sref="filter({page : page, orderBy : queryParams.orderBy, tag : queryParams.tag})">@{{ page }}</a>
                   

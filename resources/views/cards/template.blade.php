@@ -200,7 +200,7 @@
                   
                   </li>
                   
-                  <li data-ng-repeat="page in pagination.pages" ng-class="pagination.currentPage == page ? 'active' : ''">
+                  <li data-ng-repeat="page in getPaginationPages()" ng-class="pagination.currentPage == page ? 'active' : ''">
                   
                   <a ui-sref="filter({
                             page : page, 
