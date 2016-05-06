@@ -36,6 +36,43 @@
         </div>
         <div class="row">
             <div class="col-md-12">
+                <h3>Costs</h3>
+            </div>
+            <div class="col-sm-12">
+                <div class="margin-bottom-15">
+                    <a class="btn-u btn-u-green" style="width:100;" ui-sref="filter({
+                            page : undefined, 
+                            type : search.type, 
+                            set: search.set, 
+                            class : search.class, 
+                            rarity : search.rarity, 
+                            standard : search.standard,
+                            cost : undefined
+                        })" 
+                        ng-class="search.cost === undefinded ? 'btn-u-sea' : ''">
+                        ALL
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <span data-ng-repeat="currCost in costs">
+                    <a class="btn-u" ui-sref="filter({
+                            page : undefined, 
+                            type : search.type, 
+                            set: search.set, 
+                            class : search.class, 
+                            rarity : search.rarity, 
+                            standard : search.standard,
+                            cost : currCost
+                        })" 
+                        ng-class="currCost == cost ? 'btn-u-sea' : ''">
+                        @{{ currCost }}
+                    </a>
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
                 <h3>Rarities</h3>
             </div>
             <div class="col-sm-4 col-xs-3">
@@ -177,7 +214,7 @@
     </div>
     <div class="col-md-8">
         <div class="row">
-            <div class="col-sm-3 col-xs-6" data-ng-repeat="card in filteredCards | orderBy:'name' | limitTo : limit : limitFrom">
+            <div class="col-sm-3 col-xs-6" data-ng-repeat="card in filteredCards | orderBy:'cost' | limitTo : limit : limitFrom">
                 <img title="@{{ card.name }}" class="img-responsive" ng-src="@{{ card.image_path }}">
             </div>
         </div>

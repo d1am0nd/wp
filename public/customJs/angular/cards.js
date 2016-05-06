@@ -10,11 +10,41 @@ cardsApp.config(function($stateProvider, $urlRouterProvider){
         controller: "SimpleController"
     })
     .state('filter', {
-        url: '/search?standard&rarity&class&set&type&page&name',
+        url: '/search?standard&rarity&class&set&type&page&name&cost',
         templateUrl: "/templates/cards/index",
         controller: "SimpleController"
     });
 });
+
+cardsApp.filter('cost', function(){
+    return function(cards, costFilter){
+        /**
+         * If filter is undefined,
+         * return all cards
+         */
+        if(costFilter == undefined)
+            return cards;
+
+        /**
+         * Otherwise return filtered cards
+         */
+        var filtered = [];
+        if(costFilter == '7+'){
+        console.log(costFilter);
+            cards.forEach(function(card){
+                if(parseInt(card.cost) > 6)
+                    filtered.push(card);
+            });
+        }else{
+            cards.forEach(function(card){
+                if(parseInt(card.cost) == costFilter)
+                    filtered.push(card);
+            });
+        }
+        return filtered;
+    }
+});
+
 
 cardsApp.factory('cardService', function($http) {
     return {
@@ -60,14 +90,17 @@ cardsApp.controller('SimpleController', function ($scope, $filter, $state, $stat
     $scope.pagination.currentPage = $stateParams.page ? $stateParams.page : 1;
     $scope.pagination.pages = {};
 
+    $scope.costs = [0, 1, 2, 3, 4, 5, 6, "7+"];
+
     $scope.search = {
         "isStd" : $stateParams.standard,
         "rarity" : $stateParams.rarity,
         "class" : $stateParams.class,
         "set" : $stateParams.set,
         "type" : $stateParams.type,
-        'name' : undefined
+        "name" : undefined,
     }
+    $scope.cost = $stateParams.cost;
 
     $scope.originalSearchName = $stateParams.name;
 
@@ -85,6 +118,7 @@ cardsApp.controller('SimpleController', function ($scope, $filter, $state, $stat
             rarity : $scope.search.rarity, 
             standard : $scope.search.isStd,
             name : $scope.search.name,
+            cost : $scope.cost
         });
     }
 
@@ -93,8 +127,8 @@ cardsApp.controller('SimpleController', function ($scope, $filter, $state, $stat
      */
     $scope.updateFiltered = function(){
         $scope.filteredCards = $filter('filter')($scope.cards, $scope.search);
+        $scope.filteredCards = $filter('cost')($scope.filteredCards, $scope.cost);
         $scope.setPaginationRange();
-        $scope.limit = 28;
     }
 
     /**
@@ -108,7 +142,6 @@ cardsApp.controller('SimpleController', function ($scope, $filter, $state, $stat
         $scope.pagination.lastPage = lastPage;
         $scope.limitTo = currentPage * $scope.limit;
         $scope.limitFrom = (currentPage - 1) * $scope.limit;
-
 
         if(lastPage < 10){
             $scope.pagination.from = 1,
@@ -128,6 +161,9 @@ cardsApp.controller('SimpleController', function ($scope, $filter, $state, $stat
         }
     }
 
+    /**
+     * Return array of pages to display in pagination
+     */
     $scope.getPaginationPages = function(){
         var pages = [];
         for(var i = $scope.pagination.from; i <= $scope.pagination.to; i++){
