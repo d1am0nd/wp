@@ -199,7 +199,7 @@
                 <div class="margin-bottom-15">
                     <a class="btn-u" style="width:100;" ui-sref="filter({
                             page : undefined, 
-                            type : searchTerm, 
+                            type : searchTerm,
                             set: search.set, 
                             class : search.class, 
                             rarity : search.rarity, 
@@ -214,8 +214,9 @@
     </div>
     <div class="col-md-8">
         <div class="row">
-            <div class="col-sm-3 col-xs-6" data-ng-repeat="card in filteredCards | orderBy:'cost' | limitTo : limit : limitFrom">
+            <div class="col-sm-3 col-xs-6" style="margin:0!important; padding:0px!important;" data-ng-repeat="card in filteredCards | orderBy:'cost' | limitTo : limit : limitFrom">
                 <img title="@{{ card.name }}" class="img-responsive" ng-src="@{{ card.image_path }}">
+                <!--<p style="text-align: center;"><strong>More</strong></p>-->
             </div>
         </div>
         <div class="row" ng-if="pagination.lastPage > 1">
