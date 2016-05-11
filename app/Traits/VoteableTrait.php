@@ -23,13 +23,16 @@ trait VoteableTrait
         if($vote !== -1 && $vote !== 1)
             return 'Error voting';
 
+        // Get morph class (example 'App\Page')
         $morphClass = $this->getMorphClass();
 
+        // Get DB record for vote for current user
         $dbVote = Vote::where('user_id', Auth::user()->id)
             ->where('voteable_id', $this->id)
             ->where('voteable_type', $morphClass)
             ->first();
 
+        // If user did not vote yet, create a new instance of App\Vote
         if(!$dbVote)
             $dbVote = new Vote;
         elseif($dbVote->vote == $vote){
@@ -45,7 +48,7 @@ trait VoteableTrait
 
         // Return new vote - last vote
         $return = $vote - $dbVote->vote;
-        DB::transaction(function () use ($dbVote, $vote, $morphClass, $return){
+        DB::transaction(function() use ($dbVote, $vote, $morphClass, $return){
             $dbVote->user_id = Auth::user()->id;
             $dbVote->voteable_id = $this->id;
             $dbVote->voteable_type = $morphClass;

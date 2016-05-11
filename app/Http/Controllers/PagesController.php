@@ -62,17 +62,21 @@ class PagesController extends Controller
      */
     public function store(StorePagesRequest $request)
     {
+        // 
         $newPage = array_merge(
             $request->only('url', 'description', 'title'), 
-            ['thumbnail_path' => '/hslogo.jpg', 'slug' => str_slug($request->input('title'))]
+            [
+                'thumbnail_path' => '/hslogo.jpg', 
+                'slug' => str_slug($request->input('title'))
+            ]
         );
-        Video::unguard();
         $page = \Auth::user()->pages()->create($newPage);
-        Video::reguard();
 
-        $tag_ids = array_map('intval', $request->input('tag_id'));
-        $page->tags()->attach($tag_ids);
+        // Attach tags
+        $tagIds = array_map('intval', $request->input('tag_id'));
+        $page->tags()->attach($tagIds);
 
+        // Run the command that updates thumbnail for the page
         \Artisan::queue('page:updateThumbnail', [
             'id' => $page->id, 'url' => $request->input('url')
         ]);
@@ -144,8 +148,8 @@ class PagesController extends Controller
     {
         $filterPage = $request->has('page') ? $request->input('page') : 1;
         $filterTag = $request->has('tag') ?  $request->input('tag') : null;
-        $filterOrderBy = $request->input('orderBy') ? $request->input('orderBy') : null;
-        $filterTitle = $request->input('title') ? $request->input('title') : null;
+        $filterOrderBy = $request->has('orderBy') ? $request->input('orderBy') : null;
+        $filterTitle = $request->has('title') ? $request->input('title') : null;
         if(isset($filterTitle))
             return $this->pages->getPagesWithInfoByTitle($filterTitle, $filterPage, $filterTag, $filterOrderBy)->toJson();
         return $this->pages->getPagesWithInfo($filterPage, $filterTag, $filterOrderBy)->toJson();

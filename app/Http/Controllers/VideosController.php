@@ -68,9 +68,8 @@ class VideosController extends Controller
             $request->only('url', 'description', 'title'), 
             ['thumbnail_path' => '/hslogo.jpg', 'slug' => str_slug($request->input('title'), '-')]
         );
-        Video::unguard();
+
         $video = \Auth::user()->videos()->create($newVideo);
-        Video::reguard();
 
         $tag_ids = array_map('intval', $request->input('tag_id'));
 

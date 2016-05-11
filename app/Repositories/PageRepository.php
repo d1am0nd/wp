@@ -11,18 +11,18 @@ class PageRepository implements PageRepositoryInterface{
     public function getPagesWithInfo($forPage = 1, $tag = null, $orderBy = null)
     {
         $query = Page::filterOrderBy($orderBy)
-        ->withMyVote()
-        ->whereHasTag($tag);
+            ->withMyVote()
+            ->whereHasTag($tag);
         return $this->selectImportant($query, $forPage);
     }
 
     public function getPagesWithInfoByTitle($title, $forPage = 1, $tag = null, $orderBy = null)
     {
         $query = Page::filterOrderBy($orderBy)
-        ->withMyVote()
-        ->whereHasTag($tag)
-        ->where('title', 'LIKE', '%' . $title . '%');
-        return $this->selectImportant($query, $forPage);
+            ->withMyVote()
+            ->whereHasTag($tag)
+            ->where('title', 'LIKE', '%' . $title . '%');
+        return $this->selectImportant($query, $forPage)->paginate(15, '*', null, $forPage)->selectImportant($query);
     }
 
     private function selectImportant(&$query, $forPage)
@@ -39,8 +39,7 @@ class PageRepository implements PageRepositoryInterface{
             'slug',
             'url',
             Auth::check() ? 'my_vote.vote as my_vote' : DB::raw('0 as my_vote'),
-        ])
-        ->paginate(15, '*', null, $forPage);
+        ]);
     }
     
 }

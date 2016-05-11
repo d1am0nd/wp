@@ -33,11 +33,15 @@ class CardRepository implements CardRepositoryInterface
 
     public function getCardsWithInfo()
     {
-        return Card::leftJoin('card_rarities', 'cards.card_rarity_id', '=', 'card_rarities.id')
-        ->leftJoin('card_sets', 'cards.card_set_id', '=', 'card_sets.id')
-        ->leftJoin('card_types', 'cards.card_type_id', '=', 'card_types.id')
-        ->leftJoin('card_texts', 'cards.id', '=', 'card_texts.card_id')
-        ->leftJoin('classes', 'cards.class_id', '=', 'classes.id')
+        return Card::leftJoin('classes', 'cards.class_id', '=', 'classes.id')
+        /**
+         * Each card must have these.
+         * If it doesn't, the cards entry must be corrupted.
+         */
+        ->join('card_rarities', 'cards.card_rarity_id', '=', 'card_rarities.id')
+        ->join('card_sets', 'cards.card_set_id', '=', 'card_sets.id')
+        ->join('card_types', 'cards.card_type_id', '=', 'card_types.id')
+        ->join('card_texts', 'cards.id', '=', 'card_texts.card_id')
         ->join('card_languages', function($q){
             $q->on('card_texts.card_language_id', '=', 'card_languages.id')
                 ->where('card_languages.lang_id', '=', 'enUS');
@@ -60,6 +64,7 @@ class CardRepository implements CardRepositoryInterface
         ->with(['cardMechanics' => function($q){
             $q->select('id', 'name');
         }])
+        // Hero portrait is not a card. 
         ->where('card_types.name', '!=', 'HERO')
         ->get();
     }
