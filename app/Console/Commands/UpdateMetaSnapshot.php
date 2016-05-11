@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\SiteUpdate;
 use Illuminate\Console\Command;
+use App\Classes\Twitter\Message;
 
 class UpdateMetaSnapshot extends Command
 {
@@ -40,11 +41,12 @@ class UpdateMetaSnapshot extends Command
      */
     public function handle()
     {
-        $this->master_url = 'https://tempostorm.com/hearthstone/meta-snapshot';
+        $this->master_url = 'https://tempostorm.com/hearthstone/meta-snapshot/standard';
         $this->url = $this->getLastUrl();
 
         $identifier = 'tempostorm-meta-snapshot';
         $su = SiteUpdate::where('identifier', $identifier)->first();
+        $this->info($su->url);
         if(isset($su)){
             // Update twitter and db record if url is new (different)
             // and new url starts with 'https://tempostorm.com/hearthstone/meta-snapshot/'
@@ -65,11 +67,11 @@ class UpdateMetaSnapshot extends Command
 
     private function getLastUrl()
     {
-        $api = 'https://tempostorm.com/api/snapshots/findOne?filter=%7B%22order%22:%22createdDate+DESC%22,%22where%22:%7B%22isActive%22:true%7D%7D';
+        $api = 'https://tempostorm.com/api/snapshots/findOne?filter=%7B%22order%22:%22createdDate+DESC%22,%22fields%22:%5B%22id%22,%22snapshotType%22%5D,%22where%22:%7B%22isActive%22:true,%22snapshotType%22:%22standard%22%7D,%22include%22:%5B%7B%22relation%22:%22slugs%22%7D%5D%7D';
         $json = json_decode(file_get_contents($api));
-        // $json->slug->url = 'the-old-standard'
-        // full url = 'https://tempostorm.com/hearthstone/meta-snapshot/the-old-standard'
-        $url = $this->master_url . '/' . $json->slug->url;
+        // $json->slugs[0]->slug = 'meta-snapshot-1-the-new-standard'
+        // full url = 'https://tempostorm.com/hearthstone/meta-snapshot/standard/meta-snapshot-1-the-new-standard'
+        $url = $this->master_url . '/' . $json->slugs[0]->slug;
         $this->info($url);
         return $url;
 
@@ -89,7 +91,10 @@ class UpdateMetaSnapshot extends Command
 
     private function sendTwitterMessage()
     {
-        \Twitter::postTweet(['status' => 'New Tempostorm meta snapshot is out! #Hearthstone' . $this->url . ' @Tempo_Storm', 'format' => 'json']);
+        $message = new Message('New TempoStorm standard meta snapshot is out!', ['hearthstone', 'tempostorm'], $this->url);
+        $twitterMessage = $message->compose();
+        $this->info($twitterMessage);
+        //\Twitter::postTweet(['status' => $twitterMessage]);
     }
 
     private function startsWith($haystack, $needle){
