@@ -94,7 +94,7 @@ class UpdateMetaSnapshot extends Command
         $message = new Message('New TempoStorm standard meta snapshot is out!', ['hearthstone', 'tempostorm'], $this->url);
         $twitterMessage = $message->compose();
         $this->info($twitterMessage);
-        //\Twitter::postTweet(['status' => $twitterMessage]);
+        \Twitter::postTweet(['status' => $twitterMessage]);
     }
 
     private function startsWith($haystack, $needle){
