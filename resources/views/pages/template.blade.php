@@ -1,5 +1,5 @@
 
-<h1 class="margin-bottom-10">Community picked best Hearthstone videos</h1>
+<h1 class="margin-bottom-10">Community picked best Hearthstone websites</h1>
 <div class="row">
     <div class="col-md-4">
         <div class="row margin-bottom-10">
