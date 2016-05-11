@@ -70,7 +70,10 @@ class PagesController extends Controller
                 'slug' => str_slug($request->input('title'))
             ]
         );
+        
+        Page::unguard();
         $page = \Auth::user()->pages()->create($newPage);
+        Page::reguard();
 
         // Attach tags
         $tagIds = array_map('intval', $request->input('tag_id'));
