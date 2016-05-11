@@ -22,7 +22,7 @@ class PageRepository implements PageRepositoryInterface{
             ->withMyVote()
             ->whereHasTag($tag)
             ->where('title', 'LIKE', '%' . $title . '%');
-        return $this->selectImportant($query, $forPage)->paginate(15, '*', null, $forPage)->selectImportant($query);
+        return $this->selectImportant($query, $forPage);
     }
 
     private function selectImportant(&$query, $forPage)
@@ -39,7 +39,7 @@ class PageRepository implements PageRepositoryInterface{
             'slug',
             'url',
             Auth::check() ? 'my_vote.vote as my_vote' : DB::raw('0 as my_vote'),
-        ]);
+        ])->paginate(15, '*', null, $forPage);
     }
     
 }
