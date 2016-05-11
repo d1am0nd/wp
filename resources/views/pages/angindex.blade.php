@@ -1,10 +1,10 @@
 @extends('master')
 
 @section('meta')
-<title>Wizard-Poker | Hearthstone Pages</title>
-<meta name="description" content="Wizard-Poker Pages - Community picked best Hearthstone websites">
-<meta property="og:title" content="Wizard-Poker Pages - Community picked best Hearthstone websites" />
-<meta name="twitter:title" content="Wizard-Poker Pages" />
+<title>Wizard-Poker | Hearthstone Websites</title>
+<meta name="description" content="Wizard-Poker Websites - Community picked best Hearthstone websites">
+<meta property="og:title" content="Wizard-Poker Websites - Community picked best Hearthstone websites" />
+<meta name="twitter:title" content="Wizard-Poker Websites" />
 <meta name="twitter:description" content="Community picked best Hearthstone websites" />
 @stop
 
