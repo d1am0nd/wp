@@ -96,7 +96,7 @@ videosApp.controller('SimpleController', ['$scope', '$filter', '$stateParams', '
     $scope.pagination.videos = {};
 
     if (sessionStorage.getItem("orderBy") === null) {
-        pageService.getOrderBy().then(function(orderBy){
+        videoService.getOrderBy().then(function(orderBy){
             $scope.orderBy = orderBy;
             sessionStorage.setItem("orderBy", JSON.stringify(orderBy));
         });

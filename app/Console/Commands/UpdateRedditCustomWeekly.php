@@ -55,9 +55,9 @@ class UpdateRedditCustomWeekly extends Command
         $su = SiteUpdate::where('identifier', $identifier)->first();
         if(isset($su)){
             // Update twitter and db record if url is new (different)
-            // and new url starts with 'https://tempostorm.com/hearthstone/meta-snapshot/'
+            // and new title starts with 'Top 5 Scoring Cards of the Week from r/CustomHearthstone'
             $this->info($this->url);
-            if($this->checkIfUrlIsDifferent($su)){
+            if($this->checkIfUrlIsDifferent($su) && starts_with('Top 5 Scoring Cards of the Week from r/CustomHearthstone', $this->getLastTitle())){
                 $this->info('Sending');
                 $this->sendTwitterMessage();
             }
@@ -86,6 +86,12 @@ class UpdateRedditCustomWeekly extends Command
     {
         // json->data->children->data->url = url of the last post that matched the query
         return $this->json->data->children[0]->data->url;
+    }
+
+    private function getLastTitle()
+    {
+        // json->data->children->data->url = url of the last post that matched the query
+        return $this->json->data->children[0]->data->title;
     }
 
     private function sendTwitterMessage()

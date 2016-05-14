@@ -62,6 +62,7 @@ cardsApp.factory('cardService', function($http) {
                     return result.data;
                 });
         },
+        
         /**
          * Inits attributeClasses object. Sets all classes
          * to empty string.
