@@ -40,7 +40,7 @@ class TweetDH extends Command
     public function handle()
     {
         $number = rand(0,30);
-        if($number==1)
+        //if($number==1)
             $this->sendTwitterMessage();
     }
 
@@ -48,10 +48,14 @@ class TweetDH extends Command
     {
         $quotes = config('propaganda.quotes');
         $quote = $quotes[array_rand($quotes)];
-        $message = new Message('@DragonHackLj ' .$quote, ['DragonHack', 'DragonHackLj']);
+
+        if (!filter_var($quote, FILTER_VALIDATE_URL) === false)
+            $message = new Message('', ['DragonHack', 'DragonHackLj'], $quote, 'DragonHackLj');
+        else
+            $message = new Message($quote, ['DragonHack', 'DragonHackLj'], '', 'DragonHackLj');
+
         $twitterMessage = $message->compose();
         $this->info($twitterMessage);
-
         \Twitter::postTweet(['status' => $twitterMessage]);
     }
 }

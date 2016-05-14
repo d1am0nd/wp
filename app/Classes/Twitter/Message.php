@@ -50,15 +50,17 @@ class Message
      * Composes message form $text, $tags and $url.
      * Shortens $text accordingly.
      */
-    private function composeMessage($text, $tags = null, $url = null)
+    private function composeMessage($text, $tags = null, $url = null, $at = null)
     {
         $tagsText = $this->makeTagsString($tags);
+        $atsText = $this->makeAtString($at);
         $url = $url ? ' ' . $url : '';
         $urlLen = $url === '' ? 0 : 23;
+        $at = $at ? $at : '';
 
         $messageText = $text . $tagsText . $url;
         // t.co twitters domain takes 23 chars for the url
-        $messageTextLen = strlen($text . $tagsText) + $urlLen;
+        $messageTextLen = strlen($text . $tagsText . $atsText) + $urlLen;
 
         // Amount of chars to be shortened (if positive)
         $toShorten = $messageTextLen - 140;
@@ -83,16 +85,32 @@ class Message
      */
     private function makeTagsString($tags)
     {
-        if(isset($tags) && is_array($tags)){
-            $tagsText = ' ';
-            $tagsLen = count($tags) - 1;
-            foreach($tags as $index => $tag){
-                $tagsText = $tagsText . '#' . $tag;
+        return $this->makeCompositeString($tags, '#');
+    }
+
+    /**
+     * Takes array of tags and generates 
+     */
+    private function makeAtString($ats)
+    {
+        return $this->makeCompositeString($ats, '@');
+    }
+
+    /**
+     * Takes array of tags and generates 
+     */
+    private function makeCompositeString($array, $start)
+    {
+        if(isset($array) && is_array($array)){
+            $arrayText = ' ';
+            $arrayLen = count($array) - 1;
+            foreach($array as $index => $item){
+                $arrayText = $arrayText . $start . $item;
                 // If there are tags to come, append space at the end
-                if($index != $tagsLen)
-                    $tagsText = $tagsText . ' ';
+                if($index != $arrayLen)
+                    $arrayText = $arrayText . ' ';
             }
-            return $tagsText;
+            return $arrayText;
         }
         return '';
     }
