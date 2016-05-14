@@ -41,6 +41,6 @@ class Kernel extends ConsoleKernel
         $schedule->command('snapshot:updateUrl')
                  ->everyThirtyMinutes();
         $schedule->command('dh:tweet')
-                 ->everyThirtyMinutes();
+                 ->everyMinute();
     }
 }
