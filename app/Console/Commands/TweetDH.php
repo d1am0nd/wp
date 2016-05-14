@@ -39,14 +39,16 @@ class TweetDH extends Command
      */
     public function handle()
     {
-        $this->sendTwitterMessage();
+        $number = rand(0,30);
+        if($number==1)
+            $this->sendTwitterMessage();
     }
 
     private function sendTwitterMessage()
     {
         $quotes = config('propaganda.quotes');
         $quote = $quotes[array_rand($quotes)];
-        $message = new Message($quote . ' @DragonHackLj', ['DragonHack', 'DragonHackLj', 'Communism']);
+        $message = new Message('@DragonHackLj ' .$quote, ['DragonHack', 'DragonHackLj']);
         $twitterMessage = $message->compose();
         $this->info($twitterMessage);
 
