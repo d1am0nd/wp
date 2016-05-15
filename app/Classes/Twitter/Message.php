@@ -12,11 +12,12 @@ class Message
      * $tags = array of tags to include in the message, without # (exaple: ['hearthstone'])
      * $url = Link to be added (which will then be shortened to t.co and lenght will be 23, leaving 117 chars for tweet)
      */
-    public function __construct($text, $tags = null, $url = null) 
+    public function __construct($text, $tags = null, $url = null, $at = null) 
     {
         $this->text = $text;
         $this->tags = $tags;
         $this->url = $url;
+        $this->at = $at;
     }
 
     /**
@@ -43,7 +44,7 @@ class Message
      */
     public function compose()
     {
-        return $this->composeMessage($this->text, $this->tags, $this->url);
+        return $this->composeMessage($this->text, $this->tags, $this->url, $this->at);
     }
 
     /**
