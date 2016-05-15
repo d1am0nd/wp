@@ -23,7 +23,6 @@ class Kernel extends ConsoleKernel
         Commands\IsVideoEverything::class,
         Commands\ParseCardsJson::class,
         Commands\SetIsStd::class,
-        Commands\TweetDH::class,
     ];
 
     /**
@@ -40,7 +39,5 @@ class Kernel extends ConsoleKernel
                  ->everyThirtyMinutes();
         $schedule->command('snapshot:updateUrl')
                  ->everyThirtyMinutes();
-        $schedule->command('dh:tweet')
-                 ->everyMinute();
     }
 }
