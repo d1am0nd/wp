@@ -39,9 +39,9 @@ class TweetDH extends Command
      */
     public function handle()
     {
-        $number = rand(0,1);
+        $number = rand(0,30);
 
-        if($number==30)
+        if($number==1)
             $this->sendTwitterMessage();
     }
 
