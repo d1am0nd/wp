@@ -55,11 +55,11 @@ class Message
     {
         $tagsText = $this->makeTagsString($tags);
         $atsText = $this->makeAtString($at);
+        
         $url = $url ? ' ' . $url : '';
         $urlLen = $url === '' ? 0 : 23;
-        $at = $at ? $at : '';
 
-        $messageText = $text . $tagsText . $url;
+        $messageText = $text . $tagsText . $atsText . $url;
         // t.co twitters domain takes 23 chars for the url
         $messageTextLen = strlen($text . $tagsText . $atsText) + $urlLen;
 
@@ -76,6 +76,7 @@ class Message
             else
                 $messageText = substr($text, 0, $toChar) . 
                     $tagsText . 
+                    $atsText .
                     $url;
         }
         return $messageText;
