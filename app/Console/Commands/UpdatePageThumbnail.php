@@ -47,8 +47,6 @@ class UpdatePageThumbnail extends Command
         $id = $this->argument('id');
 
         $thumbnailUrl = $this->pageThumbnailUrl();
-        if(!starts_with($thumbnailUrl, 'http://') || starts_with($thumbnailUrl, 'https://'))
-            $thumbnailUrl = 'http://' . $thumbnailUrl;
 
         $fileName = '/thumbnails/pages/' . $id . '.jpg';
         $absolutePath = public_path() . $fileName;
