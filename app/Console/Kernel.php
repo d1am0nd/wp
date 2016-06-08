@@ -23,6 +23,7 @@ class Kernel extends ConsoleKernel
         Commands\IsVideoEverything::class,
         Commands\ParseCardsJson::class,
         Commands\SetIsStd::class,
+        Commands\CopyVideosToPages::class,
     ];
 
     /**
