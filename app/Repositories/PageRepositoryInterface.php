@@ -8,4 +8,6 @@ interface PageRepositoryInterface{
 
     public function getPagesWithInfoByTitle($forPage = 1, $title, $tag = null, $orderBy = null);
 
+    public function createPage($attributes, $type);
+
 }

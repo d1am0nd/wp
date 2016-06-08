@@ -8,27 +8,40 @@ use App\Page;
 
 class PageRepository implements PageRepositoryInterface{
 
+    protected $page;
+
+    public function __construct(Page $page)
+    {
+        $this->page = $page;
+    }
+
     public function getPagesWithInfo($forPage = 1, $tag = null, $orderBy = null)
     {
-        $query = Page::filterOrderBy($orderBy)
+        $this->page->filterOrderBy($orderBy)
             ->withMyVote()
             ->whereHasTag($tag);
-        return $this->selectImportant($query, $forPage);
+        $this->selectImportant();
+        return $this->paginate($forPage);
     }
 
     public function getPagesWithInfoByTitle($title, $forPage = 1, $tag = null, $orderBy = null)
     {
-        $query = Page::filterOrderBy($orderBy)
+        $this->page->filterOrderBy($orderBy)
             ->withMyVote()
             ->whereHasTag($tag)
             ->where('title', 'LIKE', '%' . $title . '%');
-        return $this->selectImportant($query, $forPage);
+        $this->selectImportant();
+        return $this->paginate($forPage);
     }
 
-    private function selectImportant(&$query, $forPage)
+    public function createPage($attributes, $type)
     {
-        return $query
-        ->select([
+        return $page = $this->page->create($attributes);
+    }
+
+    private function selectImportant()
+    {
+        $this->page->select([
             'pages.id',
             'title',
             'description',
@@ -39,7 +52,12 @@ class PageRepository implements PageRepositoryInterface{
             'slug',
             'url',
             Auth::check() ? 'my_vote.vote as my_vote' : DB::raw('0 as my_vote'),
-        ])->paginate(15, '*', null, $forPage);
+        ]);
+    }
+
+    private function paginate($forPage)
+    {
+        return $this->page->paginate(15);
     }
     
 }

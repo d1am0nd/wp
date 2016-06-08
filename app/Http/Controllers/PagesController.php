@@ -63,17 +63,13 @@ class PagesController extends Controller
     public function store(StorePagesRequest $request)
     {
         // 
-        $newPage = array_merge(
+        $attributes = array_merge(
             $request->only('url', 'description', 'title'), 
-            [
-                'thumbnail_path' => '/hslogo.jpg', 
-                'slug' => str_slug($request->input('title'))
-            ]
+            [ 'slug' => str_slug($request->input('title')) ]
         );
         
-        Page::unguard();
-        $page = \Auth::user()->pages()->create($newPage);
-        Page::reguard();
+
+        $page = $this->pages->createPate($attributes);
 
         // Attach tags
         $tagIds = array_map('intval', $request->input('tag_id'));
