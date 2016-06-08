@@ -14,7 +14,7 @@ class PageTypeSeeder extends Seeder
     {
         $pageTypes = [
             [
-                "name" => "Youtube video"
+                "name" => "Youtube Video"
             ],
             [
                 "name" => "Website"

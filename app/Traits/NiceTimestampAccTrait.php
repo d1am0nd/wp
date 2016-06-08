@@ -15,4 +15,14 @@ trait NiceTimestampAccTrait
     {
         return Carbon::parse($value)->toFormattedDateString();
     }
+
+    public function getCreatedAtTimestampAttribute($value)
+    {
+        return $this->attributes['created_at'];
+    }
+
+    public function getUpdatedAtTimestampAttribute($value)
+    {
+        return $this->attributes['updated_at'];
+    }
 }
