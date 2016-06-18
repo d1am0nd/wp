@@ -1,0 +1,154 @@
+<div class="container content">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="row">
+                <div class="col-md-6">
+                    <form novalidate="novalidate" id="sky-form2" class="sky-form" name="loginForm" ng-submit="submitLogin(login)">
+                        <header>Login form</header>
+                        
+                        <fieldset>                  
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-4">E-mail</label>
+                                    <div class="col col-8">
+                                        <label class="input">
+                                            <i class="icon-append fa fa-user"></i>
+                                            <input name="email" type="email" data-ng-model="login.email">
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+                            
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-4">Password</label>
+                                    <div class="col col-8">
+                                        <label class="input">
+                                            <i class="icon-append fa fa-lock"></i>
+                                            <input name="password" type="password" data-ng-model="login.password">
+                                        </label>
+                                        <!--<div class="note"><a href="#sky-form2" class="modal-opener">Forgot password?</a></div>-->
+                                    </div>
+                                </div>
+                            </section>
+                            
+                        </fieldset>
+                        <footer>
+                            <button type="submit" class="btn-u">Log in</button>
+                        </footer>
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <!-- Reg-Form -->
+                    <form novalidate="novalidate" id="sky-form4" class="sky-form" name="registerForm" ng-submit="submitRegister(register)">
+                        <header>Registration form</header>
+                        
+                        <fieldset>                  
+                            <section>
+                                <label class="input">
+                                    <i class="icon-append fa fa-user"></i>
+                                    <input name="username" placeholder="Username" type="text" data-ng-model="register.username" required ng-minlength="6" ng-maxlength="30">
+                                        <b class="tooltip tooltip-bottom-right">Publicly visible username</b>
+                                </label>
+                                <small ng-messages="registerForm.username.$error">
+                                    <em class="invalid" for="username" ng-message="required">Username is required</em>
+                                    <em class="invalid" for="username" ng-message="minlength">Username must be at least 6 characters long</em>
+                                    <em class="invalid" for="username" ng-message="maxlength">Username must be less than 30 characters long</em>
+                                </small>
+                            </section>
+                            
+                            <section>
+                                <label class="input">
+                                    <i class="icon-append fa fa-envelope"></i>
+                                    <input name="email" placeholder="Email address" type="email" data-ng-model="register.email" required email>
+                                    <b class="tooltip tooltip-bottom-right">Needed to verify your account</b>
+                                </label>
+                                <small ng-messages="registerForm.email.$error">
+                                    <em class="invalid" for="email" ng-message="required">Email is required</em>
+                                    <em class="invalid" for="email" ng-message="email">You must enter a valid email</em>
+                                </small>
+                            </section>
+                            
+                            <section>
+                                <label class="input">
+                                    <i class="icon-append fa fa-lock"></i>
+                                    <input name="password" placeholder="Password" id="password" type="password" data-ng-model="register.password" required>
+                                    <b class="tooltip tooltip-bottom-right">Don't forget your password</b>
+                                </label>
+                                <small ng-messages="registerForm.password.$error">
+                                    <em class="invalid" for="username" ng-message="required">Password is required</em>
+                                </small>
+                            </section>
+                            
+                            <section>
+                                <label class="input">
+                                    <i class="icon-append fa fa-lock"></i>
+                                    <input name="password_confirmation" placeholder="Confirm password" type="password" data-ng-model="register['password_confirmation']" compare-to="register.password">
+                                    <b class="tooltip tooltip-bottom-right">Don't misspel your password</b>
+                                </label>
+                                <small ng-messages="registerForm['password_confirmation'].$error">
+                                    <em class="invalid" for="password_confirmation" ng-message="compareTo">Confirmation must match password</em>
+                                </small>
+                            </section>
+                        </fieldset>
+                        <footer>
+                            <button type="submit" class="btn-u">Submit</button>
+                        </footer>
+                    </form>         
+                    <!-- End Reg-Form -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--
+<div class="container content">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
+            <form class="reg-page" ng-submit="register(user)" name="registerForm">
+                <div class="reg-header">
+                    <h2>Register a new account</h2>
+                </div>
+
+                <label class="control-label">Username </label>
+                <small ng-messages="registerForm.username.$error">
+                    <div ng-message="requried"> Username is required</div>
+                    <div ng-message="minlength"> Username must be at least 6 characters long</div>
+                    <div ng-message="maxlength"> Username must be less than 30 characters long</div>
+                </small>
+
+                <div class="input-group margin-bottom-20">
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                    <input placeholder="Username" class="form-control" type="text" name="username" data-ng-model="user.username" required ng-minlength="6" ng-maxlength="30">
+                </div>
+                <label class="control-label">Email</label> <small ng-if="errors.email">{{ errors.email }}</small>
+                <div class="input-group margin-bottom-20">
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                    <input placeholder="Email" class="form-control" type="email" data-ng-model="user.email">
+                </div>
+                <label class="control-label">Password</label> <small ng-if="errors.password">{{ errors.password }}</small>
+                <div class="input-group margin-bottom-20">
+                    <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                    <input placeholder="Password" class="form-control" type="password" data-ng-model="user.password">
+                </div>
+                <label class="control-label">Password confirmation</label>
+                <div class="input-group margin-bottom-20">
+                    <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                    <input placeholder="Password confirmation" class="form-control" type="password" data-ng-model="user['password_confirmation']">
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                    </div>
+                    <div class="col-md-6">
+                        <button class="btn-u pull-right" type="submit">Register</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    -->
+    <!--/row-->
+</div>
