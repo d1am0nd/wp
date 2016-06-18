@@ -24,6 +24,7 @@ class BackendServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind('App\Repositories\TagRepositoryInterface', 'App\Repositories\TagRepository');
+        $this->app->bind('App\Repositories\UserRepositoryInterface', 'App\Repositories\UserRepository');
         $this->app->bind('App\Repositories\PageRepositoryInterface', 'App\Repositories\PageRepository');
         $this->app->bind('App\Repositories\CardRepositoryInterface', 'App\Repositories\CardRepository');
         $this->app->bind('App\Repositories\VideoRepositoryInterface', 'App\Repositories\VideoRepository');
