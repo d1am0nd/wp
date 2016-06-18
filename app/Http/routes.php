@@ -70,6 +70,11 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('cards', 'CardsController@index');
 
+    Route::get('api/users/current', 'AuthController@getCurrentUser');
+    Route::post('api/users/login', 'AuthController@postLogin');
+    Route::post('api/users/create', 'AuthController@postCreateUser');
+    Route::get('api/users/logout', 'AuthController@getLogout');
+
     Route::get('api/cards', 'CardsController@getCardsJson');
     Route::get('api/cardattributes', 'CardsController@getCardAttributesJson');
     Route::get('api/pages', 'PagesController@getPagesJson');

@@ -9,7 +9,9 @@ use App\User;
 use Socialite;
 use Validator;
 use App\Http\Controllers\Controller;
+use App\Repositories\UserRepositoryInterface;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
+use App\Http\Requests\Accounts\CreateUserRequest;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
 class AuthController extends Controller
@@ -24,19 +26,39 @@ class AuthController extends Controller
     | a simple trait to add these behaviors. Why don't you explore it?
     |
     */
-
-    /**
-     * Create a new authentication controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+   
+    public function __construct(UserRepositoryInterface $user)
     {
-        $this->middleware('auth', ['only' => 'getUsernameEdit']);
+        $this->user = $user;
     }
 
+    public function getCurrentUser()
+    {
+        return Auth::check() ? Auth::user() : null;
+    }
+
+    public function postLogin(Request $request)
+    {
+        return Auth::attempt(['email' => $request->input('email'), 
+        'password' => $request->input('password')]) ? Auth::user() : null;
+    }
+
+    public function postCreateUser(CreateUserRequest $request)
+    {
+        $user = $this->user->createUser($request->input());
+        return Auth::login($user);
+    }
+
+    public function getLogout()
+    {
+        return Auth::logout();
+    }
+
+
+    // ***** Social login ***** //
+
     /**
-     * Redirect the user to the Facebook authentication page.
+     * Redirect the user to the social authentication page.
      *
      * @return Response
      */
