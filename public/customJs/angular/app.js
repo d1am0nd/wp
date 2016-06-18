@@ -1,24 +1,28 @@
-app = angular.module('generalApp', ['ui.router']);
+app = angular.module('generalApp', ['ui.router', 'ngMessages']);
 
-app.config(function($stateProvider, $urlRouterProvider){
+app.config(function($stateProvider, $urlRouterProvider, $httpProvider){
+    $httpProvider.defaults.withCredentials = true;
+
     $urlRouterProvider
     .otherwise('/');
 
     $stateProvider
-    .state('home', {
-        url: '/',
-        templateUrl: '/templates/general/home.html',
+    .state('root', {
+        url: '',
         controller: 'RootController'
     })
-    .state('login', {
-        url: '/login',
-        templateUrl: '/templates/auth/login.html',
-        //controller: 'LoginController'
+    .state('home', {
+        url: '/',
+        templateUrl: '/templates/general/home.html'
     })
-    .state('register', {
-        url: '/register',
+    .state('auth', {
+        url: '/auth',
         templateUrl: '/templates/auth/register.html',
-        //controller: 'RegisterController'
+        controller: 'AuthController'
+    })
+    .state('logout', {
+        url: '/auth/logout',
+        controller: 'LogoutController'
     })
     .state('tos', {
         url: '/terms-of-service',
@@ -26,14 +30,16 @@ app.config(function($stateProvider, $urlRouterProvider){
     })
 });
 
-app.controller('RootController', function($scope, $rootScope){
+app.controller('RootController', function($scope, $rootScope, AuthService){
     initController();
 
     function initController(){
-        console.log('works');
-    }
+        $scope.token = {};
 
-    function logout(){
-
+        AuthService.GetCurrent()
+        .then(function(user) {
+            if(user)
+                $rootScope.user = user;
+        });
     }
 });
