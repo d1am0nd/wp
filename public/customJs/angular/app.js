@@ -31,8 +31,13 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider){
     // Cards
     .state('cards', {
         url: '/cards/search?standard&rarity&class&set&type&page&name&cost',
-        templateUrl: "/templates/cards/cards.html",
+        templateUrl: "/templates/cards/index.html",
         controller: "CardsController"
+    })
+    .state('pages', {
+        url: '/pages/search?page&tag&orderBy&search',
+        templateUrl: "/templates/pages/index.html",
+        controller: "PagesController"
     });
 });
 

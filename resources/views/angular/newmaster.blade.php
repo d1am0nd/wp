@@ -187,8 +187,8 @@
                 <div class="container">
                     <ul class="nav navbar-nav">
                         <!-- Home -->
-                        <li title="Home" @if(Request::url() == action('GeneralController@getHome'))class="active" @endif>
-                            <a href="{{ action('GeneralController@getHome') }}" title="Home">
+                        <li title="Home">
+                            <a ui-sref="home" title="Home">
                                 Home
                             </a>
                         </li>
@@ -197,16 +197,18 @@
                                Cards
                             </a>
                         </li>
-                        <li title="Pages" @if(Request::url() == action('PagesController@index'))class="active" @endif>
-                            <a href="{{ action('PagesController@index') }}" title="Hearthstone Pages">
+                        <li title="Pages">
+                            <a ui-sref="pages" title="Hearthstone Pages">
                                Pages
                             </a>
                         </li>
+                        <!--
                         <li title="Videos" @if(Request::url() == action('VideosController@index'))class="active" @endif>
                             <a href="{{ action('VideosController@index') }}" title="Hearthstone Videos">
                                Videos
                             </a>
                         </li>
+                        -->
                         <!-- End Home -->
                     </ul>
                 </div><!--/end container-->
@@ -290,11 +292,14 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.js"></script>
 <script src="/customJs/angular/app.js"></script>
 <script src="/customJs/angular/directives/validation.js"></script>
-<script src="/customJs/angular/controllers/CardsController.js"></script>
+<script src="/customJs/angular/controllers/pages/PagesController.js"></script>
+<script src="/customJs/angular/controllers/cards/CardsController.js"></script>
 <script src="/customJs/angular/controllers/AuthController.js"></script>
 <script src="/customJs/angular/services/AuthService.js"></script>
 <script src="/customJs/angular/services/CardService.js"></script>
+<script src="/customJs/angular/services/PageService.js"></script>
 <script src="/customJs/angular/filters/Cost.js"></script>
+<script src="/customJs/angular/filters/Range.js"></script>
 <!-- /Angular -->
 
 <script type="text/javascript" src="/plugins/jquery/jquery.min.js"></script>
