@@ -28,6 +28,12 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider){
         url: '/terms-of-service',
         templateUrl: '/templates/general/tos.html',
     })
+    // Cards
+    .state('cards', {
+        url: '/cards/search?standard&rarity&class&set&type&page&name&cost',
+        templateUrl: "/templates/cards/cards.html",
+        controller: "CardsController"
+    });
 });
 
 app.controller('RootController', function($scope, $rootScope, AuthService){

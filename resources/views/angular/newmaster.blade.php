@@ -192,8 +192,8 @@
                                 Home
                             </a>
                         </li>
-                        <li title="Cards" @if(Request::url() == action('CardsController@index'))class="active" @endif>
-                            <a href="{{ action('CardsController@index') }}" title="Hearthstone cards">
+                        <li title="Cards">
+                            <a ui-sref="cards" title="Hearthstone cards">
                                Cards
                             </a>
                         </li>
@@ -214,8 +214,9 @@
         </div>
         <!-- End Navbar -->
     </div>
-
-    <main ui-view></main>
+    <div class="container">
+        <main ui-view></main>
+    </div>
 
      <!--=== Footer Version 1 ===-->
 
@@ -289,9 +290,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.js"></script>
 <script src="/customJs/angular/app.js"></script>
 <script src="/customJs/angular/directives/validation.js"></script>
-<script src="/customJs/angular/controllers/LoginController.js"></script>
+<script src="/customJs/angular/controllers/CardsController.js"></script>
 <script src="/customJs/angular/controllers/AuthController.js"></script>
 <script src="/customJs/angular/services/AuthService.js"></script>
+<script src="/customJs/angular/services/CardService.js"></script>
+<script src="/customJs/angular/filters/Cost.js"></script>
 <!-- /Angular -->
 
 <script type="text/javascript" src="/plugins/jquery/jquery.min.js"></script>
@@ -301,7 +304,6 @@
 <script type="text/javascript" src="/plugins/back-to-top.js"></script>
 <script type="text/javascript" src="/plugins/smoothScroll.js"></script>
 <script type="text/javascript" src="/plugins/fancybox/source/jquery.fancybox.pack.js"></script>
-
 
 <!-- JS Customization -->
 <script type="text/javascript" src="/js/custom.js"></script>
