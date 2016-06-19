@@ -46,7 +46,7 @@ cardsApp.filter('cost', function(){
 });
 
 
-cardsApp.factory('cardService', function($http) {
+cardsApp.factory('CardService', function($http) {
     return {
         getCards: function() {
              //return the promise directly.
@@ -83,7 +83,7 @@ cardsApp.factory('cardService', function($http) {
     }
 });
 
-cardsApp.controller('SimpleController', function ($scope, $filter, $state, $stateParams, cardService){
+cardsApp.controller('SimpleController', function ($scope, $filter, $state, $stateParams, CardService){
 
     $scope.limit = 28;
 
@@ -178,15 +178,15 @@ cardsApp.controller('SimpleController', function ($scope, $filter, $state, $stat
      * fetch them from db
      */
     if (sessionStorage.getItem("cardAttributes") === null) {
-        cardService.getAttributes().then(function(cardAttributes){
+        CardService.getAttributes().then(function(cardAttributes){
             $scope.cardAttributes = cardAttributes;
-            $scope.cardAttributeClasses = cardService.getAttributeClasses(cardAttributes);
+            $scope.cardAttributeClasses = CardService.getAttributeClasses(cardAttributes);
             sessionStorage.setItem("cardAttributes", JSON.stringify(cardAttributes));
         });
 
     }else{
         $scope.cardAttributes = JSON.parse(sessionStorage.getItem("cardAttributes"));
-        $scope.cardAttributeClasses = cardService.getAttributeClasses($scope.cardAttributes);
+        $scope.cardAttributeClasses = CardService.getAttributeClasses($scope.cardAttributes);
     }
 
     /**
@@ -194,7 +194,7 @@ cardsApp.controller('SimpleController', function ($scope, $filter, $state, $stat
      * fetch them from db
      */
     if (sessionStorage.getItem("cards") === null) {
-        cardService.getCards().then(function(cards){
+        CardService.getCards().then(function(cards){
             $scope.cards = cards;
             $scope.updateFiltered();
             sessionStorage.setItem("cards", JSON.stringify(cards));
