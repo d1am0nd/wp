@@ -15,6 +15,11 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider){
         url: '/',
         templateUrl: '/templates/general/home.html'
     })
+    .state('tos', {
+        url: '/terms-of-service',
+        templateUrl: '/templates/general/tos.html',
+    })
+    // Auth
     .state('auth', {
         url: '/auth',
         templateUrl: '/templates/auth/register.html',
@@ -24,20 +29,22 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider){
         url: '/auth/logout',
         controller: 'LogoutController'
     })
-    .state('tos', {
-        url: '/terms-of-service',
-        templateUrl: '/templates/general/tos.html',
-    })
     // Cards
     .state('cards', {
         url: '/cards/search?standard&rarity&class&set&type&page&name&cost',
         templateUrl: "/templates/cards/index.html",
         controller: "CardsController"
     })
+    // Pages
     .state('pages', {
         url: '/pages/search?page&tag&orderBy&search',
         templateUrl: "/templates/pages/index.html",
         controller: "PagesController"
+    })
+    .state('page', {
+        url: '/pages/:slug',
+        templateUrl: '/templates/pages/show.html',
+        controller: 'PageController'
     });
 });
 

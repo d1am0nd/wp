@@ -293,6 +293,7 @@
 <script src="/customJs/angular/app.js"></script>
 <script src="/customJs/angular/directives/validation.js"></script>
 <script src="/customJs/angular/controllers/pages/PagesController.js"></script>
+<script src="/customJs/angular/controllers/pages/PageController.js"></script>
 <script src="/customJs/angular/controllers/cards/CardsController.js"></script>
 <script src="/customJs/angular/controllers/AuthController.js"></script>
 <script src="/customJs/angular/services/AuthService.js"></script>
