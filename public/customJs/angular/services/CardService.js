@@ -1,4 +1,6 @@
 app.factory('CardService', function($http) {
+    var cardsUrl = '/api/cards';
+    var attributesUrl = '/api/cardattributes';
     return {
         getCards: function() {
              //return the promise directly.
