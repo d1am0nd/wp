@@ -13,35 +13,7 @@ class PageRepository implements PageRepositoryInterface{
     public function __construct(Page $page)
     {
         $this->page = $page;
-    }
-
-    public function getPagesWithInfo($forPage = 1, $tag = null, $orderBy = null)
-    {
-        $this->page->filterOrderBy($orderBy)
-            ->withMyVote()
-            ->whereHasTag($tag);
-        $this->selectImportant();
-        return $this->paginate($forPage);
-    }
-
-    public function getPagesWithInfoByTitle($title, $forPage = 1, $tag = null, $orderBy = null)
-    {
-        $this->page->filterOrderBy($orderBy)
-            ->withMyVote()
-            ->whereHasTag($tag)
-            ->where('title', 'LIKE', '%' . $title . '%');
-        $this->selectImportant();
-        return $this->paginate($forPage);
-    }
-
-    public function createPage($attributes, $type)
-    {
-        return $page = $this->page->create($attributes);
-    }
-
-    private function selectImportant()
-    {
-        $this->page->select([
+        $this->importantAttributes = [
             'pages.id',
             'title',
             'description',
@@ -51,13 +23,37 @@ class PageRepository implements PageRepositoryInterface{
             'comment_count',
             'slug',
             'url',
-            Auth::check() ? 'my_vote.vote as my_vote' : DB::raw('0 as my_vote'),
-        ]);
+            Auth::check() ? DB::raw('COALESCE(my_vote.vote, 0) as my_vote') : DB::raw('0 as my_vote'),
+        ];
     }
 
-    private function paginate($forPage)
+    public function getPagesWithInfo($forPage = 1, $tag = null, $orderBy = null)
     {
-        return $this->page->paginate(15);
+        return $this->page->filterOrderBy($orderBy)
+            ->withMyVote()
+            ->whereHasTag($tag)
+            ->select($this->importantAttributes)
+            ->paginate(15);
+    }
+
+    public function getPagesWithInfoByTitle($title, $forPage = 1, $tag = null, $orderBy = null)
+    {
+        $this->page->filterOrderBy($orderBy)
+            ->withMyVote()
+            ->whereHasTag($tag)
+            ->where('title', 'LIKE', '%' . $title . '%')
+            ->select($this->importantAttributes)
+            ->paginate(15);
+    }
+
+    public function getPageBySlug($slug)
+    {
+        return $this->page->where('slug', $slug)->first();
+    }
+
+    public function createPage($attributes, $type)
+    {
+        return $page = $this->page->create($attributes);
     }
     
 }

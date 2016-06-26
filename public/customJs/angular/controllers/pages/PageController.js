@@ -5,11 +5,17 @@
         .module('generalApp')
         .controller('PageController', PageController);
 
-    function PageController($scope, $rootScope, $window, AuthService) {
+    function PageController($scope, $rootScope, $state, $stateParams, PageService) {
         initController();
 
         function initController(){
-            console.log('test');
+            PageService.GetPage($stateParams.slug)
+            .then(function(page) {
+                if(page)
+                    $scope.page = page;
+                else
+                    $state.go('404');
+            })
         }
 
     }

@@ -10,4 +10,6 @@ interface PageRepositoryInterface{
 
     public function createPage($attributes, $type);
 
+    public function getPageBySlug($slug);
+
 }

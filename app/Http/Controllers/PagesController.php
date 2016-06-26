@@ -143,6 +143,11 @@ class PagesController extends Controller
         return $page->vote($request->input('vote'));
     }
 
+    public function getPageJson($slug)
+    {
+        return $this->pages->getPageBySlug($slug);
+    }
+
     public function getPagesJson(Request $request)
     {
         $filterPage = $request->has('page') ? $request->input('page') : 1;

@@ -15,11 +15,16 @@
         service.GetTags = GetTags;
         service.GetOrderBy = GetOrderBy;
         service.Vote = Vote;
+        service.GetPage = GetPage;
 
         return service;
 
         function GetPages(queryParams) {
             return $http.get(pagesUrl, queryParams).then(handleSuccess, handleError);
+        }
+
+        function GetPage(slug) {
+            return $http.get('/api/pages/' + slug).then(handleSuccess, handleError);
         }
 
         function GetTags() {
@@ -31,7 +36,7 @@
         }
 
         function Vote(pageSlug, vote) {
-            return $http.get('/pages/' + pageSlug + '/vote', vote).then(handleSuccess, handleError);
+            return $http.post('/pages/' + pageSlug + '/vote', vote).then(handleSuccess, handleError);
         }
 
 
