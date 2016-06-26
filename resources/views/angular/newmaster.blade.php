@@ -9,7 +9,7 @@
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
 <!--[if !IE]><!--> 
-<html lang="en" ng-app="generalApp" > <!--<![endif]-->
+<html lang="en" ng-app="generalApp" ng-controller="RootController"> <!--<![endif]-->
 <head>
     <!-- Meta -->
     <meta charset="utf-8">

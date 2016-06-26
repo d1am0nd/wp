@@ -7,10 +7,6 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider){
     .otherwise('/');
 
     $stateProvider
-    .state('root', {
-        url: '',
-        controller: 'RootController'
-    })
     .state('home', {
         url: '/',
         templateUrl: '/templates/general/home.html'
@@ -32,14 +28,14 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider){
     // Cards
     .state('cards', {
         url: '/cards/search?standard&rarity&class&set&type&page&name&cost',
-        templateUrl: "/templates/cards/index.html",
-        controller: "CardsController"
+        templateUrl: '/templates/cards/index.html',
+        controller: 'CardsController'
     })
     // Pages
     .state('pages', {
         url: '/pages/search?page&tag&orderBy&search',
-        templateUrl: "/templates/pages/index.html",
-        controller: "PagesController"
+        templateUrl: '/templates/pages/index.html',
+        controller: 'PagesController'
     })
     .state('page', {
         url: '/pages/:slug',
@@ -48,11 +44,11 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider){
     });
 });
 
-app.controller('RootController', function($scope, $rootScope, AuthService){
+app.controller('RootController', function($rootScope, AuthService){
     initController();
 
     function initController(){
-        $scope.token = {};
+        $rootScope.token = {};
 
         AuthService.GetCurrent()
         .then(function(user) {
