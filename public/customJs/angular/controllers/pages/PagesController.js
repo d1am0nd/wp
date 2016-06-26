@@ -48,22 +48,22 @@
             });
         }
 
-        $scope.vote = function(pageSlug, vote){
-            vote._token = $rootScope.csrf.token;
-            PageService.Vote(pageSlug, vote).then(function(changeNumber){
+        $scope.vote = function(page, vote){
+            if(!$rootScope.user)
+                $state.go('auth');
 
-                // Find the correct page
-                for(page in $scope.pages.data){
-                    if($scope.pages.data[page].slug == pageSlug){
-                        // Add changeNumber
-                        $scope.pages.data[page].vote_sum = parseInt($scope.pages.data[page].vote_sum) + parseInt(changeNumber);
-                        if($scope.pages.data[page].my_vote == null)
-                            $scope.pages.data[page].my_vote = parseInt(changeNumber);
-                        else
-                            $scope.pages.data[page].my_vote = parseInt($scope.pages.data[page].my_vote) + parseInt(changeNumber);
-                        return changeNumber;
-                    }
-                }
+            var pageSlug = page.slug;
+            vote = {
+                "vote": vote,
+                "_token": $rootScope.token.csrf
+            };
+
+            PageService.Vote(pageSlug, vote).then(function(changeNumber){
+                page.vote_sum = parseInt(page.vote_sum) + parseInt(changeNumber);
+                page.my_vote = parseInt(page.my_vote) + parseInt(changeNumber);
+
+                console.log(page.my_vote);
+
                 return changeNumber;
             });
         }
