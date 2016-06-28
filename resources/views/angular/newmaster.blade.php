@@ -299,6 +299,7 @@
 <script src="/customJs/angular/services/AuthService.js"></script>
 <script src="/customJs/angular/services/CardService.js"></script>
 <script src="/customJs/angular/services/PageService.js"></script>
+<script src="/customJs/angular/services/CommentService.js"></script>
 <script src="/customJs/angular/filters/Cost.js"></script>
 <script src="/customJs/angular/filters/Range.js"></script>
 <!-- /Angular -->

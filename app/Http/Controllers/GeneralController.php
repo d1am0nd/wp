@@ -18,7 +18,7 @@ class GeneralController extends Controller
 
     public function getHome(Request $request)
     {
-        return view('angular.newmaster');
+        return view('angular.newmaster'); // New angular implementation
         return view('home');
     }
 

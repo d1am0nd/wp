@@ -23,9 +23,4 @@ class Page extends Model
     {
         return $this->belongsTo('App\PageType');
     }
-
-    public function getRouteKeyName()
-    {
-        return 'slug';
-    }
 }

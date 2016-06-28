@@ -1,38 +1,37 @@
-app.factory('CardService', function($http) {
-    var cardsUrl = '/api/cards';
-    var attributesUrl = '/api/cardattributes';
-    return {
-        getCards: function() {
-             //return the promise directly.
-            return $http.get(cardsUrl)
-                //resolve the promise as the data
-                .then(function(result) {
-                    return result.data;
-                });
-        },
-        getAttributes: function() {
-            return $http.get(attributesUrl)
-                .then(function(result) {
-                    return result.data;
-                });
-        },
+(function () {
+    'use strict';
+
+    angular
+        .module('generalApp')
+        .factory('CardService', Service);
+
+    function Service($http, $q) {
+        var service = {};
+        var cardsUrl = '/api/cards';
+        var attributesUrl = '/api/cards/attributes';
+
+        service.GetCards = GetCards;
+        service.GetAttributes = GetAttributes;
+
+        return service;
+
+        function GetCards() {
+            return $http.get(cardsUrl).then(handleSuccess, handleError);
+        }
+
+        function GetAttributes() {
+            return $http.get(attributesUrl).then(handleSuccess, handleError);
+        }
         
-        /**
-         * Inits attributeClasses object. Sets all classes
-         * to empty string.
-         */
-        getAttributeClasses: function(attributes, picked = null) {
-            var attributeClasses = {};
-            $.each(attributes, function(attribute, values){
-                attributeClasses[attribute] = {};
-                $.each(values, function(dbName, prettyName){
-                    if(picked == dbName)
-                        attributeClasses[attribute][dbName] = "btn-u-sea";
-                    else
-                        attributeClasses[attribute][dbName] = "";
-                });
-            });
-            return attributeClasses;
+
+        // private functions
+        function handleSuccess(res) {
+            return res.data;
+        }
+
+        function handleError(res) {
+            return $q.reject(res.data);
         }
     }
-});
+
+})();

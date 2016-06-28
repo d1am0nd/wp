@@ -92,14 +92,13 @@ app.controller('CardsController', function ($scope, $filter, $state, $stateParam
      * fetch them from db
      */
     if (sessionStorage.getItem("cardAttributes") === null) {
-        CardService.getAttributes().then(function(cardAttributes){
+        CardService.GetAttributes().then(function(cardAttributes){
+            console.log(cardAttributes);
             $scope.cardAttributes = cardAttributes;
-            $scope.cardAttributeClasses = CardService.getAttributeClasses(cardAttributes);
             sessionStorage.setItem("cardAttributes", JSON.stringify(cardAttributes));
         });
     }else{
         $scope.cardAttributes = JSON.parse(sessionStorage.getItem("cardAttributes"));
-        $scope.cardAttributeClasses = CardService.getAttributeClasses($scope.cardAttributes);
     }
 
     /**
@@ -107,7 +106,7 @@ app.controller('CardsController', function ($scope, $filter, $state, $stateParam
      * fetch them from db
      */
     if (sessionStorage.getItem("cards") === null) {
-        CardService.getCards().then(function(cards){
+        CardService.GetCards().then(function(cards){
             $scope.cards = cards;
             $scope.updateFiltered();
             sessionStorage.setItem("cards", JSON.stringify(cards));

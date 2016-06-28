@@ -39,8 +39,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('pages', 'PagesController@index');
     Route::post('pages', 'PagesController@store');
     Route::get('pages/{pageSlug}', 'PagesController@show');
-    Route::post('pages/{page}/vote', 'PagesController@postVote');
-    Route::post('pages/{page}/comment', 'PagesController@postComment');
+    // Route::post('pages/{page}/comment', 'PagesController@postComment');
 
     Route::get('videos', 'VideosController@index');
     Route::post('videos', 'VideosController@store');
@@ -53,11 +52,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('templates/pages/index', 'PagesController@getPagesTemplate');
     Route::get('templates/videos/index', 'VideosController@getVideosTemplate');
     Route::get('templates/cards/index', 'CardsController@getCardsTemplate');
-
-    /*
-    Route::get('tags', 'TagsController@index');
-    Route::get('tags/{tag}', 'TagsController@show');
-    */
 
     Route::get('terms-of-service', 'GeneralController@getTos');
 
@@ -76,13 +70,20 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('api/users/logout', 'AuthController@getLogout');
 
     Route::get('api/cards', 'CardsController@getCardsJson');
-    Route::get('api/cardattributes', 'CardsController@getCardAttributesJson');
+    Route::get('api/cards/attributes', 'CardsController@getCardAttributesJson');
+
     Route::get('api/pages', 'PagesController@getPagesJson');
     Route::get('api/pages/{slug}', 'PagesController@getPageJson');
-    Route::get('api/videos', 'VideosController@getVideosJson');
-    Route::get('api/tags', 'TagsController@getTagsJson');
-    Route::get('api/orderBy', 'GeneralController@getOrderByJson');
+    Route::post('api/pages/{slug}/comment', 'PagesController@postComment');
+    Route::post('api/pages/{slug}/vote', 'PagesController@postVote');
 
+    Route::post('api/comments/{comment}/vote', 'CommentsController@postVote');
+
+    Route::get('api/videos', 'VideosController@getVideosJson');
+
+    Route::get('api/tags', 'TagsController@getTagsJson');
+
+    Route::get('api/orderBy', 'GeneralController@getOrderByJson');
     /**
      * Next routes are for development purposes only
      */

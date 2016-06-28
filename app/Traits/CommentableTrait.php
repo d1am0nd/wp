@@ -19,18 +19,21 @@ trait CommentableTrait
     {
         if(!Auth::check())
             return false;
-        $commentArray = [];
-        if(isset($parentId))
-            $commentArray['comment_id'] = $parentId;
-        $commentArray['text'] = $text;
-        $commentArray['user_id'] = Auth::user()->id;
 
+        $commentArray = [
+            "text" => $text,
+            "user_id" => Auth::user()->id
+        ];
+
+        // Insert comment to db
         Comment::unguard();
-        $this->comments()->create($commentArray);
+        $comment = $this->comments()->create($commentArray);
         Comment::reguard();
+        
         // Increase comment count
         $this->updateCommentCount(1);
-        return $text;
+
+        return $comment;
     }
 
     private function updateCommentCount($amount)

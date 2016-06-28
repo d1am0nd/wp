@@ -10,30 +10,30 @@
             <div class="clearfix margin-bottom-20"></div>
         </div>
         <div class="col-md-6">
-        <h3>Comments</h3>
-        <div class="profile-blog" ng-if="user">
-            <form autocmplete="off">
-                <div class="form-group">
-                    <label for="text">Post a comment</label>
-                    <input type="text" name="text" class="form-control" rows="5"></input>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn-u btn-u-green">Post</button>
-                </div>
-            </form>
-            <hr>
-        </div>
-            <div class="profile-blog">
+            <h3>Comments</h3>
+            <div class="profile-blog" ng-if="user">
+                <form autocmplete="off" ng-submit="postComment(comment)">
+                    <div class="form-group">
+                        <label for="text">Post a comment</label>
+                        <input type="text" name="text" class="form-control" rows="5" ng-model="comment.text"></input>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn-u btn-u-green">Post</button>
+                    </div>
+                </form>
+                <hr>
+            </div>
+        <div class="profile-blog" ng-repeat="comment in page.comments">
                 <div class="clearfix margin-bottom-20"></div>
                 <p>{{ comment.text }}</p>
                 <ul class="list-inline news-v1-info">
-                <li><i class="fa fa-chevron-down downvote votes-icon @if(comment.my_vote == -1)downvoted @endif" commentId="{{ comment.id }}"></i></li>
-                <li>                            
+                <li><i class="fa fa-chevron-down downvote votes-icon" ng-class="comment.my_vote == -1 ? 'downvoted' : ''" commentId="{{ comment.id }}" ng-click="vote(comment, -1)"></i></li>
+                <li>
                     <div class="vote-sum" commentId="{{ comment.id }}">
                     {{ comment['vote_sum'] }}
                     </div>
                 </li>
-                <li><i class="fa fa-chevron-up upvote votes-icon @if(comment.my_vote == 1)upvoted @endif" commentId="{{ comment.id }}"></i></li>
+                <li><i class="fa fa-chevron-up upvote votes-icon" ng-class="comment.my_vote == 1 ? 'upvoted' : ''" commentId="{{ comment.id }}" ng-click="vote(comment, 1)"></i></li>
                 <li>|</li>
                 <li><i class="fa fa-user"></i> {{ comment.user.username }} </li>
                 <li>|</li>
