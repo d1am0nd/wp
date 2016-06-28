@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Auth;
 use App\Tag;
 use App\Page;
 use App\Video;
@@ -132,15 +133,22 @@ class PagesController extends Controller
         //
     }
 
+    public function postComment(CommentRequest $request, $slug)
+    {
+        return $this->pages->postCommentBySlug($slug, $request->input('text'));
+    }
+
+    /* Old implementation
     public function postComment(CommentRequest $request, Page $page)
     {
         $page->comment($request->input('text'));
         return redirect()->back();
     }
+    */
 
-    public function postVote(VoteRequest $request, Page $page)
+    public function postVote(VoteRequest $request, $slug)
     {
-        return $page->vote($request->input('vote'));
+        return $this->pages->postVoteBySlug($slug, $request->input('vote'));
     }
 
     public function getPageJson($slug)

@@ -12,4 +12,8 @@ interface PageRepositoryInterface{
 
     public function getPageBySlug($slug);
 
+    public function postCommentBySlug($slug, $text);
+
+    public function postVoteBySlug($slug, $vote);
+
 }

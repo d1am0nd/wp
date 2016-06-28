@@ -8,7 +8,7 @@ use App\Page;
 
 class PageRepository implements PageRepositoryInterface{
 
-    protected $page;
+    protected $page, $importantAttributes;
 
     public function __construct(Page $page)
     {
@@ -48,12 +48,27 @@ class PageRepository implements PageRepositoryInterface{
 
     public function getPageBySlug($slug)
     {
-        return $this->page->where('slug', $slug)->first();
+        return $this->page->where('slug', $slug)
+        ->with([
+            'comments' => function($q){
+                return $q->withMyVote();
+            }
+        ])
+        ->first();
     }
 
     public function createPage($attributes, $type)
     {
-        return $page = $this->page->create($attributes);
+        return $this->page->create($attributes);
     }
-    
+
+    public function postCommentBySlug($slug, $text, $parentId = null)
+    {
+        return $this->getPageBySlug($slug)->comment($text);
+    }
+
+    public function postVoteBySlug($slug, $vote)
+    {
+        return $this->getPageBySlug($slug)->vote($vote);
+    }
 }
