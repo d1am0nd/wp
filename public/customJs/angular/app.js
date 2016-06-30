@@ -9,7 +9,8 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider){
     $stateProvider
     .state('home', {
         url: '/',
-        templateUrl: '/templates/general/home.html'
+        templateUrl: '/templates/general/home.html',
+        controller: 'HomeController'
     })
     .state('tos', {
         url: '/terms-of-service',
@@ -33,7 +34,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider){
     })
     // Pages
     .state('pages', {
-        url: '/pages/search?page&tag&orderBy&search',
+        url: '/pages/search?page&tag&orderBy&search&type',
         templateUrl: '/templates/pages/index.html',
         controller: 'PagesController'
     })

@@ -50,8 +50,12 @@
     <link rel="stylesheet" href="/plugins/sky-forms-pro/skyforms/css/sky-forms.css">
     <link rel="stylesheet" href="/plugins/sky-forms-pro/skyforms/custom/custom-sky-forms.css">
     <!-- CSS Customization -->
+    <link rel="stylesheet" href="/css/pages/page_one.css">
     <link rel="stylesheet" href="/css/custom.css">
     <style>
+    .full-width{
+        width:100%;
+    }
     .tags-margin-bot{
         margin-bottom:5px;
     }
@@ -227,7 +231,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-3 col-sm-6 column-one md-margin-bottom-50">
-                        <p><a href="{{ action('GeneralController@getTos') }}">Terms of Service</a></p>
+                        <p><a ui-sref="tos">Terms of Service</a></p>
                         <p>Contact: info@wizard-poker.com</p>
                         <span>Social networks:</span>
                         <a href="https://twitter.com/WizardPokerCom"><i class="fa fa-twitter fa-2x"></i> @WizardPokerCom</a>
@@ -278,7 +282,7 @@
             <div class="container">
                 <ul class="list-inline terms-menu">
                     <li>2016 &copy; All Rights Reserved.</li>
-                    <li><a href="{{ action('GeneralController@getTos') }}">Terms of Service</a></li>
+                    <li><a ui-sref="tos">Terms of Service</a></li>
                 </ul>
             </div><!--/end container-->
         </footer>
@@ -292,6 +296,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.js"></script>
 <script src="/customJs/angular/app.js"></script>
 <script src="/customJs/angular/directives/validation.js"></script>
+<script src="/customJs/angular/controllers/HomeController.js"></script>
 <script src="/customJs/angular/controllers/pages/PagesController.js"></script>
 <script src="/customJs/angular/controllers/pages/PageController.js"></script>
 <script src="/customJs/angular/controllers/cards/CardsController.js"></script>

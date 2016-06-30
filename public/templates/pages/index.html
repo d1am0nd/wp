@@ -13,16 +13,31 @@
         </div>
         <div class="row">
             <div class="col-md-12">
+                <h3>Type</h3>
+            </div>
+            <div class="col-sm-4 col-xs-4">
+                <div class="margin-bottom-15">
+                    <a class="btn-u btn-u-green" style="width:100%;" ng-class="queryParams.tag == null ? 'btn-u-sea' : ''" ui-sref="pages({type: undefined, page : undefined, orderBy : queryParams.orderBy, tag : undefined})">ALL</a>
+                </div>
+            </div>
+            <div class="col-sm-4 col-xs-4" ng-repeat="type in types">
+                <div class="margin-bottom-15">
+                    <a class="btn-u" style="width:100%;" ng-class="queryParams.type == type.name ? 'btn-u-sea' : ''" ui-sref="pages({type: type.name, page : undefined, orderBy : queryParams.orderBy, type : type.name})">{{ type.name }}</a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
                 <h3>Tags</h3>
             </div>
             <div class="col-sm-4 col-xs-4">
                 <div class="margin-bottom-15">
-                    <a class="btn-u btn-u-green" style="width:100%;" ng-class="queryParams.tag == null ? 'btn-u-sea' : ''" ui-sref="pages({page : undefined, orderBy : queryParams.orderBy, tag : undefined})">ALL</a>
+                    <a class="btn-u btn-u-green" style="width:100%;" ng-class="queryParams.tag == null ? 'btn-u-sea' : ''" ui-sref="pages({type: queryParams.type, page : undefined, orderBy : queryParams.orderBy, tag : undefined})">ALL</a>
                 </div>
             </div>
             <div class="col-sm-4 col-xs-4" data-ng-repeat="tag in tags">
                 <div class="margin-bottom-15">
-                    <a class="btn-u" style="width:100%;" ng-class="queryParams.tag == tag.name ? 'btn-u-sea' : ''" ui-sref="pages({page : undefined, orderBy : queryParams.orderBy, tag : tag.name})">{{ tag.name }}</a>
+                    <a class="btn-u" style="width:100%;" ng-class="queryParams.tag == tag.name ? 'btn-u-sea' : ''" ui-sref="pages({type: queryParams.type, page : undefined, orderBy : queryParams.orderBy, tag : tag.name})">{{ tag.name }}</a>
                 </div>
             </div>
         </div>
@@ -32,7 +47,7 @@
             </div>
             <div class="col-sm-4 col-xs-4" data-ng-repeat="(ob, array) in orderBy">
                 <div class="margin-bottom-15">
-                    <a class="btn-u" style="width:100%;" ng-class="queryParams.orderBy == ob ? 'btn-u-sea' : ''" ui-sref="pages({page : undefined, orderBy : ob, tag : queryParams.tag})">{{ array.pretty }}</a>
+                    <a class="btn-u" style="width:100%;" ng-class="queryParams.orderBy == ob ? 'btn-u-sea' : ''" ui-sref="pages({type: queryParams.type, page : undefined, orderBy : ob, tag : queryParams.tag})">{{ array.pretty }}</a>
                 </div>
             </div>
         </div>
@@ -77,19 +92,19 @@
                   
                   <li>
                   
-                  <a ui-sref="pages({page : (pages.current_page > 1) ? (pages.current_page - 1) : 1, orderBy : queryParams.orderBy, tag : queryParams.tag})"> Prev</a>
+                  <a ui-sref="pages({type: queryParams.type, page : (pages.current_page > 1) ? (pages.current_page - 1) : 1, orderBy : queryParams.orderBy, tag : queryParams.tag})"> Prev</a>
                   
                   </li>
                   
-                  <li data-ng-repeat="page in getPaginationPages()" ng-class="pages.current_page == page ? 'active' : ''">
+                  <li data-ng-repeat="page in getPaginationPages()type: queryParams.type, " ng-class="pages.current_page == page ? 'active' : ''">
                   
-                  <a ui-sref="pages({page : page, orderBy : queryParams.orderBy, tag : queryParams.tag})">{{ page }}</a>
+                  <a ui-sref="pages({type: queryParams.type, page : page, orderBy : queryParams.orderBy, tag : queryParams.tag})">{{ page }}</a>
                   
                   </li>
                   
                   <li>
                   
-                  <a ui-sref="pages({page : (pages.current_page < pages.last_page) ? (pages.current_page + 1) : pages.last_page, orderBy : queryParams.orderBy, tag : queryParams.tag})">Next </a>
+                  <a ui-sref="pages({type: queryParams.type, page : (pages.current_page < pages.last_page) ? (pages.current_page + 1) : pages.last_page, orderBy : queryParams.orderBy, tag : queryParams.tag})">Next </a>
                   
                   </li>
                  

@@ -27,22 +27,40 @@ class PageRepository implements PageRepositoryInterface{
         ];
     }
 
-    public function getPagesWithInfo($forPage = 1, $tag = null, $orderBy = null)
+    public function getPagesWithInfo($forPage = 1, $tag = null, $type = null,$orderBy = null)
     {
         return $this->page->filterOrderBy($orderBy)
-            ->withMyVote()
             ->whereHasTag($tag)
-            ->select($this->importantAttributes)
+            ->whereHas('pageType', function($q) use ($type){
+                if(isset($type))
+                    $q->where('name', $type);
+            })
+            ->with([
+                'pageType' => function($q) use($type){
+                    $q->select('name', 'id');
+                }
+            ])
+            ->withMyVote()
+            ->addSelect($this->importantAttributes)
             ->paginate(15);
     }
 
-    public function getPagesWithInfoByTitle($title, $forPage = 1, $tag = null, $orderBy = null)
+    public function getPagesWithInfoByTitle($title, $forPage = 1, $tag = null, $type = null, $orderBy = null)
     {
-        $this->page->filterOrderBy($orderBy)
-            ->withMyVote()
+        return $this->page->filterOrderBy($orderBy)
             ->whereHasTag($tag)
+            ->whereHas('pageType', function($q) use ($type){
+                if(isset($type))
+                    $q->where('name', $type);
+            })
+            ->with([
+                'pageType' => function($q) use($type){
+                    $q->select('name', 'id');
+                }
+            ])
+            ->withMyVote()
             ->where('title', 'LIKE', '%' . $title . '%')
-            ->select($this->importantAttributes)
+            ->addSelect($this->importantAttributes)
             ->paginate(15);
     }
 
@@ -70,5 +88,11 @@ class PageRepository implements PageRepositoryInterface{
     public function postVoteBySlug($slug, $vote)
     {
         return $this->getPageBySlug($slug)->vote($vote);
+    }
+
+
+    private function sortByType($q, $type)
+    {
+
     }
 }

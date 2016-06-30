@@ -47,7 +47,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('videos/{video}/comment', 'VideosController@postComment');
     Route::post('videos/{video}/vote', 'VideosController@postVote');
 
-    Route::post('comments/{comment}/vote', 'CommentsController@postVote');
+    Route::post('comments/{id}/vote', 'CommentsController@postVote');
 
     Route::get('templates/pages/index', 'PagesController@getPagesTemplate');
     Route::get('templates/videos/index', 'VideosController@getVideosTemplate');
@@ -77,7 +77,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('api/pages/{slug}/comment', 'PagesController@postComment');
     Route::post('api/pages/{slug}/vote', 'PagesController@postVote');
 
-    Route::post('api/comments/{comment}/vote', 'CommentsController@postVote');
+    Route::post('api/comments/{id}/vote', 'CommentsController@postVote');
 
     Route::get('api/videos', 'VideosController@getVideosJson');
 

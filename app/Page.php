@@ -16,11 +16,11 @@ class Page extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo(User::class);
     }
     
     public function pageType()
     {
-        return $this->belongsTo('App\PageType');
+        return $this->belongsTo(PageType::class);
     }
 }

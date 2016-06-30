@@ -10,14 +10,22 @@
             "orderBy" : $stateParams.orderBy,
             "tag" : $stateParams.tag,
             "page" : $stateParams.page,
-            "title" : $stateParams.search
+            "title" : $stateParams.search,
+            "type" : $stateParams.type
         };
         $scope.orderByFilter = 'top';
-        $scope.search = [];
+        $scope.search = {};
         $scope.search.title = '';
         $scope.pagination = {};
         $scope.pagination.pages = {};
-
+        $scope.types = [
+            { name: "Website" }, 
+            { name: "Video" },
+            { name: "Channel" }
+        ];
+        /**
+         * TODO: Seperate into a service
+         */
         if (sessionStorage.getItem("orderBy") === null) {
             PageService.GetOrderBy().then(function(orderBy){
                 $scope.orderBy = orderBy;
@@ -80,10 +88,14 @@
                 orderBy : $scope.queryParams.orderBy,
                 tag: $scope.queryParams.tag,
                 search: $scope.search.title,
+                type: $scope.queryParams.type,
                 page: undefined
             });
         }
 
+        /**
+         * TODO: Seperate into a service
+         */
         $scope.setPaginationRange = function(){
             if($scope.pages.last_page < 10){
                 $scope.pagination.from = 1,

@@ -29,5 +29,6 @@ class BackendServiceProvider extends ServiceProvider
         $this->app->bind('App\Repositories\CardRepositoryInterface', 'App\Repositories\CardRepository');
         $this->app->bind('App\Repositories\VideoRepositoryInterface', 'App\Repositories\VideoRepository');
         $this->app->bind('App\Repositories\CardAttributeRepositoryInterface', 'App\Repositories\CardAttributeRepository');
+        $this->app->bind('App\Repositories\CommentRepositoryInterface', 'App\Repositories\CommentRepository');
     }
 }

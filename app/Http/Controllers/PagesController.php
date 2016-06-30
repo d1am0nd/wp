@@ -13,8 +13,8 @@ use App\Http\Requests\VoteRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CommentRequest;
 use App\Traits\Controllers\VoteTrait;
-use App\Http\Requests\Pages\StorePagesRequest;
 use App\Repositories\PageRepositoryInterface;
+use App\Http\Requests\Pages\StorePagesRequest;
 
 class PagesController extends Controller
 {
@@ -68,7 +68,6 @@ class PagesController extends Controller
             $request->only('url', 'description', 'title'), 
             [ 'slug' => str_slug($request->input('title')) ]
         );
-        
 
         $page = $this->pages->createPate($attributes);
 
@@ -162,9 +161,10 @@ class PagesController extends Controller
         $filterTag = $request->has('tag') ?  $request->input('tag') : null;
         $filterOrderBy = $request->has('orderBy') ? $request->input('orderBy') : null;
         $filterTitle = $request->has('title') ? $request->input('title') : null;
+        $filterType = $request->has('type') ? $request->input('type') : null;
         if(isset($filterTitle))
-            return $this->pages->getPagesWithInfoByTitle($filterTitle, $filterPage, $filterTag, $filterOrderBy)->toJson();
-        return $this->pages->getPagesWithInfo($filterPage, $filterTag, $filterOrderBy)->toJson();
+            return $this->pages->getPagesWithInfoByTitle($filterTitle, $filterPage, $filterTag, $filterType, $filterOrderBy)->toJson();
+        return $this->pages->getPagesWithInfo($filterPage, $filterTag, $filterType, $filterOrderBy)->toJson();
     }
 
     public function getPages()

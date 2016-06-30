@@ -21,7 +21,10 @@
         return service;
 
         function GetPages(queryParams) {
-            return $http.get(pagesUrl, queryParams).then(handleSuccess, handleError);
+            return $http.get(pagesUrl, {
+                params: queryParams
+            })
+            .then(handleSuccess, handleError);
         }
 
         function GetPage(slug) {
