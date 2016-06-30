@@ -44,7 +44,7 @@ class CopyVideosToPages extends Command
      */
     public function handle()
     {
-        $videos = Video::with('comments', 'votes')->get();
+        $videos = Video::with('comments', 'votes')->with('tags')->get();
         $types = PageType::lists('id', 'name');
 
         // Copy videos
@@ -69,20 +69,29 @@ class CopyVideosToPages extends Command
                 $newPage->page_type_id = ($video->isVideo ? $types['Youtube Video'] : $types['Youtube Channel']);
                 $newPage->save();
 
-                foreach($newPage->comments as $comment) {
+                foreach($video->comments as $comment) {
                     $comment = new Comment;
                     $comment->commentable_id = $newPage->id;
                     $comment->commentable_type = 'App\Page';
                     $comment->save();
                 }            
 
-                foreach($newPage->votes as $vote) {
+                foreach($video->votes as $vote) {
                     $vote = new Vote;
-                    $vote->commentable_id = $newPage->id;
-                    $vote->commentable_type = 'App\Page';
+                    $vote->voteable_id = $newPage->id;
+                    $vote->voteable_type = 'App\Page';
                     $vote->save();
                 }
 
+                foreach($video->tags as $tag) {
+                    $taggable = [
+                        'taggable_id' => $newPage->id,
+                        'taggable_type' => 'App\Page',
+                        'tag_id' => $tag->id
+                    ];
+
+                    DB::table('taggables')->insert($taggable);
+                }
             }
         });
 
