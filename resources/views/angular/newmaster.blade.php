@@ -1,11 +1,4 @@
 <!DOCTYPE html>
-<!--
-    TODO:
-    yield meta
-    yield head
-    yield content
-
--->
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
 <!--[if !IE]><!--> 
@@ -15,10 +8,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="dbZm6GFuvEGRol9FGnF-6D5vofQHk5Z6mTSy4s_-23w" />
+
+    <title ng-bind="MetaTags.title">Wizard Poker</title>
+    <meta name="description" content="@{{MetaTags.description}}">
+    <meta name="keywords" content="@{{MetaTags.keywords}}">
+    <meta ng-repeat="(key, value) in MetaTags.properties" property="@{{key}}" content="@{{value}}" >
+    <meta name="prerender-status-code" content="@{{MetaTags.prerender.statusCode}}">
+    <meta name="prerender-header" ng-if="MetaTags.prerender.header" content="@{{MetaTags.prerender.header}}">
+
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="@WizardPokerCom" />
     <meta name="twitter:image" content="http://www.wizard-poker.com/hslogo.png" />
-    <meta property="og:url" content="{{ Request::url() }}" />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="http://www.wizard-poker.com/hslogo.png" />
     <meta ng-init="token.csrf='{{ csrf_token() }}'" />
@@ -191,8 +191,8 @@
                 <div class="container">
                     <ul class="nav navbar-nav">
                         <!-- Home -->
-                        <li title="Home">
-                            <a ui-sref="home" title="Home">
+                        <li ui-sref="home" title="Home">
+                            <a title="Home">
                                 Home
                             </a>
                         </li>
@@ -258,22 +258,6 @@
                         @endforeach
                         <!-- End Latest News -->
                     </div>
-
-                    <div class="col-md-3 col-sm-6 md-margin-bottom-50">
-                        <h2>Latest Videos</h2>
-                        <!-- Latest Newws -->
-                        @foreach($latestVideos as $video)
-                        <a href="{{$video->url}}" class="no-link-style">
-                            <div class="latest-news margin-bottom-20">
-                                <img src="{{ $video->thumbnail_path }}" alt="">
-                                <h3>{{ $video->title }}</h3>
-                                <p>{{ $video->description }}</p>
-                            </div>
-                        </a>
-                        <hr>
-                        @endforeach
-                        <!-- End Latest News -->
-                    </div>
                 </div><!--/end row-->
             </div><!--/end container-->
         </footer>
@@ -294,6 +278,7 @@
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.js"></script>
+<script src="/assets/bower/ui-router-metatags/dist/ui-router-metatags.min.js"></script>
 <script src="/customJs/angular/app.js"></script>
 <script src="/customJs/angular/directives/validation.js"></script>
 <script src="/customJs/angular/controllers/HomeController.js"></script>
