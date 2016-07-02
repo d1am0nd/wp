@@ -5,21 +5,17 @@
         .module('generalApp')
         .controller('PageController', PageController);
 
-    function PageController($scope, $rootScope, $state, $stateParams, PageService, CommentService) {
+    function PageController($scope, $rootScope, $state, $stateParams, PageService, CommentService, page) {
         initController();
 
         function initController() {
-            $scope.comment = {};
-            $scope.postComment = postComment;
-            $scope.vote = vote;
+            if(!page)
+                console.log('ni'); // #TODO: 404
 
-            PageService.GetPage($stateParams.slug)
-            .then(function(page) {
-                if(page)
-                    $scope.page = page;
-                else
-                    $state.go('404'); // TODO
-            });
+            $scope.comment = {};
+            $scope.page = page; // Get from resolve
+            $scope.postComment = postComment; 
+            $scope.vote = vote;
         }
 
         function postComment(comment) {
