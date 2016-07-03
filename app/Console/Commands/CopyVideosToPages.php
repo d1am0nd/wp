@@ -76,10 +76,12 @@ class CopyVideosToPages extends Command
                     $comment->save();
                 }            
 
-                foreach($video->votes as $vote) {
+                foreach($video->votes as $currVote) {
                     $vote = new Vote;
                     $vote->voteable_id = $newPage->id;
                     $vote->voteable_type = 'App\Page';
+                    $vote->user_id = $currVote->user_id;
+                    $vote->vote = $currVote->vote;
                     $vote->save();
                 }
 
