@@ -66,7 +66,7 @@ class CopyVideosToPages extends Command
                 $newPage->updated_at = $video->updated_at_timestamp;
                 $newPage->comment_count = $video->comment_count;
                 $newPage->slug = $video->slug;
-                $newPage->page_type_id = ($video->isVideo ? $types['Youtube Video'] : $types['Youtube Channel']);
+                $newPage->page_type_id = ($video->isVideo ? $types['Video'] : $types['Channel']);
                 $newPage->save();
 
                 foreach($video->comments as $comment) {
