@@ -15,6 +15,8 @@ use App\Http\Requests\CommentRequest;
 use App\Traits\Controllers\VoteTrait;
 use App\Repositories\PageRepositoryInterface;
 use App\Http\Requests\Pages\StorePagesRequest;
+use App\Repositories\PageTypeRepositoryInterface;
+use App\Classes\
 
 class PagesController extends Controller
 {
@@ -26,50 +28,27 @@ class PagesController extends Controller
     }
 
     /**
-     * 
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
-    {        
-        return view('pages.angindex');
-        
-        /**
-         * Old implementation
-         */
-        /*
-        $filterTag = $request->input('tag');
-        $filterOrderBy = $request->input('orderBy');
-        $pages = Page::filterOrderBy($filterOrderBy)->withMyVote()->whereHasTag($filterTag)->paginate(15);
-        return view('pages.index', compact('pages', 'filterTag', 'filterOrderBy'));
-        */
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request)
-    {
-
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorePagesRequest $request)
+    public function createPage(StorePagesRequest $request)
     {
-        // 
+        $pth = new PageTypeHelper($request->input('url'));
+
+        /**
+         * Merge the attributes from request with 'slug' and 'page_type_id'
+         */
         $attributes = array_merge(
-            $request->only('url', 'description', 'title'), 
-            [ 'slug' => str_slug($request->input('title')) ]
+            $request->only('url', 'description', 'title'),
+            [ 
+                'slug' => str_slug($request->input('title')),
+                'page_type_id' => $pth->getPageTypeId()
+            ] 
         );
 
-        $page = $this->pages->createPate($attributes);
+        $page = $this->pages->createPage($attributes); // Create page
 
         // Attach tags
         $tagIds = array_map('intval', $request->input('tag_id'));
@@ -79,71 +58,14 @@ class PagesController extends Controller
         \Artisan::queue('page:updateThumbnail', [
             'id' => $page->id, 'url' => $request->input('url')
         ]);
-        return json_encode("Success");
+        return $page->toJson();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($pageSlug)
-    {
-        $page = Page::with([
-            'comments' => function($q){
-                return $q->withMyVote();
-            }
-        ])->where('slug', $pageSlug)->first();
-        return view('pages.show')->with(compact('page'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 
     public function postComment(CommentRequest $request, $slug)
     {
         return $this->pages->postCommentBySlug($slug, $request->input('text'));
     }
-
-    /* Old implementation
-    public function postComment(CommentRequest $request, Page $page)
-    {
-        $page->comment($request->input('text'));
-        return redirect()->back();
-    }
-    */
 
     public function postVote(VoteRequest $request, $slug)
     {
@@ -165,15 +87,5 @@ class PagesController extends Controller
         if(isset($filterTitle))
             return $this->pages->getPagesWithInfoByTitle($filterTitle, $filterPage, $filterTag, $filterType, $filterOrderBy)->toJson();
         return $this->pages->getPagesWithInfo($filterPage, $filterTag, $filterType, $filterOrderBy)->toJson();
-    }
-
-    public function getPages()
-    {
-        return view('pages.angindex');
-    }
-
-    public function getPagesTemplate()
-    {
-        return view('pages.template');
     }
 }

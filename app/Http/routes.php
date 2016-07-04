@@ -24,11 +24,18 @@
 */
 
 Route::group(['middleware' => ['web']], function () {
+    
+    /*
+    Route::get('test', function() {
+        $url = 'http://php.net/manual/en/language.oop5.overloading.php';
+        $p = new App\Classes\Page\PageTypeHelper($url);
+        return var_dump($p->isValidUrl());
+        $a = new App\Classes\Page\Channel('https://laravel.com/docs/5.1/testing');
+        return $a->getTitle();
+    });
+    */
+    
     Route::get('', 'GeneralController@getHome');
-    Route::get('logout', 'Auth\AuthController@getLogout');
-    Route::post('login', 'Auth\AuthController@postLogin');
-    Route::post('register', 'Auth\AuthController@postRegister');
-
     Route::get('account/username/edit', 'AccountsController@getUsernameEdit');
     Route::post('account/username/edit', 'AccountsController@postUsernameEdit');
     Route::get('account/username/confirm', 'AccountsController@getConfirmUsername');
@@ -36,6 +43,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('auth/{provider}', 'AuthController@redirectToProvider');
     Route::get('auth/{provider}/callback', 'AuthController@handleProviderCallback');
 
+    /*
     Route::get('pages', 'PagesController@index');
     Route::post('pages', 'PagesController@store');
     Route::get('pages/{pageSlug}', 'PagesController@show');
@@ -44,25 +52,14 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('videos', 'VideosController@index');
     Route::post('videos', 'VideosController@store');
     Route::get('videos/{video}', 'VideosController@show');
-    Route::post('videos/{video}/comment', 'VideosController@postComment');
-    Route::post('videos/{video}/vote', 'VideosController@postVote');
-
-    Route::post('comments/{id}/vote', 'CommentsController@postVote');
-
-    Route::get('templates/pages/index', 'PagesController@getPagesTemplate');
-    Route::get('templates/videos/index', 'VideosController@getVideosTemplate');
-    Route::get('templates/cards/index', 'CardsController@getCardsTemplate');
-
-    Route::get('terms-of-service', 'GeneralController@getTos');
-
+    */
+   
     Route::get('sitemap.xml', 'GeneralController@getSitemapXml');
 
     Route::get('zohoverify/verifyforzoho.html', function()
     {
         return response('1460414100837')->header('Content-Type', 'text/html');
     });
-
-    Route::get('cards', 'CardsController@index');
 
     Route::get('api/users/current', 'AuthController@getCurrentUser');
     Route::post('api/users/login', 'AuthController@postLogin');

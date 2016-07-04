@@ -4,7 +4,9 @@ namespace App\Console\Commands;
 
 use App\Page;
 use Illuminate\Console\Command;
-use App\Classes\Parsers\HtmlParser;
+use App\Classes\Page\PageFactory;
+use App\Classes\Images\ImageHelper;
+use App\Repositories\PageRepository;
 
 class UpdatePageThumbnail extends Command
 {
@@ -24,16 +26,18 @@ class UpdatePageThumbnail extends Command
      */
     protected $description = 'Updates page thumbnail';
 
-    protected $url;
+    protected $url, $id, $pageFactory, $pages;
 
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(PageRepository $pages)
     {
+        $this->pages = $pages;
         parent::__construct();
+
     }
 
     /**
@@ -44,28 +48,18 @@ class UpdatePageThumbnail extends Command
     public function handle()
     {
         $this->url = $this->argument('url');
-        $id = $this->argument('id');
+        $this->id = $this->argument('id');
+        $this->pageFactory = PageFactory::create($this->url);
 
-        $thumbnailUrl = $this->pageThumbnailUrl();
-
-        $fileName = '/thumbnails/pages/' . $id . '.jpg';
-        $absolutePath = public_path() . $fileName;
-        try{
-            // Save thumbnail to public/thumbnails/pages
-            $img = \Image::make($thumbnailUrl)->fit(480, 280);
-            $img->save($absolutePath);
-        }catch(Exception $e){
-            break;
+        $thumbnailUrl = $this->pageFactory->getThumbnailUrl();
+        if(isset($thumbnailUrl)){
+            $path = '/thumbnails/pages/' . $this->id . '.jpg';
+            $absolutePath = public_path() . $path;
+            ImageHelper::downloadAndResize($thumbnailUrl, $absolutePath, 480, 280);
+            $this->pages->updateThumbnailPathById($this->id, $path);
+            $this->info('Downloaded image to: ' . $path);
+        } else {
+            $this->info('$thumbnailUrl is not set');
         }
-        catch(\Exception $e){
-            $this->info($e->getMessage());
-        }
-        Page::where('id', $id)->update(['thumbnail_path' => $fileName]);
-    }
-
-    private function pageThumbnailUrl()
-    {
-        $htmlParser = new HtmlParser($this->url);
-        return $htmlParser->getDomAttVal('meta', 'property', 'og:image', 'content');
     }
 }
