@@ -81,7 +81,7 @@ class PageRepository implements PageRepositoryInterface{
             ->update(['thumbnail_path' => $path]);
     }
 
-    public function createPage($attributes, $type)
+    public function createPage($attributes)
     {
         return $this->page->create($attributes);
     }

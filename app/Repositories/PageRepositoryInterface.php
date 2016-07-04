@@ -10,7 +10,7 @@ interface PageRepositoryInterface{
 
     public function updateThumbnailPathById($id, $path);
 
-    public function createPage($attributes, $type);
+    public function createPage($attributes);
 
     public function getPageBySlug($slug);
 

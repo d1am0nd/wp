@@ -17,6 +17,7 @@
         service.Vote = Vote;
         service.GetPage = GetPage;
         service.PostComment = PostComment;
+        service.CreatePage = CreatePage;
 
         return service;
 
@@ -45,6 +46,10 @@
 
         function PostComment(pageSlug, comment) {
             return $http.post('api/pages/' + pageSlug + '/comment', comment).then(handleSuccess, handleError);
+        }
+
+        function CreatePage(page) {
+            return $http.post('api/pages/create', page).then(handleSuccess, handleError);
         }
 
 

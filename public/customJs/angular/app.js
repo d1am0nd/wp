@@ -1,6 +1,8 @@
 app = angular.module('generalApp', ['ui.router', 'ngMessages', 'ui.router.metatags']);
 
-app.config(function($stateProvider, $urlRouterProvider, $httpProvider, UIRouterMetatagsProvider){
+app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$locationProvider', 'UIRouterMetatagsProvider', function($stateProvider, $urlRouterProvider, $httpProvider, $location, UIRouterMetatagsProvider){
+    $location.hashPrefix('!');
+
     $httpProvider.defaults.withCredentials = true;
 
     UIRouterMetatagsProvider
@@ -86,6 +88,18 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, UIRouterM
             }
         }
     })
+    .state('pageCreate', {
+        url: '/pages/add',
+        templateUrl: '/templates/pages/create.html',
+        controller: 'PageCreateController',
+        metaTags: {
+            title: "Add new Hearthstone Page",
+            description: "Add your favourite Hearthstone related pages",
+            properties: {
+                'og:title': "Wizard Poker - Add new Hearthstone Page"
+            }
+        }
+    })
     .state('page', {
         url: '/pages/:slug',
         templateUrl: '/templates/pages/show.html',
@@ -109,9 +123,9 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, UIRouterM
             }
         }
     });
-});
+}]);
 
-app.controller('RootController', function($rootScope, AuthService){
+app.controller('RootController', ['$rootScope', 'AuthService', function($rootScope, AuthService){
     initController();
 
     function initController(){
@@ -123,7 +137,7 @@ app.controller('RootController', function($rootScope, AuthService){
                 $rootScope.user = user;
         });
     }
-});
+}]);
 
 /**
  * Ui-router-metatags setup

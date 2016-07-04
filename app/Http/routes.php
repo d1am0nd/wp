@@ -70,6 +70,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('api/cards/attributes', 'CardsController@getCardAttributesJson');
 
     Route::get('api/pages', 'PagesController@getPagesJson');
+    Route::get('api/pages/types', 'PageTypesController@getPageTypes');
+    Route::post('api/pages/create/', 'PagesController@postCreate');
     Route::get('api/pages/{slug}', 'PagesController@getPageJson');
     Route::post('api/pages/{slug}/comment', 'PagesController@postComment');
     Route::post('api/pages/{slug}/vote', 'PagesController@postVote');

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Repositories\PageTypeRepositoryInterface;
 
-class PagesController extends Controller
+class PageTypesController extends Controller
 {
 
     public function __construct(PageTypeRepositoryInterface $pageTypes)

@@ -1,0 +1,72 @@
+<div class="container content">
+    <div class="row">
+        <div class="col-md-8">
+            <form novalidate="novalidate" id="sky-form2" class="sky-form" name="pageForm" ng-submit="submitPage(page)">
+                <header>Add new page</header>
+                
+                <fieldset>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Url</label>
+                            <div class="col col-8">
+                                <label class="input">
+                                    <i class="icon-append fa fa-link"></i>
+                                    <input type="text" name="url" ng-model="page.url" required>
+                                </label>
+                                <small ng-messages="pageForm.url.$error" ng-if="pageForm.url.$dirty">
+                                    <em class="invalid" for="url" ng-message="required">Url is required</em>
+                                </small>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Title</label>
+                            <div class="col col-8">
+                                <label class="input">
+                                    <i class="icon-append fa fa-bold"></i>
+                                    <input type="text" name="title" ng-model="page.title" required ng-minlength="3" ng-maxlength="40">
+                                </label>
+                                <small ng-messages="pageForm.title.$error" ng-if="pageForm.title.$dirty">
+                                    <em class="invalid" for="title" ng-message="required">Title is required</em>
+                                    <em class="invalid" for="title" ng-message="minlength">Title must be at least 3 characters long</em>
+                                    <em class="invalid" for="title" ng-message="maxlength">Title must be less than 40 characters long</em>
+                                </small>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Description</label>
+                            <div class="col col-8">
+                                <label class="input">
+                                    <i class="icon-append fa fa-italic"></i>
+                                    <input type="text" name="description" ng-model="page.description" required ng-minlength="15" ng-maxlength="120">
+                                </label>
+                                <small ng-messages="pageForm.description.$error" ng-if="pageForm.description.$dirty">
+                                    <em class="invalid" for="description" ng-message="required">Description is required</em>
+                                    <em class="invalid" for="description" ng-message="minlength">Description must be at least 15 characters long</em>
+                                    <em class="invalid" for="description" ng-message="maxlength">Description must be less than 120 characters long</em>
+                                </small>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <label class="checkbox col-md-4" ng-repeat="tag in tags">
+                            <input name="type_id" type="checkbox" value="type.id" 
+                            ng-checked="isTagIdChecked(tag.id)"
+                            ng-click="toggleTagId(tag.id)"><i></i>{{ tag.name }}
+                        </label>
+                    </section>
+                </fieldset>
+                <footer>
+                    <button type="submit" class="btn-u">Log in</button>
+                </footer>
+            </form>
+        </div>
+        <div class="col-md-4">
+        </div>
+    </div>
+</div>

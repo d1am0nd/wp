@@ -12,7 +12,7 @@ class Page extends Model
 {
     use TaggableTrait, VoteableTrait, CommentableTrait, NiceTimestampAccTrait;
     
-    protected $fillable = ['title'];
+    protected $fillable = ['title', 'description', 'url', 'page_type_id', 'slug', 'user_id'];
 
     public function user()
     {

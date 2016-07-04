@@ -277,12 +277,14 @@
 <script src="/customJs/angular/controllers/HomeController.js"></script>
 <script src="/customJs/angular/controllers/pages/PagesController.js"></script>
 <script src="/customJs/angular/controllers/pages/PageController.js"></script>
+<script src="/customJs/angular/controllers/pages/PageCreateController.js"></script>
 <script src="/customJs/angular/controllers/cards/CardsController.js"></script>
 <script src="/customJs/angular/controllers/AuthController.js"></script>
 <script src="/customJs/angular/services/AuthService.js"></script>
 <script src="/customJs/angular/services/CardService.js"></script>
 <script src="/customJs/angular/services/PageService.js"></script>
 <script src="/customJs/angular/services/CommentService.js"></script>
+<script src="/customJs/angular/services/TagService.js"></script>
 <script src="/customJs/angular/filters/Cost.js"></script>
 <script src="/customJs/angular/filters/Range.js"></script>
 <!-- /Angular -->

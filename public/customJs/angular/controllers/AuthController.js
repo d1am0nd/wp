@@ -10,7 +10,6 @@
         initController();
 
         function initController(){
-            $scope.errors = {};
             $scope.submitRegister = submitRegister;
             $scope.submitLogin = submitLogin;
 

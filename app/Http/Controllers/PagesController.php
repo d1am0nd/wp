@@ -11,12 +11,12 @@ use App\Video;
 use App\Http\Requests;
 use App\Http\Requests\VoteRequest;
 use App\Http\Controllers\Controller;
+use App\Classes\Page\PageTypeHelper;
 use App\Http\Requests\CommentRequest;
 use App\Traits\Controllers\VoteTrait;
 use App\Repositories\PageRepositoryInterface;
 use App\Http\Requests\Pages\StorePagesRequest;
 use App\Repositories\PageTypeRepositoryInterface;
-use App\Classes\
 
 class PagesController extends Controller
 {
@@ -33,7 +33,7 @@ class PagesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function createPage(StorePagesRequest $request)
+    public function postCreate(StorePagesRequest $request)
     {
         $pth = new PageTypeHelper($request->input('url'));
 
@@ -44,7 +44,8 @@ class PagesController extends Controller
             $request->only('url', 'description', 'title'),
             [ 
                 'slug' => str_slug($request->input('title')),
-                'page_type_id' => $pth->getPageTypeId()
+                'page_type_id' => $pth->getPageTypeId(),
+                'user_id' => Auth::user()->id
             ] 
         );
 
