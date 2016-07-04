@@ -75,6 +75,12 @@ class PageRepository implements PageRepositoryInterface{
         ->first();
     }
 
+    public function updateThumbnailPathById($id, $path)
+    {
+        return $this->page->where('id', $id)
+            ->update(['thumbnail_path' => $path]);
+    }
+
     public function createPage($attributes, $type)
     {
         return $this->page->create($attributes);
@@ -88,11 +94,5 @@ class PageRepository implements PageRepositoryInterface{
     public function postVoteBySlug($slug, $vote)
     {
         return $this->getPageBySlug($slug)->vote($vote);
-    }
-
-
-    private function sortByType($q, $type)
-    {
-
     }
 }

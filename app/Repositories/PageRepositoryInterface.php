@@ -8,6 +8,8 @@ interface PageRepositoryInterface{
 
     public function getPagesWithInfoByTitle($forPage = 1, $title, $tag = null, $type = null, $orderBy = null);
 
+    public function updateThumbnailPathById($id, $path);
+
     public function createPage($attributes, $type);
 
     public function getPageBySlug($slug);
