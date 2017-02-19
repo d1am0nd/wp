@@ -51,7 +51,9 @@ return [
         'GVG' => 'GVG',
         'BRM' => 'BRM',
         'EXPERT1' => 'CLASSIC',
-        'OG' => 'WotOG'
+        'OG' => 'WotOG',
+        'GANGS' => 'GoG',
+        'KARA' => 'KARA'
         // 'HERO_SKINS' => 'HERO SKINS',
     ],
     'classes' => [
