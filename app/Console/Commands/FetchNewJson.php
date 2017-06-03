@@ -41,5 +41,7 @@ class FetchNewJson extends Command
         $json = file_get_contents('https://api.hearthstonejson.com/v1/19506/all/cards.collectible.json');
 
         File::put(storage_path('cards.json'), $json);
+
+        \Artisan::call('parse:cardsJson');
     }
 }

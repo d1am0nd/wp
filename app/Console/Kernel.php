@@ -43,6 +43,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('snapshot:updateUrl')
                  ->everyThirtyMinutes();
         */
-        $schedule->command('')
+
+        $schedule->command('json:fetch')
+            ->everyMonth();
     }
 }
