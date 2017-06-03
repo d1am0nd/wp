@@ -24,6 +24,7 @@ class Kernel extends ConsoleKernel
         Commands\ParseCardsJson::class,
         Commands\SetIsStd::class,
         Commands\CopyVideosToPages::class,
+        Commands\FetchNewJson::class,
     ];
 
     /**
@@ -34,11 +35,14 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        /*
         $schedule->command('twitter:updateRedditCustomWeekly')
                  ->everyThirtyMinutes();
         $schedule->command('twitter:updateRedditArenaWeekly')
                  ->everyThirtyMinutes();
         $schedule->command('snapshot:updateUrl')
                  ->everyThirtyMinutes();
+        */
+        $schedule->command('')
     }
 }

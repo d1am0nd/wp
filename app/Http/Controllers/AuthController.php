@@ -26,7 +26,7 @@ class AuthController extends Controller
     | a simple trait to add these behaviors. Why don't you explore it?
     |
     */
-   
+
     public function __construct(UserRepositoryInterface $user)
     {
         $this->user = $user;
@@ -39,7 +39,7 @@ class AuthController extends Controller
 
     public function postLogin(Request $request)
     {
-        return Auth::attempt(['email' => $request->input('email'), 
+        return Auth::attempt(['email' => $request->input('email'),
         'password' => $request->input('password')]) ? Auth::user() : null;
     }
 

@@ -108,7 +108,7 @@ class ParseCardsJson extends Command
         // 14 is the number of all languages or something is wrong
         $languagesCount = CardLanguage::get()->count();
         $this->getLanguages();
-        
+
         if($languagesCount != 14){
             DB::table('card_texts')->delete();
             DB::table('card_languages')->delete();
@@ -439,7 +439,7 @@ class ParseCardsJson extends Command
     }
 
     private function unsetCardsAlreadyInDb($dbItemIds, $cardsArray)
-    {   
+    {
         $tmpArray = [];
         foreach($cardsArray as $card){
             if(!in_array($card['card_id'], $dbItemIds))
