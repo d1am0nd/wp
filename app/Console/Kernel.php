@@ -45,6 +45,6 @@ class Kernel extends ConsoleKernel
         */
 
         $schedule->command('json:fetch')
-            ->everyMonth();
+            ->monthly();
     }
 }
