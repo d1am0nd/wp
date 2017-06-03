@@ -53,7 +53,8 @@ return [
         'EXPERT1' => 'CLASSIC',
         'OG' => 'WotOG',
         'GANGS' => 'GoG',
-        'KARA' => 'KARA'
+        'KARA' => 'KARA',
+        'HOF' => 'HOF'
         // 'HERO_SKINS' => 'HERO SKINS',
     ],
     'classes' => [
