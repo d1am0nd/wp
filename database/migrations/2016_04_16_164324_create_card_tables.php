@@ -127,7 +127,7 @@ class CreateCardTables extends Migration
 
             $table->foreign('card_id')
                 ->references('id')
-                ->on('cards');
+                ->on('cards')
                 ->onDelete('cascade');
         });
 
@@ -143,7 +143,7 @@ class CreateCardTables extends Migration
 
             $table->foreign('card_id')
                 ->references('id')
-                ->on('cards');
+                ->on('cards')
                 ->onDelete('cascade');
 
             $table->primary(['card_mechanic_id', 'card_id']);
