@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h1>Wizard poker</h1>
+    <h1>Wizard Poker</h1>
     <CardFilters :filters="cards.attributes"></CardFilters>
     <Cards></Cards>
   </div>

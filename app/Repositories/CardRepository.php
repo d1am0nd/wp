@@ -58,6 +58,7 @@ class CardRepository implements CardRepositoryInterface
             'card_sets.is_standard as isStd',
             'card_types.name as type',
             'card_texts.name as name',
+            'card_texts.slug as slug',
             'card_texts.text as text',
             'classes.name as class',
         ])

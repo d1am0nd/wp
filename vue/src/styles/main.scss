@@ -21,6 +21,14 @@ html, body {
     }
 }
 
+a.no-style, a.no-style:hover {
+    text-decoration: none;
+}
+
+.pointer:hover {
+    cursor: pointer;
+}
+
 .simple-border-bot {
     border-bottom: 1px solid;
 }

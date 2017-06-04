@@ -74,7 +74,7 @@ class CreateCardTables extends Migration
             $table->timestamps();
         });
 
-        // Card 
+        // Card
         Schema::create('cards', function ( Blueprint $table){
             $table->increments('id');
             $table->string('card_id')->unique();
@@ -92,19 +92,23 @@ class CreateCardTables extends Migration
 
             $table->foreign('card_rarity_id')
                 ->references('id')
-                ->on('card_rarities');
+                ->on('card_rarities')
+                ->onDelete('cascade');
 
             $table->foreign('card_type_id')
                 ->references('id')
-                ->on('card_types');
+                ->on('card_types')
+                ->onDelete('cascade');
 
             $table->foreign('card_set_id')
                 ->references('id')
-                ->on('card_sets');
+                ->on('card_sets')
+                ->onDelete('cascade');
 
             $table->foreign('class_id')
                 ->references('id')
-                ->on('classes');
+                ->on('classes')
+                ->onDelete('cascade');
         });
 
         // Card has Many
@@ -118,11 +122,13 @@ class CreateCardTables extends Migration
 
             $table->foreign('card_language_id')
                 ->references('id')
-                ->on('card_languages');
+                ->on('card_languages')
+                ->onDelete('cascade');
 
             $table->foreign('card_id')
                 ->references('id')
                 ->on('cards');
+                ->onDelete('cascade');
         });
 
         // Pivots
@@ -132,11 +138,13 @@ class CreateCardTables extends Migration
 
             $table->foreign('card_mechanic_id')
                 ->references('id')
-                ->on('card_mechanics');
+                ->on('card_mechanics')
+                ->onDelete('cascade');
 
             $table->foreign('card_id')
                 ->references('id')
                 ->on('cards');
+                ->onDelete('cascade');
 
             $table->primary(['card_mechanic_id', 'card_id']);
         });
@@ -148,11 +156,13 @@ class CreateCardTables extends Migration
 
             $table->foreign('card_play_req_id')
                 ->references('id')
-                ->on('card_play_reqs');
+                ->on('card_play_reqs')
+                ->onDelete('cascade');
 
             $table->foreign('card_id')
                 ->references('id')
-                ->on('cards');
+                ->on('cards')
+                ->onDelete('cascade');
 
             $table->primary(['card_play_req_id', 'card_id']);
         });

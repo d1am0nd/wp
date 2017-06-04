@@ -278,6 +278,7 @@ class ParseCardsJson extends Command
                     'card_id' => (int)$cardId,
                     'card_language_id' => (int)$langId,
                     'name' => (string)$name,
+                    'slug' => str_slug((string)$name),
                     'text' => (string)$text
                 ];
                 array_push($this->texts, $tmpArray);

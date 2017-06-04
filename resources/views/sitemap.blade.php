@@ -9,4 +9,13 @@
        <image:caption>Quick Hearthstone Card Search | Wizard Poker</image:caption>
     </image:image>
   </url>
+  @foreach ($cards as $card)
+  <url>
+    <loc>http://www.wizard-poker.com/card/{{ $card->slug }}</loc>
+    <image:image>
+       <image:loc>{{ $card->image_path }}</image:loc>
+       <image:caption>{{ $card->name }} | Wizard Poker</image:caption>
+    </image:image>
+  </url>
+  @endforeach
 </urlset>

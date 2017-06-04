@@ -5,12 +5,15 @@
       class="row"
       v-for="(chunk, chunkKey) in chunks(filteredCards, 3)">
       <div
-        class="four columns"
+        class="four columns pointer"
+        @click="goTo(card.slug)"
         v-for="(card, ckey) in chunk">
         <p class="card-title"><strong>{{ card.name }}</strong></p>
         <div class="row">
           <div class="six columns">
             <img
+              :alt="card.name"
+              :title="card.name"
               class="u-max-full-width"
               v-lazy="card.image_path">
           </div>
@@ -70,8 +73,8 @@ export default {
       }
       return tmp
     },
-    test () {
-      console.log('s')
+    goTo (slug) {
+      this.$router.push({ name: 'card', params: { slug: slug } })
     }
   }
 }
