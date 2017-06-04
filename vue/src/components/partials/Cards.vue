@@ -20,7 +20,7 @@
                 <ul class="att-list">
                     <li
                       class="atts"
-                      v-if="card.cost">
+                      v-if="typeof card.cost !== 'undefined'">
                       C: {{ card.cost }}
                     </li>
                     <li
