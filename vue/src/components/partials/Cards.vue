@@ -16,17 +16,10 @@
           <div class="six columns">
             <strong>{{ card.name }}</strong>
             <ul class="card-list">
-                <li class="atts">
-                  <button class="button button-sm">{{ card.type.toLowerCase() }}</button>
-                </li>
-                <li class="atts">
-                  <button class="button button-sm">{{ card.rarity.toLowerCase() }}</button>
-                </li>
-                <li class="atts">
-                  <button class="button button-sm">{{ card.set.toLowerCase() }}</button>
-                </li>
-                <li class="atts">
-                  <button class="button button-sm">{{ card.class.toLowerCase() }}</button>
+                <li
+                  class="atts"
+                  v-for="m in card.card_mechanics">
+                  <button class="button button-sm">{{ m.name }}</button>
                 </li>
             </ul>
           </div>
