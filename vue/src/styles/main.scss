@@ -27,9 +27,14 @@ ul.card-list {
 
     li.atts {
         display: inline-block;
+        margin: 0;
 
         span.type {
             text-decoration: lowercase;
+        }
+
+        button {
+            margin-bottom: 0;
         }
     }
 }

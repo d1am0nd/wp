@@ -3,25 +3,35 @@
     <input type="text" v-model="filter" placeholder="Filter by name">
     <div
       class="row"
-      v-for="chunk in chunks(filteredCards, 3)">
+      v-for="(chunk, chunkKey) in chunks(filteredCards, 3)">
       <div
         class="four columns"
-        v-for="card in chunk">
-        <strong>{{ card.name }}</strong>
-        <ul class="card-list">
-            <li class="atts">
-              <button class="button button-sm">{{ card.type.toLowerCase() }}</button>
-            </li>
-            <li class="atts">
-              <button class="button button-sm">{{ card.rarity.toLowerCase() }}</button>
-            </li>
-            <li class="atts">
-              <button class="button button-sm">{{ card.set.toLowerCase() }}</button>
-            </li>
-            <li class="atts">
-              <button class="button button-sm">{{ card.class.toLowerCase() }}</button>
-            </li>
-        </ul>
+        v-for="(card, ckey) in chunk">
+        <div class="row">
+          <div class="six columns">
+            <img
+              v-if="((chunkKey * 3) + ckey) < 18"
+              class="u-max-full-width"
+              :src="card.image_path">
+          </div>
+          <div class="six columns">
+            <strong>{{ card.name }}</strong>
+            <ul class="card-list">
+                <li class="atts">
+                  <button class="button button-sm">{{ card.type.toLowerCase() }}</button>
+                </li>
+                <li class="atts">
+                  <button class="button button-sm">{{ card.rarity.toLowerCase() }}</button>
+                </li>
+                <li class="atts">
+                  <button class="button button-sm">{{ card.set.toLowerCase() }}</button>
+                </li>
+                <li class="atts">
+                  <button class="button button-sm">{{ card.class.toLowerCase() }}</button>
+                </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   </div>
