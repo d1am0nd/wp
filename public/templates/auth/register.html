@@ -1,0 +1,114 @@
+<div class="container content">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="sky-form">
+                <header>Social login</header>
+                <hr>
+            </div>
+            <a href="http://www.wizard-poker.com/auth/twitter" class="btn btn-block btn-lg btn-twitter-inversed">
+              <i class="fa fa-twitter"></i> Connect with Twitter
+            </a>
+            <a href="http://www.wizard-poker.com/auth/facebook" class="btn btn-block btn-lg btn-facebook-inversed">
+              <i class="fa fa-facebook"></i> Connect with Facebook
+            </a>                    
+            <a href="http://www.wizard-poker.com/auth/google" class="btn btn-block btn-lg btn-google-inversed">
+              <i class="fa fa-google"></i> Connect with Google
+            </a>
+        </div>
+        <div class="col-md-4">
+            <form novalidate="novalidate" id="sky-form2" class="sky-form" name="loginForm" ng-submit="submitLogin(login)">
+                <header>Login form</header>
+                
+                <fieldset>                  
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">E-mail</label>
+                            <div class="col col-8">
+                                <label class="input">
+                                    <i class="icon-append fa fa-user"></i>
+                                    <input name="email" type="email" data-ng-model="login.email">
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <section>
+                        <div class="row">
+                            <label class="label col col-4">Password</label>
+                            <div class="col col-8">
+                                <label class="input">
+                                    <i class="icon-append fa fa-lock"></i>
+                                    <input name="password" type="password" data-ng-model="login.password">
+                                </label>
+                                <!--<div class="note"><a href="#sky-form2" class="modal-opener">Forgot password?</a></div>-->
+                            </div>
+                        </div>
+                    </section>
+                    
+                </fieldset>
+                <footer>
+                    <button type="submit" class="btn-u">Log in</button>
+                </footer>
+            </form>
+        </div>
+        <div class="col-md-4">
+            <!-- Reg-Form -->
+            <form novalidate="novalidate" id="sky-form4" class="sky-form" name="registerForm" ng-submit="submitRegister(register)">
+                <header>Registration form</header>
+                
+                <fieldset>                  
+                    <section>
+                        <label class="input">
+                            <i class="icon-append fa fa-user"></i>
+                            <input name="username" placeholder="Username" type="text" data-ng-model="register.username" required ng-minlength="6" ng-maxlength="30">
+                            <b class="tooltip tooltip-bottom-right">Publicly visible username</b>
+                        </label>
+                        <small ng-messages="registerForm.username.$error" ng-if="registerForm.username.$dirty">
+                            <em class="invalid" for="username" ng-message="required">Username is required</em>
+                            <em class="invalid" for="username" ng-message="minlength">Username must be at least 6 characters long</em>
+                            <em class="invalid" for="username" ng-message="maxlength">Username must be less than 30 characters long</em>
+                        </small>
+                    </section>
+                    
+                    <section>
+                        <label class="input">
+                            <i class="icon-append fa fa-envelope"></i>
+                            <input name="email" placeholder="Email address" type="email" data-ng-model="register.email" required email>
+                            <b class="tooltip tooltip-bottom-right">Needed to verify your account</b>
+                        </label>
+                        <small ng-messages="registerForm.email.$error" ng-if="registerForm.email.$dirty">
+                            <em class="invalid" for="email" ng-message="required">Email is required</em>
+                            <em class="invalid" for="email" ng-message="email">You must enter a valid email</em>
+                        </small>
+                    </section>
+                    
+                    <section>
+                        <label class="input">
+                            <i class="icon-append fa fa-lock"></i>
+                            <input name="password" placeholder="Password" id="password" type="password" data-ng-model="register.password" required>
+                            <b class="tooltip tooltip-bottom-right">Don't forget your password</b>
+                        </label>
+                        <small ng-messages="registerForm.password.$error" ng-if="registerForm.password.$dirty">
+                            <em class="invalid" for="username" ng-message="required">Password is required</em>
+                        </small>
+                    </section>
+                    
+                    <section>
+                        <label class="input">
+                            <i class="icon-append fa fa-lock"></i>
+                            <input name="password_confirmation" placeholder="Confirm password" type="password" data-ng-model="register['password_confirmation']" compare-to="register.password">
+                            <b class="tooltip tooltip-bottom-right">Don't misspel your password</b>
+                        </label>
+                        <small ng-messages="registerForm['password_confirmation'].$error" ng-if="registerForm['password_confirmation'].$dirty">
+                            <em class="invalid" for="password_confirmation" ng-message="compareTo">Confirmation must match password</em>
+                        </small>
+                    </section>
+                </fieldset>
+                <footer>
+                    <button type="submit" class="btn-u">Submit</button>
+                </footer>
+            </form>         
+            <!-- End Reg-Form -->
+        </div>
+    </div>
+</div>
