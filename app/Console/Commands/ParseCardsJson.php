@@ -254,7 +254,7 @@ class ParseCardsJson extends Command
             $tmp['card_rarity_id'] = $rarityId;
 
             // Append img url from http://wow.zamimg.com/images/hearthstone/cards/enus/original/{id}.png
-            $tmp['image_path'] = 'http://wow.zamimg.com/images/hearthstone/cards/enus/original/' . $card->id . '.png';
+            $tmp['image_path'] = 'http://media.services.zam.com/v1/media/byName/hs/cards/enus/pal/' . $card->id . '.png';
 
             array_push($this->cards, $tmp);
         }
