@@ -1,49 +1,47 @@
 <template>
   <div class="cards">
     <input type="text" v-model="filter" placeholder="Filter by name">
-    <lazy-component @show="test">
+    <div
+      class="row"
+      v-for="(chunk, chunkKey) in chunks(filteredCards, 3)">
       <div
-        class="row"
-        v-for="(chunk, chunkKey) in chunks(filteredCards, 3)">
-        <div
-          class="four columns"
-          v-for="(card, ckey) in chunk">
-          <p class="card-title"><strong>{{ card.name }}</strong></p>
-          <div class="row">
-            <div class="six columns">
-              <img
-                class="u-max-full-width"
-                v-lazy="card.image_path">
+        class="four columns"
+        v-for="(card, ckey) in chunk">
+        <p class="card-title"><strong>{{ card.name }}</strong></p>
+        <div class="row">
+          <div class="six columns">
+            <img
+              class="u-max-full-width"
+              v-lazy="card.image_path">
+          </div>
+          <div class="six columns">
+            <div class="simple-border-bot">
+              <ul class="att-list">
+                  <li
+                    class="atts"
+                    v-if="typeof card.cost !== 'undefined'">
+                    C: {{ card.cost }}
+                  </li>
+                  <li
+                    class="atts"
+                    v-if="card.atk">
+                    A: {{ card.atk }}
+                  </li>
+                  <li
+                    class="atts"
+                    v-if="card.hp">
+                    HP: {{ card.hp }}
+                  </li>
+              </ul>
             </div>
-            <div class="six columns">
-              <div class="simple-border-bot">
-                <ul class="att-list">
-                    <li
-                      class="atts"
-                      v-if="typeof card.cost !== 'undefined'">
-                      C: {{ card.cost }}
-                    </li>
-                    <li
-                      class="atts"
-                      v-if="card.atk">
-                      A: {{ card.atk }}
-                    </li>
-                    <li
-                      class="atts"
-                      v-if="card.hp">
-                      HP: {{ card.hp }}
-                    </li>
-                </ul>
-              </div>
-              <p
-                class="small-card"
-                v-html="card.text">
-              </p>
-            </div>
+            <p
+              class="small-card"
+              v-html="card.text">
+            </p>
           </div>
         </div>
       </div>
-    </lazy-component>
+    </div>
   </div>
 </template>
 
