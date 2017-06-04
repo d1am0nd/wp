@@ -4,4 +4,4 @@
     })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
     ga('create', 'UA-74992400-1', 'auto');
-    ga('send', 'pageview');</script><body><div id=app></div><script type=text/javascript src=/static/js/manifest.a2e49d7c2af28389cb02.js></script><script type=text/javascript src=/static/js/vendor.1bc917143156590b5bf1.js></script><script type=text/javascript src=/static/js/app.47696f09a57abe483e63.js></script></body></html>
+    ga('send', 'pageview');</script><body><div id=app></div><script type=text/javascript src=/static/js/manifest.988241e9d96cb5bed036.js></script><script type=text/javascript src=/static/js/vendor.1bc917143156590b5bf1.js></script><script type=text/javascript src=/static/js/app.b458012718cbbd052b93.js></script></body></html>
