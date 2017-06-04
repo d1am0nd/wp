@@ -37,7 +37,6 @@ var Attributes = (attJson) => {
   }
 
   tmp.toggleClass = (className) => {
-    console.log(tmp.selected.classes.indexOf(className))
     if (tmp.isClassSelected(className)) {
       tmp.removeClass(className)
     } else {

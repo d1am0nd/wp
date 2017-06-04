@@ -2,6 +2,7 @@
   <div class="card-filters">
     <div class="row">
       <div class="twelve rows">
+        <strong>Type</strong>
         <ul class="filter-nav f-types">
           <li v-for="r in filters.getTypes()">
             <button
@@ -12,6 +13,7 @@
             </button>
           </li>
         </ul>
+        <strong>Rarity</strong>
         <ul class="filter-nav f-rarities">
           <li v-for="r in filters.getRarities()">
             <button
@@ -22,6 +24,7 @@
             </button>
           </li>
         </ul>
+        <strong>Set</strong>
         <ul class="filter-nav f-sets">
           <li v-for="r in filters.getSets()">
             <button
@@ -32,6 +35,7 @@
             </button>
           </li>
         </ul>
+        <strong>Class</strong>
         <ul class="filter-nav f-classes">
           <li v-for="r in filters.getClasses()">
             <button
