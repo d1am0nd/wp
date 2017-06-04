@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import VueResource from 'vue-resource'
+import VueLazyload from 'vue-lazyload'
 import 'skeleton-css/css/normalize.css'
 import 'skeleton-css/css/skeleton.css'
 import './styles/main.scss'
@@ -14,6 +15,7 @@ import Attributes from '@/services/data/cardattributes'
 
 Vue.config.productionTip = false
 Vue.use(VueResource)
+Vue.use(VueLazyload)
 
 /* eslint-disable no-new */
 new Vue({

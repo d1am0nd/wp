@@ -10,9 +10,8 @@
         <div class="row">
           <div class="six columns">
             <img
-              v-if="((chunkKey * 3) + ckey) < 18"
               class="u-max-full-width"
-              :src="card.image_path">
+              v-lazy="card.image_path">
           </div>
           <div class="six columns">
             <strong>{{ card.name }}</strong>
