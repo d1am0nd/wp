@@ -27,9 +27,11 @@ class ViewComposer
      */
     public function compose(View $view)
     {
+        /*
         $latestPages = Page::orderBy('created_at', 'DESC')->take(3)->get();
         $latestVideos = Video::orderBy('created_at', 'DESC')->take(3)->get();
         $tags = Tag::get();
         $view->with(compact('latestPages', 'latestVideos', 'tags'));
+        */
     }
 }
