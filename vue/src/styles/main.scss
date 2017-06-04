@@ -21,3 +21,15 @@ html, body {
     }
 }
 
+
+ul.card-list {
+    margin: 0;
+
+    li.atts {
+        display: inline-block;
+
+        span.type {
+            text-decoration: lowercase;
+        }
+    }
+}
