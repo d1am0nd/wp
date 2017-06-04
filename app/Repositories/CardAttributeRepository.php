@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Repositories;
 
@@ -15,6 +15,7 @@ class CardAttributeRepository implements CardAttributeRepositoryInterface
     {
         return CardRarity::get();
     }
+
     public function getMechanics()
     {
         return CardMechanic::get();
@@ -27,7 +28,7 @@ class CardAttributeRepository implements CardAttributeRepositoryInterface
 
     public function getSets()
     {
-        return CardSet::get();
+        return CardSet::whereNotIn('name', ['expert1', 'hero_skins'])->get();
     }
 
     public function getTypes()

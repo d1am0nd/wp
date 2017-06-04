@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Repositories;
 
@@ -64,8 +64,9 @@ class CardRepository implements CardRepositoryInterface
         ->with(['cardMechanics' => function($q){
             $q->select('id', 'name');
         }])
-        // Hero portrait is not a card. 
+        // Hero portrait is not a card.
         ->where('card_types.name', '!=', 'HERO')
+        ->orderBy('cards.cost', 'ASC')
         ->get();
     }
 

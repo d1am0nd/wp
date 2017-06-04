@@ -23,8 +23,53 @@
 |
 */
 
+Route::get('test', function () {
+    return App\Models\Cards\Card::leftJoin('classes', 'cards.class_id', '=', 'classes.id')
+        /**
+         * Each card must have these.
+         * If it doesn't, the cards entry must be corrupted.
+         */
+        ->join('card_rarities', 'cards.card_rarity_id', '=', 'card_rarities.id')
+        ->join('card_sets', 'cards.card_set_id', '=', 'card_sets.id')
+        ->join('card_types', 'cards.card_type_id', '=', 'card_types.id')
+        ->join('card_texts', 'cards.id', '=', 'card_texts.card_id')
+        ->join('card_languages', function($q){
+            $q->on('card_texts.card_language_id', '=', 'card_languages.id')
+                ->where('card_languages.lang_id', '=', 'enUS');
+        })
+        ->select([
+            'cards.id',
+            'cards.card_id',
+            'cards.image_path',
+            'cards.cost',
+            'cards.hp',
+            'cards.atk',
+            'card_rarities.name as rarity',
+            'card_sets.name as set',
+            'card_sets.is_standard as isStd',
+            'card_types.name as type',
+            'card_texts.name as name',
+            'card_texts.text as text',
+            'classes.name as class',
+        ])
+        ->with(['cardMechanics' => function($q){
+            $q->select('id', 'name');
+        }])
+        // Hero portrait is not a card.
+        ->where('card_types.name', '!=', 'HERO')
+        ->take(5)
+        ->get();
+});
+Route::group(['prefix' => 'api/v2', 'middleware' => 'api'], function () {
+    Route::group(['prefix' => 'cards'], function () {
+        Route::get('/', 'CardsController2@getCardsJson');
+        Route::get('attributes', 'CardsController2@getCardAttributesJson');
+    });
+});
+
 Route::group(['middleware' => ['web']], function () {
-    
+    Route::get('sitemap.xml', 'GeneralController@getSitemapXml');
+
     /*
     Route::get('test', function() {
         $url = 'http://php.net/manual/en/language.oop5.overloading.php';
@@ -34,7 +79,8 @@ Route::group(['middleware' => ['web']], function () {
         return $a->getTitle();
     });
     */
-    
+
+    /*
     Route::get('', 'GeneralController@getHome');
     Route::get('account/username/edit', 'AccountsController@getUsernameEdit');
     Route::post('account/username/edit', 'AccountsController@postUsernameEdit');
@@ -42,6 +88,7 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('auth/{provider}', 'AuthController@redirectToProvider');
     Route::get('auth/{provider}/callback', 'AuthController@handleProviderCallback');
+    */
 
     /*
     Route::get('pages', 'PagesController@index');
@@ -53,8 +100,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('videos', 'VideosController@store');
     Route::get('videos/{video}', 'VideosController@show');
     */
-   
-    Route::get('sitemap.xml', 'GeneralController@getSitemapXml');
+
+    /*
 
     Route::get('zohoverify/verifyforzoho.html', function()
     {
@@ -83,9 +130,16 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('api/tags', 'TagsController@getTagsJson');
 
     Route::get('api/orderBy', 'GeneralController@getOrderByJson');
+
+    */
     /**
      * Next routes are for development purposes only
      */
     // Route::get('ang/pages', 'PagesController@getPages');
     // Route::get('ang/videos', 'VideosController@getVideos');
+    Route::get('{any?}', function () {
+        if (env('APP_ENV') == 'local')
+            return view('dev');
+        return view('index');
+    })->where('any', '(.*)');
 });

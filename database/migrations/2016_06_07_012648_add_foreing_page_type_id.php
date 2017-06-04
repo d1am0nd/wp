@@ -15,7 +15,8 @@ class AddForeingPageTypeId extends Migration
         Schema::table('pages', function($table) {
             $table->foreign('page_type_id')
             ->references('id')
-            ->on('page_types');
+            ->on('page_types')
+            ->onDelete('cascade');
         });
     }
 
