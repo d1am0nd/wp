@@ -1,6 +1,6 @@
 <template>
   <section class="header">
-    <div class="title">Wizard Poker | Heartstone Cards Search</div>
+    <div class="title">Wizard Poker | Hearthstone Cards Search</div>
   </section>
 </template>
 

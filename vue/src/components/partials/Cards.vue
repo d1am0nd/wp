@@ -9,7 +9,7 @@
         @click="goTo(card.slug)"
         v-for="(card, ckey) in chunk">
         <div
-          v-if="chunkKey < 5">
+          v-if="chunkKey < rowsDisplayed">
 
           <p class="card-title"><strong>{{ card.name }}</strong></p>
           <div class="row">
@@ -49,17 +49,32 @@
         </div>
       </div>
     </div>
+    <infinite-loading
+      :on-infinite="incRowsDisplayed"
+      ref="infiniteLoading"
+      v-if="rowsDisplayed < filteredCards.length"></infinite-loading>
   </div>
 </template>
 
 <script>
+import InfiniteLoading from 'vue-infinite-loading'
+
+const ROWS_DISPLAYED = 10
+
 export default {
   name: 'Cards',
+  components: {
+    InfiniteLoading: InfiniteLoading
+  },
   data () {
     return {
       filter: '',
-      cards: this.$root.cards
+      cards: this.$root.cards,
+      rowsDisplayed: ROWS_DISPLAYED
     }
+  },
+  watch: {
+    'filteredCards': 'resetRowsDisplayed'
   },
   computed: {
     filteredCards () {
@@ -84,8 +99,18 @@ export default {
       this.$router.push({ name: 'card', params: { slug: slug } })
     },
     canShowRow (row) {
-      console.log(row)
-      return row < 5
+      return row < this.rowsDisplayeds
+    },
+    incRowsDisplayed () {
+      if (this.rowsDisplayed + ROWS_DISPLAYED >= this.filteredCards.length) {
+        this.rowsDisplayed = this.filteredCards.length
+      } else {
+        this.rowsDisplayed = this.rowsDisplayed + ROWS_DISPLAYED
+        this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded')
+      }
+    },
+    resetRowsDisplayed () {
+      this.rowsDisplayed = ROWS_DISPLAYED
     }
   }
 }
