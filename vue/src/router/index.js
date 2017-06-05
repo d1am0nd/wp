@@ -3,7 +3,6 @@ import Router from 'vue-router'
 import Home from '@/components/pages/Home'
 import Card from '@/components/pages/Card'
 import Origin from '@/components/pages/Origin'
-import VueAnalytics from 'vue-analytics'
 
 Vue.use(Router)
 
@@ -26,11 +25,6 @@ var router = new Router({
       component: Origin
     }
   ]
-})
-
-Vue.use(VueAnalytics, {
-  id: 'UA-74992400-1',
-  router
 })
 
 export default router
