@@ -61,8 +61,11 @@ export default {
     filteredCards () {
       var vm = this
       return this.cards.cards.filter((val, key) => {
-        return vm.cards.attributes.canCardBePlayed(val) && val.name.toLowerCase().indexOf(vm.filter) !== -1
+        return vm.cards.attributes.canCardBePlayed(val) && val.name.toLowerCase().indexOf(vm.lcFilter) !== -1
       })
+    },
+    lcFilter () {
+      return this.filter.toLowerCase()
     }
   },
   methods: {
