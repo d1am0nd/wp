@@ -9,7 +9,6 @@ import 'skeleton-css/css/normalize.css'
 import 'skeleton-css/css/skeleton.css'
 import './styles/main.scss'
 
-import VueAnalytics from 'vue-analytics'
 import Errors from '@/errors'
 import cards from '@/services/db/cards'
 import Attributes from '@/services/data/cardattributes'
@@ -17,10 +16,6 @@ import Attributes from '@/services/data/cardattributes'
 Vue.config.productionTip = false
 Vue.use(VueResource)
 Vue.use(VueLazyload)
-
-Vue.use(VueAnalytics, {
-  id: 'UA-74992400-1'
-})
 
 /* eslint-disable no-new */
 new Vue({
