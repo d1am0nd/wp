@@ -1,6 +1,6 @@
 <template>
   <section class="header">
-    <div class="title">Wizard Poker | Hearthstone Cards Search</div>
+    <div class="title"><router-link :to="{ name: 'home' }" class="no-style">Wizard Poker</router-link> | <router-link :to="{ name: 'origin' }" class="no-style">Name Origin</router-link> | Hearthstone Card Search</div>
   </section>
 </template>
 
