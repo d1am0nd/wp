@@ -2,7 +2,12 @@
   <div class="home">
     <h1>Name Origin</h1>
     <p>
-      "<a href="https://www.reddit.com/r/hearthstone/comments/36qt9z/when_my_teacher_caught_me_playing_hearthstone_in/" class="no-style">Stop playin your damn Wizard Poker</a>" - /u/JewBrownie's teacher
+      "<a
+        href="https://www.reddit.com/r/hearthstone/comments/36qt9z/when_my_teacher_caught_me_playing_hearthstone_in/"
+        class="no-style"
+        target="_blank">
+        Stop playin your damn Wizard Poker
+      </a>" - /u/JewBrownie's teacher
     </p>
   </div>
 </template>
