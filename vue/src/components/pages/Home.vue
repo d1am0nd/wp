@@ -9,12 +9,17 @@
 <script>
 import CardFilters from '@/components/partials/CardFilters'
 import Cards from '@/components/partials/Cards'
+import Meta from '@/config/head'
 
 export default {
   name: 'home',
   components: {
     CardFilters: CardFilters,
     Cards: Cards
+  },
+  created () {
+    Meta.title('Hearthstone Card Search')
+    Meta.description('Quick responsive Hearthsotne card search. Named after a viral Reddit post')
   },
   data () {
     return {

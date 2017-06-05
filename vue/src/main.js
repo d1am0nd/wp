@@ -36,9 +36,8 @@ new Vue({
 
     cards.getCards()
     .then((res) => {
-      if (res.status === 200) {
-        this.cards.cards = JSON.parse(res.body)
-      }
+      console.log(res)
+      this.cards.cards = res
     })
     .catch((err) => {
       Errors.newErrRes(err)

@@ -33,7 +33,7 @@ class CardAttributeRepository implements CardAttributeRepositoryInterface
 
     public function getTypes()
     {
-        return CardType::get();
+        return CardType::whereNotIn('name', ['hero'])->get();
     }
 
     public function getClasses()
