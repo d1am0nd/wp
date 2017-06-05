@@ -36,7 +36,6 @@ new Vue({
 
     cards.getCards()
     .then((res) => {
-      console.log(res)
       this.cards.cards = res
     })
     .catch((err) => {
