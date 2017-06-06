@@ -46,6 +46,7 @@
             </button>
           </li>
         </ul>
+        <strong>Mana</strong>
       </div>
     </div>
   </div>
@@ -57,13 +58,8 @@ export default {
   name: 'card-filters',
   data () {
     return {
-      selected: this.filters.solocted
+      selected: this.filters.selected
     }
-  },
-  created () {
-    setTimeout(() => {
-      console.log(this.filters)
-    }, 200)
   },
   methods: {
     toggleType (val) {
