@@ -19,7 +19,7 @@ export default {
   },
   created () {
     Meta.title('Hearthstone Card Search')
-    Meta.description('Quick responsive Hearthsotne card search. Named after a viral Reddit post. Named after /u/JewBrownie Reddit post')
+    Meta.description('Quick responsive Hearthstone card search. Named after a viral Reddit post. Named after /u/JewBrownie Reddit post')
   },
   data () {
     return {
