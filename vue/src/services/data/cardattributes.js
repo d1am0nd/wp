@@ -53,7 +53,6 @@ var Attributes = (attJson) => {
     if (tmp.selected[type][val] === true) {
       tmp.selected[type][val] = false
       tmp.selected[type + '-count']--
-      console.log(tmp)
       return false
     }
     tmp.selected[type][val] = true
@@ -61,7 +60,6 @@ var Attributes = (attJson) => {
 
     if (tmp.selected[type + '-count'] >= tmp.attributes[type].length) {
       tmp.resetType(type)
-      console.log('RESET')
     }
 
     return true

@@ -46,7 +46,6 @@
             </button>
           </li>
         </ul>
-        <strong>Mana</strong>
       </div>
     </div>
   </div>
@@ -58,7 +57,8 @@ export default {
   name: 'card-filters',
   data () {
     return {
-      selected: this.filters.selected
+      selected: this.filters.selected,
+      manaSlider: 0
     }
   },
   methods: {
