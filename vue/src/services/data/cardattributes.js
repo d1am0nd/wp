@@ -11,12 +11,6 @@ var Attributes = (attJson) => {
 
   tmp.attributes = {}
   tmp.selected = {
-    classes: [],
-    rarities: [],
-    sets: [],
-    types: []
-  }
-  tmp.solocted = {
     classes: {},
     rarities: {},
     sets: {},
@@ -45,47 +39,45 @@ var Attributes = (attJson) => {
   }
 
   tmp.isSelected = (type, val) => {
-    if (!tmp.solocted.hasOwnProperty(type) || !tmp.solocted[type].hasOwnProperty(val)) {
+    if (!tmp.selected.hasOwnProperty(type) || !tmp.selected[type].hasOwnProperty(val)) {
       return false
     }
-    return tmp.solocted[type][val] === true
+    return tmp.selected[type][val] === true
   }
 
   tmp.isFiltered = (type, val) => {
-    return tmp.isSelected(type, val) || tmp.solocted[type + '-count'] === 0
+    return tmp.isSelected(type, val) || tmp.selected[type + '-count'] === 0
   }
 
   tmp.toggle = (type, val) => {
-    if (tmp.solocted[type][val] === true) {
-      tmp.solocted[type][val] = false
-      tmp.solocted[type + '-count']--
-      console.log(tmp)
+    if (tmp.selected[type][val] === true) {
+      tmp.selected[type][val] = false
+      tmp.selected[type + '-count']--
       return false
     }
-    tmp.solocted[type][val] = true
-    tmp.solocted[type + '-count']++
+    tmp.selected[type][val] = true
+    tmp.selected[type + '-count']++
 
-    if (tmp.solocted[type + '-count'] >= tmp.attributes[type].length) {
+    if (tmp.selected[type + '-count'] >= tmp.attributes[type].length) {
       tmp.resetType(type)
-      console.log('RESET')
     }
 
     return true
   }
 
   tmp.resetType = (type) => {
-    for (var c in tmp.solocted[type]) {
-      if (tmp.solocted[type].hasOwnProperty(c)) {
-        tmp.solocted[type][c] = false
+    for (var c in tmp.selected[type]) {
+      if (tmp.selected[type].hasOwnProperty(c)) {
+        tmp.selected[type][c] = false
       }
     }
-    tmp.solocted[type + '-count'] = 0
+    tmp.selected[type + '-count'] = 0
   }
 
   // Attributes setter/getter
   tmp.setAttributes = (attJson) => {
     tmp.attributes = attJson
-    tmp.solocted = {
+    tmp.selected = {
       classes: {},
       rarities: {},
       sets: {},
@@ -96,13 +88,13 @@ var Attributes = (attJson) => {
       'types-count': 0
     }
     for (var i in FILTER_TYPES) {
-      tmp.solocted[FILTER_TYPES[i]] = {}
+      tmp.selected[FILTER_TYPES[i]] = {}
       var atts = tmp.attributes[FILTER_TYPES[i]]
       if (typeof atts === 'undefined') {
         continue
       }
       for (var j = 0; j < atts.length; j++) {
-        tmp.solocted[FILTER_TYPES[i]][atts[j].name] = false
+        tmp.selected[FILTER_TYPES[i]][atts[j].name] = false
       }
     }
   }
@@ -112,7 +104,7 @@ var Attributes = (attJson) => {
   }
 
   tmp.getSelected = () => {
-    return tmp.solocted
+    return tmp.selected
   }
 
   tmp.setAttributes(attJson)

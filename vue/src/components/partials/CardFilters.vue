@@ -57,13 +57,9 @@ export default {
   name: 'card-filters',
   data () {
     return {
-      selected: this.filters.solocted
+      selected: this.filters.selected,
+      manaSlider: 0
     }
-  },
-  created () {
-    setTimeout(() => {
-      console.log(this.filters)
-    }, 200)
   },
   methods: {
     toggleType (val) {
