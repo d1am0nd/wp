@@ -10,6 +10,7 @@ var Attributes = (attJson) => {
   var tmp = {}
 
   tmp.attributes = {}
+
   tmp.selected = {
     classes: {},
     rarities: {},
@@ -65,6 +66,13 @@ var Attributes = (attJson) => {
     return true
   }
 
+  tmp.setTrue = (type, val) => {
+    if (tmp.isSelected(type, val) === false) {
+      tmp.selected[type][val] = true
+      tmp.selected[type + '-count']++
+    }
+  }
+
   tmp.resetType = (type) => {
     for (var c in tmp.selected[type]) {
       if (tmp.selected[type].hasOwnProperty(c)) {
@@ -72,6 +80,13 @@ var Attributes = (attJson) => {
       }
     }
     tmp.selected[type + '-count'] = 0
+  }
+
+  tmp.resetAll = () => {
+    tmp.resetType('classes')
+    tmp.resetType('rarities')
+    tmp.resetType('sets')
+    tmp.resetType('types')
   }
 
   // Attributes setter/getter
