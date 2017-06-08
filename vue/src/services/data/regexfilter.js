@@ -63,7 +63,6 @@ var Filters = (regex, cards = {}) => {
       return []
     }
     var contents = str[3]
-    console.log(tmp.attributes.rarities)
     return tmp.parseType(contents, tmp.attributes.rarities)
   }
 
@@ -76,8 +75,7 @@ var Filters = (regex, cards = {}) => {
       return []
     }
     var contents = str[3]
-    console.log(tmp.transformSets(tmp.cards.attributes.getAtts('sets')))
-    return tmp.parseType(contents, tmp.transformSets(tmp.cards.attributes.getAtts('sets')))
+    return tmp.parseType(contents, tmp.getSets())
   }
 
   tmp.transformSets = (fromDb) => {
@@ -100,8 +98,16 @@ var Filters = (regex, cards = {}) => {
     return parsed
   }
 
+  tmp.setRegex = (regex) => {
+    tmp.regex = regex
+  }
+
   tmp.setSets = (sets) => {
     tmp.attributes.sets = sets
+  }
+
+  tmp.getSets = () => {
+    return tmp.transformSets(tmp.cards.attributes.getAtts('sets'))
   }
 
   return tmp

@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <h1>Name Origin</h1>
-    <p>
+    <p class="summary">
       "<a
         href="https://www.reddit.com/r/hearthstone/comments/36qt9z/when_my_teacher_caught_me_playing_hearthstone_in/"
         class="no-style"

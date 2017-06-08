@@ -21,6 +21,12 @@ html, body {
     }
 }
 
+p.summary {
+  font-size: 21px;
+  letter-spacing: 1px;
+  font-weight: 400;
+}
+
 a.no-style, a.no-style:hover {
     text-decoration: none;
 }
@@ -56,3 +62,4 @@ p.card-title {
     text-align: center;
     margin-bottom: 0;
 }
+

@@ -1,7 +1,16 @@
 <template>
   <div class="advanced">
+    <h1>Advanced Search</h1>
+    <p class="summary">
+      Write an expression for filtering Hearthstone cards using the rules below. Each rule has to be separated with space.<br>
+      <button class="button button-sm" @click="tryExample(1)">Try example</button>
+    </p>
+    <p>
+      <pre>{{ ex1 }}</pre>
+    </p>
     <input
       type="text"
+      class="regex-input"
       placeholder="Advanced filter"
       v-model="regex.regex">
     <Cards></Cards>
@@ -27,7 +36,8 @@ export default {
   data () {
     return {
       cards: this.$root.cards,
-      regex: RegexFilter.newRegexFilter('', this.$root.cards)
+      regex: RegexFilter.newRegexFilter('', this.$root.cards),
+      ex1: 'rarities:r,l,c classes:warr,warl,pri,pal,rog,hun types:s'
     }
   },
   methods: {
@@ -45,6 +55,10 @@ export default {
       for (var i = 0; i < vals.length; i++) {
         this.cards.attributes.setTrue(type, vals[i].toUpperCase())
       }
+    },
+    tryExample (n) {
+      console.log(this['ex' + n])
+      this.regex.setRegex(this['ex' + n])
     }
   },
   watch: {
@@ -52,3 +66,8 @@ export default {
   }
 }
 </script>
+<style type="text/css">
+  .regex-input {
+    width: 100%;
+  }
+</style>
