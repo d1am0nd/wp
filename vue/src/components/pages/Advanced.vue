@@ -27,13 +27,15 @@ export default {
   data () {
     return {
       cards: this.$root.cards,
-      regex: RegexFilter.newRegexFilter('as')
+      regex: RegexFilter.newRegexFilter('', this.$root.cards)
     }
   },
   methods: {
     parseRegex () {
       this.pushFilters('types', this.regex.parseTypes())
       this.pushFilters('classes', this.regex.parseClasses())
+      this.pushFilters('rarities', this.regex.parseRarities())
+      this.pushFilters('sets', this.regex.parseSets())
     },
     pushFilters (type, vals) {
       if (vals.length === 0) {

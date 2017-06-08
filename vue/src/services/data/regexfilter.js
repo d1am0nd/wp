@@ -1,10 +1,10 @@
 export default {
-  newRegexFilter (regex) {
-    return new Filters(regex)
+  newRegexFilter (regex, cards) {
+    return new Filters(regex, cards)
   }
 }
 
-var Filters = (regex) => {
+var Filters = (regex, cards = {}) => {
   var tmp = {}
 
   tmp.attributes = {
@@ -25,27 +25,67 @@ var Filters = (regex) => {
       druid: 'dru',
       warrior: 'warr',
       warlock: 'warl'
+    },
+
+    rarities: {
+      free: 'f',
+      common: 'c',
+      rare: 'r',
+      epic: 'e',
+      legendary: 'l'
     }
   }
 
+  tmp.cards = cards
   tmp.regex = regex
 
   tmp.parseTypes = () => {
-    var str = /(t|types?):\s?([^\s]+)/i.exec(tmp.regex)
+    var str = /(t|types?)(:|\s)\s?([^\s]+)/i.exec(tmp.regex)
     if (str === null) {
       return []
     }
-    var contents = str[2]
+    var contents = str[3]
     return tmp.parseType(contents, tmp.attributes.types)
   }
 
   tmp.parseClasses = () => {
-    var str = /(classe?s?):\s?([^\s]+)/i.exec(tmp.regex)
+    var str = /(c|classe?s?)(:|\s)\s?([^\s]+)/i.exec(tmp.regex)
     if (str === null) {
       return []
     }
-    var contents = str[2]
+    var contents = str[3]
     return tmp.parseType(contents, tmp.attributes.classes)
+  }
+
+  tmp.parseRarities = () => {
+    var str = /(r|rarity|rarities)(:|\s)\s?([^\s]+)/i.exec(tmp.regex)
+    if (str === null) {
+      return []
+    }
+    var contents = str[3]
+    console.log(tmp.attributes.rarities)
+    return tmp.parseType(contents, tmp.attributes.rarities)
+  }
+
+  tmp.parseSets = () => {
+    if (typeof tmp.cards.attributes === 'undefined') {
+      return []
+    }
+    var str = /(s|sets?)(:|\s)\s?([^\s]+)/i.exec(tmp.regex)
+    if (str === null) {
+      return []
+    }
+    var contents = str[3]
+    console.log(tmp.transformSets(tmp.cards.attributes.getAtts('sets')))
+    return tmp.parseType(contents, tmp.transformSets(tmp.cards.attributes.getAtts('sets')))
+  }
+
+  tmp.transformSets = (fromDb) => {
+    var sets = {}
+    for (var i in fromDb) {
+      sets[fromDb[i].name.toLowerCase()] = fromDb[i].name.toLowerCase()
+    }
+    return sets
   }
 
   tmp.parseType = (contents, typeJson) => {
@@ -58,6 +98,10 @@ var Filters = (regex) => {
       }
     }
     return parsed
+  }
+
+  tmp.setSets = (sets) => {
+    tmp.attributes.sets = sets
   }
 
   return tmp
