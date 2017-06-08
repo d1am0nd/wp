@@ -52,12 +52,13 @@ export default {
         this.cards.attributes.resetType(type)
         return
       }
+      var arr = []
       for (var i = 0; i < vals.length; i++) {
-        this.cards.attributes.setTrue(type, vals[i].toUpperCase())
+        arr.push(vals[i].toUpperCase())
       }
+      this.cards.attributes.setTrueArr(type, arr)
     },
     tryExample (n) {
-      console.log(this['ex' + n])
       this.regex.setRegex(this['ex' + n])
     }
   },

@@ -66,10 +66,27 @@ var Attributes = (attJson) => {
     return true
   }
 
+  tmp.setTrueArr = (type, vals) => {
+    for (var i in tmp.attributes[type]) {
+      if (vals.indexOf(tmp.attributes[type][i].name) === -1) {
+        tmp.setFalse(type, tmp.attributes[type][i].name)
+      } else {
+        tmp.setTrue(type, tmp.attributes[type][i].name)
+      }
+    }
+  }
+
   tmp.setTrue = (type, val) => {
     if (tmp.isSelected(type, val) === false) {
       tmp.selected[type][val] = true
       tmp.selected[type + '-count']++
+    }
+  }
+
+  tmp.setFalse = (type, val) => {
+    if (tmp.isSelected(type, val) === true) {
+      tmp.selected[type][val] = false
+      tmp.selected[type + '-count']--
     }
   }
 
