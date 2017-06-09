@@ -19,7 +19,8 @@ var Attributes = (attJson) => {
     'classes-count': 0,
     'rarities-count': 0,
     'sets-count': 0,
-    'types-count': 0
+    'types-count': 0,
+    cost: {}
   }
 
   tmp.canCardBePlayed = (card) => {
@@ -30,6 +31,8 @@ var Attributes = (attJson) => {
     } else if (!tmp.isFiltered('sets', card.set)) {
       return false
     } else if (!tmp.isFiltered('types', card.type)) {
+      return false
+    } else if (!tmp.isCostFiltered(card.cost)) {
       return false
     }
     return true
@@ -99,6 +102,20 @@ var Attributes = (attJson) => {
     tmp.selected[type + '-count'] = 0
   }
 
+  tmp.isCostFiltered = (cost) => {
+    if (typeof tmp.selected.cost.min !== 'undefined' && cost < tmp.selected.cost.min) {
+      return false
+    } else if (typeof tmp.selected.cost.max !== 'undefined' && cost > tmp.selected.cost.max) {
+      return false
+    }
+    return true
+  }
+
+  tmp.setCost = (cost) => {
+    console.log(cost)
+    tmp.selected.cost = cost
+  }
+
   tmp.resetAll = () => {
     tmp.resetType('classes')
     tmp.resetType('rarities')
@@ -117,7 +134,8 @@ var Attributes = (attJson) => {
       'classes-count': 0,
       'rarities-count': 0,
       'sets-count': 0,
-      'types-count': 0
+      'types-count': 0,
+      cost: {}
     }
     for (var i in FILTER_TYPES) {
       tmp.selected[FILTER_TYPES[i]] = {}

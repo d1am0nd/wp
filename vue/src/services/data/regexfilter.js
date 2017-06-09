@@ -49,7 +49,7 @@ var Filters = (regex, cards = {}) => {
   }
 
   tmp.parseClasses = () => {
-    var str = /(c|classe?s?)(:|\s)\s?([^\s]+)/i.exec(tmp.regex)
+    var str = /(c|classe?s?)(:|\s)\s?([^\s\d]+)/i.exec(tmp.regex)
     if (str === null) {
       return []
     }
@@ -78,6 +78,28 @@ var Filters = (regex, cards = {}) => {
     return tmp.parseType(contents, tmp.getSets())
   }
 
+  tmp.parseCost = () => {
+    if (typeof tmp.cards.attributes === 'undefined') {
+      return []
+    }
+    // Testing for c:1-12
+    var str = /(c|costs?)(:\s?|\s)(\d+)-(\d+)/i.exec(tmp.regex)
+    if (str !== null) {
+      return { min: str[3], max: str[4] }
+    }
+    // Testing for c:1+
+    str = /(c|costs?)(:\s?|\s)(\d+)\+/.exec(tmp.regex)
+    if (str !== null) {
+      return { min: str[3] }
+    }
+    // Testing for c:1-
+    str = /(c|costs?)(:\s?|\s)(\d+)-/.exec(tmp.regex)
+    if (str !== null) {
+      return { max: str[3] }
+    }
+    return {}
+  }
+
   tmp.transformSets = (fromDb) => {
     var sets = {}
     for (var i in fromDb) {
@@ -86,6 +108,11 @@ var Filters = (regex, cards = {}) => {
     return sets
   }
 
+  /**
+   * Parses contents of regex return for
+   * card attributes and returns array of
+   * attributes that are in the regex
+   */
   tmp.parseType = (contents, typeJson) => {
     var parsed = []
     for (var type in typeJson) {

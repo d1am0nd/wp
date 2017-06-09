@@ -46,6 +46,7 @@ export default {
       this.pushFilters('classes', this.regex.parseClasses())
       this.pushFilters('rarities', this.regex.parseRarities())
       this.pushFilters('sets', this.regex.parseSets())
+      this.cards.attributes.setCost(this.regex.parseCost())
     },
     pushFilters (type, vals) {
       if (vals.length === 0) {

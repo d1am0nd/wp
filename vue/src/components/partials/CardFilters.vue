@@ -75,7 +75,6 @@ export default {
       this.filters.toggleClass(val)
     },
     toggle (type, val) {
-      console.log(this.selected.sets)
       var newVal = this.filters.toggle(type, val)
       this.selected[type][val] = newVal
     }
