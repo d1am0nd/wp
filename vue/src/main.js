@@ -18,7 +18,7 @@ Vue.use(VueResource)
 Vue.use(VueLazyload)
 
 /* eslint-disable no-new */
-new Vue({
+var vm = new Vue({
   el: '#app',
   router,
   template: '<App/>',
@@ -50,4 +50,9 @@ new Vue({
       }
     }
   }
+})
+
+router.beforeEach((to, from, next) => {
+  vm.cards.attributes.resetAll()
+  next()
 })

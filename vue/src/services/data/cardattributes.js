@@ -140,6 +140,8 @@ var Attributes = (attJson) => {
     tmp.resetType('rarities')
     tmp.resetType('sets')
     tmp.resetType('types')
+    tmp.setCost({})
+    tmp.set
   }
 
   // Attributes setter/getter
