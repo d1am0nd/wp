@@ -2,7 +2,7 @@
   <div class="home">
     <h1>Wizard Poker</h1>
     <CardFilters :filters="cards.attributes"></CardFilters>
-    <Cards></Cards>
+    <Cards :name="true" :text="true" :cost="true"></Cards>
   </div>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
   <div class="cards">
-    <MiniFilters :filters="filters" :name="true" :text="true" :cost="true"></MiniFilters>
+    <MiniFilters :filters="filters" :name="name" :text="text" :cost="cost"></MiniFilters>
     <div
       class="row"
       v-for="(chunk, chunkKey) in chunks(filteredCards, 3)">
@@ -68,6 +68,7 @@ export default {
     InfiniteLoading: InfiniteLoading,
     MiniFilters: MiniFilters
   },
+  props: ['name', 'text', 'cost'],
   data () {
     return {
       filters: { name: '', text: '', cost: '' },
