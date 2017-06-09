@@ -60,6 +60,7 @@
       type="text"
       class="regex-input"
       placeholder="Advanced filter"
+      autofocus
       v-model="regex.regex">
     <Cards :name="true" :text="true"></Cards>
   </div>

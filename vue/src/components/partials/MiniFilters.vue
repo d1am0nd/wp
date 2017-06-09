@@ -1,6 +1,6 @@
 <template>
   <div class="mini-filters">
-    <input type="text" v-if="name" v-model="filters.name" placeholder="Filter by name">
+    <input :autofocus="autofocus" type="text" v-if="name" v-model="filters.name" placeholder="Filter by name">
     <input type="text" v-if="text" v-model="filters.text" placeholder="Filter by card text">
     <input type="text" v-if="cost" v-model="filters.cost" placeholder="Filter by cost">
   </div>
@@ -10,7 +10,7 @@ import Cost from '@/services/mini/cost'
 
 export default {
   name: 'MiniFilters',
-  props: ['filters', 'name', 'text', 'cost'],
+  props: ['filters', 'name', 'text', 'cost', 'autofocus'],
   watch: {
     'filters.text': 'setText',
     'filters.name': 'setName',
