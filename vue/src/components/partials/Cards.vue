@@ -1,6 +1,6 @@
 <template>
   <div class="cards">
-    <MiniFilters :filters="filters" :name="true" :text="true"></MiniFilters>
+    <MiniFilters :filters="filters" :name="true" :text="true" :cost="true"></MiniFilters>
     <div
       class="row"
       v-for="(chunk, chunkKey) in chunks(filteredCards, 3)">
@@ -70,7 +70,7 @@ export default {
   },
   data () {
     return {
-      filters: { name: '', text: '' },
+      filters: { name: '', text: '', cost: '' },
       cards: this.$root.cards,
       rowsDisplayed: ROWS_DISPLAYED
     }
@@ -84,9 +84,6 @@ export default {
       return this.cards.cards.filter((val, key) => {
         return vm.cards.attributes.canCardBePlayed(val)
       })
-    },
-    lcFilter () {
-      return this.filters.name.toLowerCase()
     }
   },
   methods: {

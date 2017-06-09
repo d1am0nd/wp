@@ -2,16 +2,19 @@
   <div class="mini-filters">
     <input type="text" v-if="name" v-model="filters.name" placeholder="Filter by name">
     <input type="text" v-if="text" v-model="filters.text" placeholder="Filter by card text">
-    <input type="text" v-if="cost" v-model="filter.cost" placeholder="Filter by cost">
+    <input type="text" v-if="cost" v-model="filters.cost" placeholder="Filter by cost">
   </div>
 </template>
 <script type="text/javascript">
+import Cost from '@/services/mini/cost'
+
 export default {
   name: 'MiniFilters',
   props: ['filters', 'name', 'text', 'cost'],
   watch: {
     'filters.text': 'setText',
-    'filters.name': 'setName'
+    'filters.name': 'setName',
+    'filters.cost': 'setCost'
   },
   methods: {
     setText () {
@@ -21,7 +24,7 @@ export default {
       this.$root.cards.attributes.setText('name', this.filters.name)
     },
     setCost () {
-
+      this.$root.cards.attributes.setCost(Cost.parseCostContent(this.filters.cost))
     }
   }
 }
