@@ -42,7 +42,7 @@ var Filters = (regex, cards = {}) => {
   tmp.regex = regex
 
   tmp.parseTypes = () => {
-    var str = /(t|types?)(:|\s)\s?([^\s]+)/i.exec(tmp.regex)
+    var str = /\b(t|types?)(:|\s)\s?([^\s]+)/i.exec(tmp.regex)
     if (str === null) {
       return []
     }
@@ -51,7 +51,7 @@ var Filters = (regex, cards = {}) => {
   }
 
   tmp.parseClasses = () => {
-    var str = /(c|classe?s?)(:|\s)\s?([^\s\d]+)/i.exec(tmp.regex)
+    var str = /\b(c|classe?s?)(:|\s)\s?([^\s\d]+)/i.exec(tmp.regex)
     if (str === null) {
       return []
     }
@@ -60,7 +60,7 @@ var Filters = (regex, cards = {}) => {
   }
 
   tmp.parseRarities = () => {
-    var str = /(r|rarity|rarities)(:|\s)\s?([^\s]+)/i.exec(tmp.regex)
+    var str = /\b(r|rarity|rarities)(:|\s)\s?([^\s]+)/i.exec(tmp.regex)
     if (str === null) {
       return []
     }
@@ -72,7 +72,7 @@ var Filters = (regex, cards = {}) => {
     if (typeof tmp.cards.attributes === 'undefined') {
       return []
     }
-    var str = /(s|sets?)(:|\s)\s?([^\s]+)/i.exec(tmp.regex)
+    var str = /\b(s|sets?)(:|\s)\s?([^\s]+)/i.exec(tmp.regex)
     if (str === null) {
       return []
     }

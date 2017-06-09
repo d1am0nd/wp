@@ -1,7 +1,7 @@
 <template>
   <div class="mini-filters">
     <input type="text" v-if="name" v-model="filters.name" placeholder="Filter by name">
-    <input type="text" v-if="text" v-model="filters.text" placeholder="Filter by description">
+    <input type="text" v-if="text" v-model="filters.text" placeholder="Filter by card text">
     <input type="text" v-if="cost" v-model="filter.cost" placeholder="Filter by cost">
   </div>
 </template>
@@ -19,6 +19,9 @@ export default {
     },
     setName () {
       this.$root.cards.attributes.setText('name', this.filters.name)
+    },
+    setCost () {
+
     }
   }
 }

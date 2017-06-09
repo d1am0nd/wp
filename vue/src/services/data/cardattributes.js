@@ -66,7 +66,7 @@ var Attributes = (attJson) => {
     if (txt.length === 0) {
       return true
     }
-    return val.indexOf(txt) !== -1
+    return val.toLowerCase().indexOf(txt) !== -1
   }
 
   tmp.toggle = (type, val) => {
@@ -132,7 +132,7 @@ var Attributes = (attJson) => {
   }
 
   tmp.setText = (type, val) => {
-    tmp.selected.text[type] = val
+    tmp.selected.text[type] = val.toLowerCase()
   }
 
   tmp.resetAll = () => {
