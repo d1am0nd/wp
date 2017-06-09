@@ -1,6 +1,6 @@
 <template>
   <div class="cards">
-    <input type="text" v-model="filter" placeholder="Filter by name">
+    <MiniFilters :filters="filters" :name="true" :text="true"></MiniFilters>
     <div
       class="row"
       v-for="(chunk, chunkKey) in chunks(filteredCards, 3)">
@@ -58,17 +58,19 @@
 
 <script>
 import InfiniteLoading from 'vue-infinite-loading'
+import MiniFilters from '@/components/partials/MiniFilters'
 
 const ROWS_DISPLAYED = 10
 
 export default {
   name: 'Cards',
   components: {
-    InfiniteLoading: InfiniteLoading
+    InfiniteLoading: InfiniteLoading,
+    MiniFilters: MiniFilters
   },
   data () {
     return {
-      filter: '',
+      filters: { name: '', text: '' },
       cards: this.$root.cards,
       rowsDisplayed: ROWS_DISPLAYED
     }
@@ -80,11 +82,11 @@ export default {
     filteredCards () {
       var vm = this
       return this.cards.cards.filter((val, key) => {
-        return vm.cards.attributes.canCardBePlayed(val) && val.name.toLowerCase().indexOf(vm.lcFilter) !== -1
+        return vm.cards.attributes.canCardBePlayed(val)
       })
     },
     lcFilter () {
-      return this.filter.toLowerCase()
+      return this.filters.name.toLowerCase()
     }
   },
   methods: {

@@ -20,7 +20,11 @@ var Attributes = (attJson) => {
     'rarities-count': 0,
     'sets-count': 0,
     'types-count': 0,
-    cost: {}
+    cost: {},
+    text: {
+      name: '',
+      text: ''
+    }
   }
 
   tmp.canCardBePlayed = (card) => {
@@ -33,6 +37,10 @@ var Attributes = (attJson) => {
     } else if (!tmp.isFiltered('types', card.type)) {
       return false
     } else if (!tmp.isCostFiltered(card.cost)) {
+      return false
+    } else if (!tmp.isTextFiltered('name', card.name)) {
+      return false
+    } else if (!tmp.isTextFiltered('text', card.text)) {
       return false
     }
     return true
@@ -51,6 +59,14 @@ var Attributes = (attJson) => {
 
   tmp.isFiltered = (type, val) => {
     return tmp.isSelected(type, val) || tmp.selected[type + '-count'] === 0
+  }
+
+  tmp.isTextFiltered = (type, val) => {
+    var txt = tmp.selected.text[type]
+    if (txt.length === 0) {
+      return true
+    }
+    return val.indexOf(txt) !== -1
   }
 
   tmp.toggle = (type, val) => {
@@ -112,8 +128,11 @@ var Attributes = (attJson) => {
   }
 
   tmp.setCost = (cost) => {
-    console.log(cost)
     tmp.selected.cost = cost
+  }
+
+  tmp.setText = (type, val) => {
+    tmp.selected.text[type] = val
   }
 
   tmp.resetAll = () => {
@@ -135,7 +154,11 @@ var Attributes = (attJson) => {
       'rarities-count': 0,
       'sets-count': 0,
       'types-count': 0,
-      cost: {}
+      cost: {},
+      text: {
+        name: '',
+        text: ''
+      }
     }
     for (var i in FILTER_TYPES) {
       tmp.selected[FILTER_TYPES[i]] = {}

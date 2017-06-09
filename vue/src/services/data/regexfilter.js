@@ -1,3 +1,5 @@
+import Cost from '@/services/mini/cost'
+
 export default {
   newRegexFilter (regex, cards) {
     return new Filters(regex, cards)
@@ -79,25 +81,7 @@ var Filters = (regex, cards = {}) => {
   }
 
   tmp.parseCost = () => {
-    if (typeof tmp.cards.attributes === 'undefined') {
-      return []
-    }
-    // Testing for c:1-12
-    var str = /(c|costs?)(:\s?|\s)(\d+)-(\d+)/i.exec(tmp.regex)
-    if (str !== null) {
-      return { min: str[3], max: str[4] }
-    }
-    // Testing for c:1+
-    str = /(c|costs?)(:\s?|\s)(\d+)\+/.exec(tmp.regex)
-    if (str !== null) {
-      return { min: str[3] }
-    }
-    // Testing for c:1-
-    str = /(c|costs?)(:\s?|\s)(\d+)-/.exec(tmp.regex)
-    if (str !== null) {
-      return { max: str[3] }
-    }
-    return {}
+    return Cost.parseCost(tmp.regex)
   }
 
   tmp.transformSets = (fromDb) => {
