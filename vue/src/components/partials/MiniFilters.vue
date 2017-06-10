@@ -13,15 +13,14 @@
             <a
               href="javascript:;"
               @click="toggleSort('cost')"
-              class="no-style">Cost <span></span>
-            </a>
+              class="no-style">Cost</a>
+            <span>{{ sortIcons.cost }}</span>
           </li>
           <li>
             <a
               href="javascript:;"
               @click="toggleSort('name')"
-              class="no-style">Name <span>{{ sort.nameIco }}</span>
-            </a>
+              class="no-style">Name</a> <span>{{ sortIcons.name }}</span>
           </li>
         </ul>
       </div>
@@ -41,9 +40,13 @@ export default {
   },
   data () {
     return {
-      sort: {
-        nameIco: '',
-        costIco: ''
+      sortIcons: {
+        name: '',
+        cost: '⇩'
+      },
+      icons: {
+        down: '⇩',
+        up: '⇧'
       }
     }
   },
@@ -58,7 +61,16 @@ export default {
       this.$root.cards.attributes.setCost(Cost.parseCostContent(this.filters.cost))
     },
     toggleSort (att) {
-      this.$root.cards.cards.sortBy(att)
+      var order = this.$root.cards.cards.sortBy(att)
+      var ico = (order === 'asc' ? this.icons.down : this.icons.up)
+      for (var v in this.sortIcons) {
+        if (this.sortIcons.hasOwnProperty(v)) {
+          this.sortIcons[v] = ''
+          if (v === att) {
+            this.sortIcons[v] = ico
+          }
+        }
+      }
     }
   }
 }

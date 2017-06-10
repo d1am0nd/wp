@@ -53,6 +53,7 @@ var Cards = (cards) => {
       }
       return sortByInt(a[att], b[att], tmp.sort.sort)
     })
+    return tmp.sort.sort
   }
 
   tmp.getSortAtt = () => {
