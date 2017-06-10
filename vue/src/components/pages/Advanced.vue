@@ -13,36 +13,35 @@
       </p>
       <div class="row">
         <div class="six columns">
-          <strong>Class</strong><br>
-          rule <code>[c]lass</code><br>
-          values
-          <code title="Neutral">neu</code>
-          <code title="Druid">dru</code>
-          <code title="Hunter">hun</code>
-          <code title="Mage">mag</code>
-          <code title="Paladin">pal</code>
-          <code title="Priest">pri</code>
-          <code title="Rogue">rog</code>
-          <code title="Shaman">sha</code>
-          <code title="Warlock">warl</code>
-          <code title="Warrior">warr</code>
-          <br>
-          <strong>Rarity</strong><br>
-          rule <code>[r]arity</code><br>
-          values
-          <code title="Free">f</code>
-          <code title="Common">c</code>
-          <code title="Rare">r</code>
-          <code title="Epic">e</code>
-          <code title="Legendary">l</code>
-          (free, common, rare, epic, legendary)
+        <strong>Class</strong><br>
+        rule <code>[c]lass</code><br>
+        values
+        <code title="Druid">dru</code>
+        <code title="Hunter">hun</code>
+        <code title="Mage">mag</code>
+        <code title="Paladin">pal</code>
+        <code title="Priest">pri</code>
+        <code title="Rogue">rog</code>
+        <code title="Shaman">sha</code>
+        <code title="Warlock">warl</code>
+        <code title="Warrior">warr</code>
+        <br>
+        <strong>Rarity</strong><br>
+        rule <code>[r]arity</code><br>
+        values
+        <code title="Free">f</code>
+        <code title="Common">c</code>
+        <code title="Rare">r</code>
+        <code title="Epic">e</code>
+        <code title="Legendary">l</code>
+        (free, common, rare, epic, legendary)
         </div>
         <div class="six columns">
           <strong>Type</strong><br>
           rule <code>[t]ype</code><br>
           values
           <code title="Minon">m</code>
-          <code title="Spell">s</code>
+          <code title="Spell">c</code>
           <code title="Weapon">r</code>
           (minion, spell, weapon)
           <br>
@@ -53,7 +52,17 @@
           <code title="More than">5+</code>
           <code title="Less than">0-</code>
           (between, more than, less than)
-          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve columns">
+          <strong>Class</strong><br>
+          rule <code>[c]lass</code><br>
+          values
+          <code
+            v-for="s in cards.attributes.getAtts('sets')">
+            {{ s.name }}
+          </code>
         </div>
       </div>
     </div>
@@ -61,9 +70,9 @@
       type="text"
       class="regex-input"
       placeholder="Advanced filter"
-      autofocus
-      v-model="regex.regex">
-    <Cards :name="true" :text="true"></Cards>
+      v-model="regex.regex"
+      style="margin-top: 10px">
+    <Cards></Cards>
   </div>
 </template>
 
