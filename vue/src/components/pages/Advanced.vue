@@ -89,7 +89,7 @@ export default {
     Cards: Cards
   },
   created () {
-    Meta.title('Hearthstone Card Search')
+    Meta.title('Advanced Hearthstone Card Search')
     Meta.description('Advanced responsive Hearthstone card search')
   },
   data () {
