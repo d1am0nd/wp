@@ -2,6 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
+import cards from '@/services/data/cards'
 import router from './router'
 import VueResource from 'vue-resource'
 import VueLazyload from 'vue-lazyload'
@@ -10,7 +11,7 @@ import 'skeleton-css/css/skeleton.css'
 import './styles/main.scss'
 
 import Errors from '@/errors'
-import cards from '@/services/db/cards'
+import cardService from '@/services/db/cards'
 import Attributes from '@/services/data/cardattributes'
 
 Vue.config.productionTip = false
@@ -24,7 +25,7 @@ var vm = new Vue({
   template: '<App/>',
   components: { App },
   created () {
-    cards.getAttributes()
+    cardService.getAttributes()
     .then((res) => {
       if (res.status === 200) {
         this.cards.attributes.setAttributes(JSON.parse(res.body))
@@ -34,9 +35,9 @@ var vm = new Vue({
       Errors.newErrRes(err)
     })
 
-    cards.getCards()
+    cardService.getCards()
     .then((res) => {
-      this.cards.cards = res
+      this.cards.cards.setCards(res)
     })
     .catch((err) => {
       Errors.newErrRes(err)
@@ -46,7 +47,7 @@ var vm = new Vue({
     return {
       cards: {
         attributes: Attributes.newAttributes({}),
-        cards: []
+        cards: cards.newCards([])
       }
     }
   }

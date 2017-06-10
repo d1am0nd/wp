@@ -31,22 +31,22 @@
         </div>
         <div class="row">
           <div class="twelve columns">
-            <div 
+            <div
               title="Class"
               class="button button-sm">
               {{ card.class }}
             </div>
-            <div 
+            <div
               title="Type"
               class="button button-sm">
               {{ card.type }}
             </div>
-            <div 
+            <div
               title="Rarity"
               class="button button-sm">
               {{ card.rarity }}
             </div>
-            <div 
+            <div
               title="Set"
               class="button button-sm">
               {{ card.set }}
@@ -74,15 +74,23 @@ import Meta from '@/config/head'
 
 export default {
   name: 'card',
-  created () {
-    Meta.title(this.card.name)
-    Meta.description(this.card.text)
-  },
   computed: {
     card () {
-      return this.$root.cards.cards.find((e, i, a) => {
+      return this.$root.cards.cards.getCards().find((e, i, a) => {
         return e.slug === this.$route.params.slug
       })
+    }
+  },
+  watch: {
+    'this.card': 'setMeta'
+  },
+  methods: {
+    setMeta () {
+      if (this.card === undefined) {
+        return
+      }
+      Meta.title(this.card.name)
+      Meta.description(this.card.text)
     }
   }
 }

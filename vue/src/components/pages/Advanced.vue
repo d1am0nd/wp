@@ -16,6 +16,7 @@
           <strong>Class</strong><br>
           rule <code>[c]lass</code><br>
           values
+          <code title="Neutral">neu</code>
           <code title="Druid">dru</code>
           <code title="Hunter">hun</code>
           <code title="Mage">mag</code>
@@ -41,7 +42,7 @@
           rule <code>[t]ype</code><br>
           values
           <code title="Minon">m</code>
-          <code title="Spell">c</code>
+          <code title="Spell">s</code>
           <code title="Weapon">r</code>
           (minion, spell, weapon)
           <br>

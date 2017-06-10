@@ -1,6 +1,11 @@
 <template>
   <div class="cards">
     <MiniFilters :filters="filters" :name="name" :text="text" :cost="cost" :autofocus="autofocus"></MiniFilters>
+    <ul class="inline">
+      <li>
+        Cards found: {{ filteredCards.length }}
+      </li>
+    </ul>
     <div
       class="row"
       v-for="(chunk, chunkKey) in chunks(filteredCards, 3)">
@@ -82,7 +87,7 @@ export default {
   computed: {
     filteredCards () {
       var vm = this
-      return this.cards.cards.filter((val, key) => {
+      return this.cards.cards.getCards().filter((val, key) => {
         return vm.cards.attributes.canCardBePlayed(val)
       })
     }

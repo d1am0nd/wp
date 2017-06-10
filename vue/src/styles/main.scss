@@ -39,6 +39,10 @@ a.no-style, a.no-style:hover {
     border-bottom: 1px solid;
 }
 
+ul.inline li {
+    display: inline-block;
+    padding-right: 2px;
+}
 ul.att-list {
     margin: 0;
 
