@@ -8,7 +8,7 @@
     </ul>
     <div
       class="row"
-      v-for="(chunk, chunkKey) in chunks(filteredCards, 3)">
+      v-for="(chunk, chunkKey) in filteredChunks">
       <div
         class="four columns pointer"
         @click="goTo(card.slug)"
@@ -87,9 +87,16 @@ export default {
   computed: {
     filteredCards () {
       var vm = this
-      return this.cards.cards.getCards().filter((val, key) => {
+      return this.cards.cards.cards.filter((val, key) => {
         return vm.cards.attributes.canCardBePlayed(val)
       })
+    },
+    filteredChunks () {
+      var tmp = []
+      for (var i = 0, j = this.filteredCards.length; i < j; i += 3) {
+        tmp.push(this.filteredCards.slice(i, i + 3))
+      }
+      return tmp
     }
   },
   methods: {

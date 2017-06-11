@@ -11,30 +11,30 @@ var Filters = (regex, cards = {}) => {
 
   tmp.attributes = {
     types: {
-      minion: 'm',
-      spell: 's',
-      weapon: 'w'
+      minion: 'min(i|ion)?',
+      spell: 'spe(l{1,2})?',
+      weapon: 'we(ap|p)?(on)?'
     },
 
     classes: {
-      neutral: 'neu',
-      priest: 'pri',
-      mage: 'mag',
-      paladin: 'pal',
-      shaman: 'sha',
-      hunter: 'hun',
-      rogue: 'rog',
-      druid: 'dru',
-      warrior: 'warr',
-      warlock: 'warl'
+      neutral: 'neu(t|tral)?',
+      priest: 'pri(s|est)?',
+      mage: 'mage?',
+      paladin: 'pal(a|adin)?',
+      shaman: 'sha(m|man)?',
+      hunter: 'hun(t|ter)?',
+      rogue: 'ro(g|u|gue)',
+      druid: 'dru(id)?',
+      warrior: '(warr(ior)?|wrr)',
+      warlock: '(wl[ck]|warl(ock)?)'
     },
 
     rarities: {
-      free: 'f',
-      common: 'c',
-      rare: 'r',
-      epic: 'e',
-      legendary: 'l'
+      free: 'free?',
+      common: '(cmn|com(mon)?)',
+      rare: 'rare?',
+      epic: 'epic?',
+      legendary: 'leg(endary)?'
     }
   }
 
@@ -42,42 +42,19 @@ var Filters = (regex, cards = {}) => {
   tmp.regex = regex
 
   tmp.parseTypes = () => {
-    var str = /\b(t|types?)(:|\s)\s?([^\s]+)/i.exec(tmp.regex)
-    if (str === null) {
-      return []
-    }
-    var contents = str[3]
-    return tmp.parseType(contents, tmp.attributes.types)
+    return tmp.shortToLong(tmp.attributes['types'])
   }
 
   tmp.parseClasses = () => {
-    var str = /\b(c|classe?s?)(:|\s)\s?([^\s\d]+)/i.exec(tmp.regex)
-    if (str === null) {
-      return []
-    }
-    var contents = str[3]
-    return tmp.parseType(contents, tmp.attributes.classes)
+    return tmp.shortToLong(tmp.attributes['classes'])
   }
 
   tmp.parseRarities = () => {
-    var str = /\b(r|rarity|rarities)(:|\s)\s?([^\s]+)/i.exec(tmp.regex)
-    if (str === null) {
-      return []
-    }
-    var contents = str[3]
-    return tmp.parseType(contents, tmp.attributes.rarities)
+    return tmp.shortToLong(tmp.attributes['rarities'])
   }
 
   tmp.parseSets = () => {
-    if (typeof tmp.cards.attributes === 'undefined') {
-      return []
-    }
-    var str = /\b(s|sets?)(:|\s)\s?([^\s]+)/i.exec(tmp.regex)
-    if (str === null) {
-      return []
-    }
-    var contents = str[3]
-    return tmp.parseType(contents, tmp.getSets())
+    return tmp.shortToLong(tmp.getSets())
   }
 
   tmp.parseCost = () => {
@@ -93,17 +70,14 @@ var Filters = (regex, cards = {}) => {
   }
 
   /**
-   * Parses contents of regex return for
-   * card attributes and returns array of
-   * attributes that are in the regex
+   * Transforms shorthands into actual names
    */
-  tmp.parseType = (contents, typeJson) => {
+  tmp.shortToLong = (arr) => {
     var parsed = []
-    for (var type in typeJson) {
-      if (typeJson.hasOwnProperty(type)) {
-        if (contents.indexOf(typeJson[type]) !== -1) {
-          parsed.push(type)
-        }
+    for (var t in arr) {
+      var regex = arr[t]
+      if (tmp.regex.match(new RegExp('\\b' + regex + '\\b', 'i')) !== null) {
+        parsed.push(t)
       }
     }
     return parsed
