@@ -1,69 +1,48 @@
 <template>
   <div class="advanced">
     <h1>Advanced Search</h1>
-    <p class="summary">
-      Write an expression for filtering Hearthstone cards using the rules below. Each rule has to be separated with space.
-    </p>
     <div class="small-help">
       <strong>Usage</strong>
-      <p>Rules follow next pattern: <code>{attribute}:{value1},{value2}...</code>. Multiple rules are separated by space: <code>{a1}:{v1} {a2}:{v2}...</code></p>
-      <strong>Attributes and values</strong>
-      <p>
-      Use next rules followed by values to filter by this attribute. Symbols in <code>[]</code> are shorthands.
-      </p>
-      <div class="row">
-        <div class="six columns">
-        <strong>Class</strong><br>
-        rule <code>[c]lass</code><br>
-        values
-        <code title="Druid">dru</code>
-        <code title="Hunter">hun</code>
-        <code title="Mage">mag</code>
-        <code title="Paladin">pal</code>
-        <code title="Priest">pri</code>
-        <code title="Rogue">rog</code>
-        <code title="Shaman">sha</code>
-        <code title="Warlock">warl</code>
-        <code title="Warrior">warr</code>
-        <br>
-        <strong>Rarity</strong><br>
-        rule <code>[r]arity</code><br>
-        values
-        <code title="Free">f</code>
-        <code title="Common">c</code>
-        <code title="Rare">r</code>
-        <code title="Epic">e</code>
-        <code title="Legendary">l</code>
-        (free, common, rare, epic, legendary)
-        </div>
-        <div class="six columns">
-          <strong>Type</strong><br>
-          rule <code>[t]ype</code><br>
-          values
-          <code title="Minon">m</code>
-          <code title="Spell">c</code>
-          <code title="Weapon">r</code>
-          (minion, spell, weapon)
-          <br>
-          <strong>Cost</strong><br>
-          rule <code>[c]ost</code><br>
-          values
-          <code title="Between">2-5</code>
-          <code title="More than">5+</code>
-          <code title="Less than">0-</code>
-          (between, more than, less than)
-        </div>
+      <p>Write whatever you want to add to filter into 'Advanced filter' input. Rules must be separated with space Example <code>pri leg 5-</code><br>
+      Use the next shorthands to filter by that attribute. Symbols in <code>[]</code> are shorthands.</p>
+    </div>
+    <div class="row">
+      <div class="six columns">
+      <strong>Classes</strong><br>
+      <code title="Druid">[dru]id</code>
+      <code title="Hunter">[hun]ter</code>
+      <code title="Mage">[mag]e</code>
+      <code title="Paladin">[pal]adin</code>
+      <code title="Priest">[pri]est</code>
+      <code title="Rogue">[rog]ue</code>
+      <code title="Shaman">[sha]man</code>
+      <code title="Warlock">[warl]ock</code>
+      <code title="Warrior">[warr]ior</code>
+      <br>
+      <strong>Rarities</strong><br>
+      <code title="Free">[fre]e</code>
+      <code title="Common">[com]mon</code>
+      <code title="Rare">[rar]e</code>
+      <code title="Epic">[epi]c</code>
+      <code title="Legendary">[leg]endary</code>
       </div>
-      <div class="row">
-        <div class="twelve columns">
-          <strong>Class</strong><br>
-          rule <code>[c]lass</code><br>
-          values
-          <code
-            v-for="s in cards.attributes.getAtts('sets')">
-            {{ s.name }}
-          </code>
-        </div>
+      <div class="six columns">
+        <strong>Types</strong><br>
+        <code title="Minon">[min]ion</code>
+        <code title="Spell">[spe]ll</code>
+        <code title="Weapon">[wea]pon</code>
+        <br>
+        <strong>Cost</strong><br>
+        <code title="Between">2-5</code>
+        <code title="More than">5+</code>
+        <code title="Less than">0-</code>
+      </div>
+    </div>
+    <div class="row">
+      <div class="twelve columns">
+        <strong>Classes</strong><br>
+        <code
+          v-for="s in cards.attributes.getAtts('sets')">{{ s.name.toLowerCase() }}</code>
       </div>
     </div>
     <input
@@ -72,7 +51,7 @@
       placeholder="Advanced filter"
       v-model="regex.regex"
       style="margin-top: 10px">
-    <Cards></Cards>
+    <Cards :name="true" :text="true"></Cards>
   </div>
 </template>
 
