@@ -23,7 +23,8 @@ var Attributes = (attJson) => {
     cost: {},
     text: {
       name: '',
-      text: ''
+      text: '',
+      main: ''
     }
   }
 
@@ -38,9 +39,7 @@ var Attributes = (attJson) => {
       return false
     } else if (!tmp.isCostFiltered(card.cost)) {
       return false
-    } else if (!tmp.isTextFiltered('name', card.name)) {
-      return false
-    } else if (!tmp.isTextFiltered('text', card.text)) {
+    } else if (!tmp.isAnyTextFiltered(card)) {
       return false
     }
     return true
@@ -59,6 +58,16 @@ var Attributes = (attJson) => {
 
   tmp.isFiltered = (type, val) => {
     return tmp.isSelected(type, val) || tmp.selected[type + '-count'] === 0
+  }
+
+  tmp.isAnyTextFiltered = (card) => {
+    var txt = tmp.selected.text.main
+    var val1 = card.name.toLowerCase()
+    var val2 = card.text.toLowerCase()
+    if (txt.length === 0) {
+      return true
+    }
+    return val1.indexOf(txt) !== -1 || val2.indexOf(txt) !== -1
   }
 
   tmp.isTextFiltered = (type, val) => {
@@ -159,7 +168,8 @@ var Attributes = (attJson) => {
       cost: {},
       text: {
         name: '',
-        text: ''
+        text: '',
+        main: ''
       }
     }
     for (var i in FILTER_TYPES) {
