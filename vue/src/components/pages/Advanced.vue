@@ -61,6 +61,8 @@ import Cards from '@/components/partials/Cards'
 import Meta from '@/config/head'
 import RegexFilter from '@/services/data/regexfilter'
 
+var regexTimeout = null
+
 export default {
   name: 'advanced',
   components: {
@@ -80,11 +82,17 @@ export default {
   },
   methods: {
     parseRegex () {
-      this.pushFilters('types', this.regex.parseTypes())
-      this.pushFilters('classes', this.regex.parseClasses())
-      this.pushFilters('rarities', this.regex.parseRarities())
-      this.pushFilters('sets', this.regex.parseSets())
-      this.cards.attributes.setCost(this.regex.parseCost())
+      if (regexTimeout !== null) {
+        clearTimeout(regexTimeout)
+        regexTimeout = null
+      }
+      regexTimeout = setTimeout(() => {
+        this.pushFilters('types', this.regex.parseTypes())
+        this.pushFilters('classes', this.regex.parseClasses())
+        this.pushFilters('rarities', this.regex.parseRarities())
+        this.pushFilters('sets', this.regex.parseSets())
+        this.cards.attributes.setCost(this.regex.parseCost())
+      }, 400)
     },
     pushFilters (type, vals) {
       if (vals.length === 0) {

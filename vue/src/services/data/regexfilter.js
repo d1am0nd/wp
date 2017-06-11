@@ -10,6 +10,10 @@ var Filters = (regex, cards = {}) => {
   var tmp = {}
 
   tmp.attributes = {
+    allTypes: /\b(min(i|ion)?|spe(l{1,2})?|we(ap|p)?(on)?)\b/ig,
+    allClasses: /\b(neu(t|tral)?|pri(s|est)?|mage?|pal(a|adin)?|sha(m|man)?|hun(t|ter)?|ro(g|u|gue)|dru(id)?|(warr(ior)?|wrr)|(wl[ck]|warl(ock)?))\b/ig,
+    allRarities: /\b(free?|(cmn|com(mon)?)|rare?|epic?|leg(endary)?)\b/ig,
+
     types: {
       minion: 'min(i|ion)?',
       spell: 'spe(l{1,2})?',
@@ -42,15 +46,18 @@ var Filters = (regex, cards = {}) => {
   tmp.regex = regex
 
   tmp.parseTypes = () => {
-    return tmp.shortToLong(tmp.attributes['types'])
+    var types = tmp.regex.match(tmp.attributes.allTypes)
+    return tmp.shortArrayToLong('types', types)
   }
 
   tmp.parseClasses = () => {
-    return tmp.shortToLong(tmp.attributes['classes'])
+    var types = tmp.regex.match(tmp.attributes.allClasses)
+    return tmp.shortArrayToLong('classes', types)
   }
 
   tmp.parseRarities = () => {
-    return tmp.shortToLong(tmp.attributes['rarities'])
+    var types = tmp.regex.match(tmp.attributes.allRarities)
+    return tmp.shortArrayToLong('rarities', types)
   }
 
   tmp.parseSets = () => {
@@ -67,6 +74,24 @@ var Filters = (regex, cards = {}) => {
       sets[fromDb[i].name.toLowerCase()] = fromDb[i].name.toLowerCase()
     }
     return sets
+  }
+
+  tmp.shortArrayToLong = (type, arr) => {
+    var parsed = []
+    // Loop through array
+    for (var i in arr) {
+      // Loop through this type's regexes
+      for (var t in tmp.attributes[type]) {
+        if (tmp.attributes[type].hasOwnProperty(t)) {
+          // Do the regex on current array index
+          var regex = new RegExp('\\b' + tmp.attributes[type][t] + '\\b')
+          if (arr[i].match(regex) !== null && parsed.indexOf(t) === -1) {
+            parsed.push(t)
+          }
+        }
+      }
+    }
+    return parsed
   }
 
   /**
