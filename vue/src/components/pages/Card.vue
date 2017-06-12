@@ -62,6 +62,9 @@
               <li>
                 <a target="_blank" :href="card.gamepedia_url">See on Gamepedia </a>
               </li>
+              <li>
+                <a target="_blank" :href="card.hearthhead_url">See on Hearthhead </a>
+              </li>
             </ul>
           </div>
         </div>
