@@ -25,6 +25,7 @@ class Kernel extends ConsoleKernel
         Commands\SetIsStd::class,
         Commands\CopyVideosToPages::class,
         Commands\FetchNewJson::class,
+        Commands\CheckWikiaUrls::class
     ];
 
     /**

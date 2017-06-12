@@ -55,7 +55,14 @@
         </div>
         <div class="row">
           <div class="twelve columns">
-            <a target="_blank" :href="card.wikia_url">See on Wikia </a>
+            <ul class="inline">
+              <li>
+                <a target="_blank" :href="card.wikia_url">See on Wikia </a>
+              </li>
+              <li>
+                <a target="_blank" :href="card.gamepedia_url">See on Gamepedia </a>
+              </li>
+            </ul>
           </div>
         </div>
         <p
