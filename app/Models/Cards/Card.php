@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Card extends Model
 {
-
     // Card has many
     public function cardTexts()
     {

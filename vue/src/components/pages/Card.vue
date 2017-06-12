@@ -53,6 +53,11 @@
             </div>
           </div>
         </div>
+        <div class="row">
+          <div class="twelve columns">
+            <a target="_blank" :href="card.wikia_url">See on Wikia </a>
+          </div>
+        </div>
         <p
           class="small-card"
           v-html="card.text">

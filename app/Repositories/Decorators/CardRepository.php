@@ -3,9 +3,9 @@
 namespace App\Repositories\Decorators;
 
 use Cache;
-use App\Repositories\CardRepository as CardRepositoryOriginal;
+use App\Repositories\Transformers\CardRepository as CardRepositoryTransformer;
 
-class CardRepository extends CardRepositoryOriginal
+class CardRepository extends CardRepositoryTransformer
 {
     public function getCardsWithInfo()
     {
