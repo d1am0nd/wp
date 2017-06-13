@@ -60,6 +60,7 @@ class CardRepository implements CardRepositoryInterface
             'card_texts.name as name',
             'card_texts.slug as slug',
             'card_texts.text as text',
+            'card_texts.flavor as flavor',
             'classes.name as class',
         ])
         ->with(['cardMechanics' => function($q){
