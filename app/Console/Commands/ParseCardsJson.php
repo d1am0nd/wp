@@ -271,15 +271,23 @@ class ParseCardsJson extends Command
                 $text = $card->text->$lang;
             else
                 $text = '';
+            if (isset($card->flavor))
+                $flavor = $card->flavor->$lang;
+            else
+                $flavor = '';
+
+            $this->info($flavor);
+
             $langId = $this->allLanguages[$lang];
 
             if(isset($langId) && isset($name)){
                 $tmpArray = [
-                    'card_id' => (int)$cardId,
+                    'card_id'   => (int)$cardId,
                     'card_language_id' => (int)$langId,
-                    'name' => (string)$name,
-                    'slug' => str_slug((string)$name),
-                    'text' => (string)$text
+                    'name'      => (string)$name,
+                    'slug'      => str_slug((string)$name),
+                    'text'      => (string)$text,
+                    'flavor'    => (string)$flavor
                 ];
                 array_push($this->texts, $tmpArray);
                 // CardText::create($tmpArray);
