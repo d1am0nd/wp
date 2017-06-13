@@ -72,6 +72,10 @@
           class="small-card"
           v-html="card.text">
         </p>
+        <p
+          class="flavor" style="font-size: 100%">
+          Flavor: <i>{{ card.flavor }}</i>
+        </p>
       </div>
     </div>
     <div class="row">
@@ -119,5 +123,8 @@ export default {
   }
   .button.back {
     width: 100%;
+  }
+  p.flavor i {
+    font-size: 100%;
   }
 </style>
