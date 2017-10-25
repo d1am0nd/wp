@@ -22,17 +22,9 @@ class RouteServiceProvider extends ServiceProvider
      * @param  \Illuminate\Routing\Router  $router
      * @return void
      */
-    public function boot(Router $router)
+    public function boot()
     {
-        parent::boot($router);
-        \DB::enableQueryLog();
-        $router->bind('page', function ($value) {
-            return \App\Page::with([
-                'comments' => function($q){
-                    return $q->withMyVote();
-                }
-            ])->where('slug', $value)->first();
-        });
+        parent::boot();
     }
 
     /**

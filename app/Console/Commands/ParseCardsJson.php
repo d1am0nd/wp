@@ -142,20 +142,20 @@ class ParseCardsJson extends Command
         $this->insertMechanics();
         $this->insertClasses();
 
-        $this->allClasses = CardClass::lists('id', 'name')->toArray();
-        $this->allMechanics = CardMechanic::lists('id', 'name')->toArray();
-        $this->allPlayReqs = CardPlayReq::lists('id', 'name')->toArray();
-        $this->allRarities = CardRarity::lists('id', 'name')->toArray();
-        $this->allSets = CardSet::lists('id', 'name')->toArray();
-        $this->allTypes = CardType::lists('id', 'name')->toArray();
-        $this->allLanguages = CardLanguage::lists('id', 'lang_id')->toArray();
+        $this->allClasses = CardClass::pluck('id', 'name')->toArray();
+        $this->allMechanics = CardMechanic::pluck('id', 'name')->toArray();
+        $this->allPlayReqs = CardPlayReq::pluck('id', 'name')->toArray();
+        $this->allRarities = CardRarity::pluck('id', 'name')->toArray();
+        $this->allSets = CardSet::pluck('id', 'name')->toArray();
+        $this->allTypes = CardType::pluck('id', 'name')->toArray();
+        $this->allLanguages = CardLanguage::pluck('id', 'lang_id')->toArray();
 
         $this->info(print_r($this->allLanguages));
 
         $this->appendCards();
         $this->insertCards();
 
-        $this->allCards = Card::lists('id', 'card_id')->toArray();
+        $this->allCards = Card::pluck('id', 'card_id')->toArray();
 
         DB::table('card_card_mechanic')->delete();
         DB::table('card_card_play_req')->delete();
@@ -314,7 +314,7 @@ class ParseCardsJson extends Command
     // Inserts to db
     private function insertTypes()
     {
-        $dbTypes = CardType::whereIn('name', $this->types)->lists('name')->toArray();
+        $dbTypes = CardType::whereIn('name', $this->types)->pluck('name')->toArray();
         $insertTypes = array_diff($this->types, $dbTypes);
 
         $insertArray = $this->makeInsertArray($insertTypes, 'name');
@@ -326,7 +326,7 @@ class ParseCardsJson extends Command
 
     private function insertSets()
     {
-        $dbItems = CardSet::whereIn('name', $this->sets)->lists('name')->toArray();
+        $dbItems = CardSet::whereIn('name', $this->sets)->pluck('name')->toArray();
         $insertItems = array_diff($this->sets, $dbItems);
 
         $insertArray = $this->makeInsertArray($insertItems, 'name');
@@ -338,7 +338,7 @@ class ParseCardsJson extends Command
 
     private function insertRarities()
     {
-        $dbItems = CardRarity::whereIn('name', $this->rarities)->lists('name')->toArray();
+        $dbItems = CardRarity::whereIn('name', $this->rarities)->pluck('name')->toArray();
         $insertItems = array_diff($this->rarities, $dbItems);
 
         $insertArray = $this->makeInsertArray($insertItems, 'name');
@@ -350,7 +350,7 @@ class ParseCardsJson extends Command
 
     private function insertPlayReqs()
     {
-        $dbItems = CardPlayReq::whereIn('name', $this->playReqs)->lists('name')->toArray();
+        $dbItems = CardPlayReq::whereIn('name', $this->playReqs)->pluck('name')->toArray();
         $insertItems = array_diff($this->playReqs, $dbItems);
 
         $insertArray = $this->makeInsertArray($insertItems, 'name');
@@ -362,7 +362,7 @@ class ParseCardsJson extends Command
 
     private function insertMechanics()
     {
-        $dbItems = CardMechanic::whereIn('name', $this->mechanics)->lists('name')->toArray();
+        $dbItems = CardMechanic::whereIn('name', $this->mechanics)->pluck('name')->toArray();
         $insertItems = array_diff($this->mechanics, $dbItems);
 
         $insertArray = $this->makeInsertArray($insertItems, 'name');
@@ -374,7 +374,7 @@ class ParseCardsJson extends Command
 
     private function insertClasses()
     {
-        $dbItems = CardClass::whereIn('name', $this->classes)->lists('name')->toArray();
+        $dbItems = CardClass::whereIn('name', $this->classes)->pluck('name')->toArray();
         $insertItems = array_diff($this->classes, $dbItems);
 
         $insertArray = $this->makeInsertArray($insertItems, 'name');
@@ -395,7 +395,7 @@ class ParseCardsJson extends Command
 
     private function insertCards()
     {
-        $dbItems = Card::whereIn('card_id', $this->cardIds)->lists('card_id')->toArray();
+        $dbItems = Card::whereIn('card_id', $this->cardIds)->pluck('card_id')->toArray();
         $insertArray = $this->unsetCardsAlreadyInDb($dbItems, $this->cards);
 
         // Wierd error when trying to mass insert, so yeah

@@ -13,6 +13,8 @@ return [
     |
     */
 
+    'name' => 'Your Application Name',
+
     'env' => env('APP_ENV', 'production'),
 
     /*
@@ -156,8 +158,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-
-        Collective\Html\HtmlServiceProvider::class,
         // Validation for youtube links
         App\Providers\ValidatorServiceProvider::class,
         // Adds top videos/pages to all views
@@ -216,8 +216,6 @@ return [
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
-        'Form' => Collective\Html\FormFacade::class,
-        'Html' => Collective\Html\HtmlFacade::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Twitter' => Thujohn\Twitter\Facades\Twitter::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
