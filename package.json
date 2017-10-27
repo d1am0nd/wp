@@ -1,7 +1,24 @@
 {
   "private": true,
   "devDependencies": {
-    "gulp": "^3.8.8"
+    "gulp": "^3.8.8",
+    "babel-eslint": "^8.0.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-react": "^6.24.1",
+    "cross-env": "^3.2.3",
+    "eslint": "^4.7.1",
+    "eslint-config-google": "^0.9.1",
+    "eslint-friendly-formatter": "^3.0.0",
+    "eslint-loader": "^1.9.0",
+    "eslint-plugin-html": "^3.2.2",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-react": "^7.4.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "laravel-mix": "^1.4.5",
+    "lodash": "^4.17.4",
+    "radium": "^0.19.5"
   },
   "dependencies": {
     "laravel-elixir": "^4.0.0",
