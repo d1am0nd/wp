@@ -27,4 +27,5 @@ mix
         }
       ]
     }
-  });
+  })
+  .react('resources/assets/js/app.js', 'js');

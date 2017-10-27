@@ -10,6 +10,6 @@
   <body>
     <div id="app"></div>
     <!-- built files will be auto injected -->
-  <script type="text/javascript" src="http://localhost:8080/app.js"></script>
+  <script type="text/javascript" src="/js/app.js"></script>
   </body>
 </html>
