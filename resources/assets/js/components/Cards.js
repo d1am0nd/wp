@@ -24,7 +24,6 @@ class Cards extends React.Component {
       .props
       .cards
       .map(i => {
-        console.log(i);
         return <Card
           key={i.id}
           card={i}/>;

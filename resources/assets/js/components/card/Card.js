@@ -41,9 +41,9 @@ class Card extends React.Component {
 
   cardProps() {
     return [
-      <CardProp name={'COST'} val={this.props.card.cost}/>,
-      <CardProp name={'ATK'} val={this.props.card.atk}/>,
-      <CardProp name={'HP'} val={this.props.card.hp}/>,
+      <CardProp key={'c'} name={'COST'} val={this.props.card.cost}/>,
+      <CardProp key={'a'} name={'ATK'} val={this.props.card.atk}/>,
+      <CardProp key={'h'} name={'HP'} val={this.props.card.hp}/>,
     ];
   }
 
@@ -52,14 +52,16 @@ class Card extends React.Component {
       <div
         style={this.getStyles()}>
         <div>{this.props.card.name}</div>
+        <div
+          style={this.getWrapperStyles()}>
           <div
-            style={this.getWrapperStyles()}>
-          <div
+            key={'left'}
             style={this.getLeftStyles()}>
             <img
               src={this.props.card.image_path}/>
           </div>
           <div
+            key={'right'}
             style={this.getRightStyles()}>
             <div dangerouslySetInnerHTML={{__html: this.props.card.text}}></div>
           </div>
