@@ -4,7 +4,7 @@ import radium from 'radium';
 class Filter extends React.Component {
   constructor() {
     super();
-    this.active = false;
+    this.active = true;
     this.styles = {
       base: {
         'display': 'inline',
@@ -31,7 +31,7 @@ class Filter extends React.Component {
   handleClick(e) {
     this.active = !this.active;
     this.forceUpdate();
-    this.props.handleClick(e, this.props.filter.id);
+    this.props.handleClick(e, this.props.filter.name);
   }
 
   isActive() {

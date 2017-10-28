@@ -11,6 +11,7 @@ class Layout extends React.Component {
     super();
     this.state = {
       cards: [],
+      visibleCards: [],
       filters: {
         rarities: [],
         mechanics: [],
@@ -21,6 +22,34 @@ class Layout extends React.Component {
       },
     };
 
+    this.show = {
+        rarities: {},
+        mechanics: {},
+        playReqs: {},
+        sets: {},
+        types: {},
+        classes: {},
+    };
+
+    this.types = [
+      {
+        multi: 'types',
+        single: 'type',
+      },
+      {
+        multi: 'rarities',
+        single: 'rarity',
+      },
+      {
+        multi: 'sets',
+        single: 'set',
+      },
+      {
+        multi: 'classes',
+        single: 'class',
+      },
+    ];
+
     // Fetch cards
     cardsApi
       .getCards()
@@ -28,6 +57,7 @@ class Layout extends React.Component {
         this
           .setState({
             cards: res.data,
+            visibleCards: this.visibleCards(res.data),
           });
       });
 
@@ -39,15 +69,36 @@ class Layout extends React.Component {
           .setState({
             filters: res.data,
           });
+
+          this.types.forEach(type => {
+            res.data[type.multi].forEach(i => {
+              this.show[type.multi][i.name] = true;
+            });
+          });
       });
   }
 
-  visibleCards() {
-    return this.state.cards.slice(0, 20);
+  visibleCards(cards) {
+    return cards
+      .filter(i => {
+        let r = true;
+        this.types.forEach(type => {
+          let toShow = this.show[type.multi][i[type.single]];
+          if (toShow === false || typeof toShow === 'undefined') {
+            r = false;
+          }
+        });
+        return r;
+      })
+      .slice(0, 20);
   }
 
-  handleFilterChange(type, id) {
-    console.log(type, id);
+  handleFilterChange(type, name) {
+    this.show[type][name] = !this.show[type][name];
+    this.setState({
+      visibleCards: this.visibleCards(this.state.cards),
+    });
+    console.log(this.show);
   }
 
   render() {
@@ -55,10 +106,10 @@ class Layout extends React.Component {
       <div>
         Hi
         <Filters
-          handleClick={this.handleFilterChange}
+          handleClick={this.handleFilterChange.bind(this)}
           filters={this.state.filters}/>
         <Cards
-          cards={this.visibleCards()}/>
+          cards={this.state.visibleCards}/>
       </div>
     );
   }
