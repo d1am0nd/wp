@@ -26,10 +26,11 @@
     "lodash": "^4.17.4"
   },
   "dependencies": {
-    "laravel-elixir": "^4.0.0",
+    "axios": "^0.17.0",
     "bootstrap-sass": "^3.0.0",
+    "laravel-elixir": "^4.0.0",
+    "radium": "^0.19.5",
     "react": "^16.0.0",
-    "react-dom": "^16.0.0",
-    "radium": "^0.19.5"
+    "react-dom": "^16.0.0"
   }
 }

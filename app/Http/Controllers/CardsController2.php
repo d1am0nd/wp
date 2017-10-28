@@ -18,7 +18,7 @@ class CardsController2 extends Controller
 
     public function getCardsJson()
     {
-        return response()->json($this->cards->getCardsWithInfo()->toJson());
+        return response()->json($this->cards->getCardsWithInfo());
     }
 
     public function getCardAttributesJson()
@@ -30,6 +30,6 @@ class CardsController2 extends Controller
             'sets' => $this->attributes->getSets(),
             'types' => $this->attributes->getTypes(),
             'classes' => $this->attributes->getClasses()
-        ])->toJson());
+        ]));
     }
 }
