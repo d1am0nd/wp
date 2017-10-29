@@ -4,7 +4,6 @@ import radium from 'radium';
 class Filter extends React.Component {
   constructor() {
     super();
-    this.active = true;
     this.styles = {
       base: {
         'display': 'inline-block',
@@ -35,7 +34,7 @@ class Filter extends React.Component {
   }
 
   isActive() {
-    return this.active;
+    return this.props.active;
   }
 
   render() {

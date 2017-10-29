@@ -13,6 +13,10 @@ class Row extends React.Component {
     };
   }
 
+  filterActive(filter) {
+    return this.props.show[filter.name];
+  }
+
   filters() {
     return this
       .props
@@ -20,6 +24,7 @@ class Row extends React.Component {
       .map(i => {
         return <Filter
           key={i.id}
+          active={this.filterActive(i)}
           filter={i}
           handleClick={this.props.handleClick.bind(this)}/>;
       });

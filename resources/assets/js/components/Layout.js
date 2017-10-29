@@ -20,15 +20,14 @@ class Layout extends React.Component {
         types: [],
         classes: [],
       },
-    };
-
-    this.show = {
+      show: {
         rarities: {},
         mechanics: {},
         playReqs: {},
         sets: {},
         types: {},
         classes: {},
+      },
     };
 
     this.types = [
@@ -72,7 +71,7 @@ class Layout extends React.Component {
 
           this.types.forEach(type => {
             res.data[type.multi].forEach(i => {
-              this.show[type.multi][i.name] = true;
+              this.state.show[type.multi][i.name] = true;
             });
           });
       });
@@ -83,7 +82,7 @@ class Layout extends React.Component {
       .filter(i => {
         let r = true;
         this.types.forEach(type => {
-          let toShow = this.show[type.multi][i[type.single]];
+          let toShow = this.state.show[type.multi][i[type.single]];
           if (toShow === false || typeof toShow === 'undefined') {
             r = false;
           }
@@ -93,8 +92,30 @@ class Layout extends React.Component {
       .slice(0, 20);
   }
 
+  countSelected(type) {
+    let count = 0;
+    for (let prop in this.state.show[type]) {
+      if (this.state.show[type].hasOwnProperty(prop) &&
+        this.state.show[type][prop] === true) {
+        count++;
+      }
+    }
+    return count;
+  }
+
+  selectAll(type) {
+    for (let prop in this.state.show[type]) {
+      if (this.state.show[type].hasOwnProperty(prop)) {
+        this.state.show[type][prop] = true;
+      }
+    }
+  }
+
   handleFilterChange(type, name) {
-    this.show[type][name] = !this.show[type][name];
+    this.state.show[type][name] = !this.state.show[type][name];
+    if (this.countSelected(type) === 0) {
+      this.selectAll(type);
+    }
     this.setState({
       visibleCards: this.visibleCards(this.state.cards),
     });
@@ -106,6 +127,7 @@ class Layout extends React.Component {
         Hi
         <Sidebar
           handleClick={this.handleFilterChange.bind(this)}
+          show={this.state.show}
           filters={this.state.filters}/>
         <div style={{marginLeft: '25%'}}>
           <Cards
