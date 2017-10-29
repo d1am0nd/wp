@@ -7,7 +7,7 @@ class Filter extends React.Component {
     this.active = true;
     this.styles = {
       base: {
-        'display': 'inline',
+        'display': 'inline-block',
         'marginRight': '5px',
         ':hover': {
           cursor: 'pointer',
@@ -43,7 +43,9 @@ class Filter extends React.Component {
       <li
         onClick={this.handleClick.bind(this)}
         style={this.getStyles()}>
-        {this.props.filter.name}
+        <button>
+          {this.props.filter.name}
+        </button>
       </li>
     );
   }

@@ -58,6 +58,7 @@ class Card extends React.Component {
             key={'left'}
             style={this.getLeftStyles()}>
             <img
+              style={{width: '100%'}}
               src={this.props.card.image_path}/>
           </div>
           <div

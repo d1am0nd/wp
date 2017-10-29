@@ -2,7 +2,7 @@ import React from 'react';
 import radium from 'radium';
 
 import Cards from './Cards';
-import Filters from './Filters';
+import Sidebar from './Sidebar';
 
 import cardsApi from '../api/cards';
 
@@ -98,18 +98,19 @@ class Layout extends React.Component {
     this.setState({
       visibleCards: this.visibleCards(this.state.cards),
     });
-    console.log(this.show);
   }
 
   render() {
     return (
       <div>
         Hi
-        <Filters
+        <Sidebar
           handleClick={this.handleFilterChange.bind(this)}
           filters={this.state.filters}/>
-        <Cards
-          cards={this.state.visibleCards}/>
+        <div style={{marginLeft: '25%'}}>
+          <Cards
+            cards={this.state.visibleCards}/>
+        </div>
       </div>
     );
   }
