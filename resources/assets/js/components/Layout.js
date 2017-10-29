@@ -1,6 +1,8 @@
 import React from 'react';
 import radium from 'radium';
 
+import Filters from '../filter';
+
 import Cards from './Cards';
 import Sidebar from './Sidebar';
 
@@ -49,6 +51,8 @@ class Layout extends React.Component {
       },
     ];
 
+    this.Filters = new Filters();
+
     // Fetch cards
     cardsApi
       .getCards()
@@ -69,11 +73,7 @@ class Layout extends React.Component {
             filters: res.data,
           });
 
-          this.types.forEach(type => {
-            res.data[type.multi].forEach(i => {
-              this.state.show[type.multi][i.name] = true;
-            });
-          });
+          this.Filters.setFilters(res.data);
       });
   }
 
@@ -82,7 +82,7 @@ class Layout extends React.Component {
       .filter(i => {
         let r = true;
         this.types.forEach(type => {
-          let toShow = this.state.show[type.multi][i[type.single]];
+          let toShow = this.Filters.showCard(type.multi, i[type.single]);
           if (toShow === false || typeof toShow === 'undefined') {
             r = false;
           }
@@ -112,10 +112,7 @@ class Layout extends React.Component {
   }
 
   handleFilterChange(type, name) {
-    this.state.show[type][name] = !this.state.show[type][name];
-    if (this.countSelected(type) === 0) {
-      this.selectAll(type);
-    }
+    this.Filters.toggle(type, name);
     this.setState({
       visibleCards: this.visibleCards(this.state.cards),
     });
@@ -127,7 +124,7 @@ class Layout extends React.Component {
         Hi
         <Sidebar
           handleClick={this.handleFilterChange.bind(this)}
-          show={this.state.show}
+          show={this.Filters}
           filters={this.state.filters}/>
         <div style={{marginLeft: '25%'}}>
           <Cards

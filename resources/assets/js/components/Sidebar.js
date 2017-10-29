@@ -3,7 +3,7 @@ import radium from 'radium';
 
 import Row from './filters/Row';
 
-class Filters extends React.Component {
+class Sidebar extends React.Component {
   constructor() {
     super();
     this.styles = {
@@ -35,22 +35,26 @@ class Filters extends React.Component {
         <div style={this.styles.inner}>
           <Row
             name={'Type'}
-            show={this.props.show.types}
+            showName={'types'}
+            show={this.props.show}
             handleClick={(e, val) => this.handleClick(e, 'types', val)}
             filters={this.props.filters.types}/>
           <Row
             name={'Rarity'}
-            show={this.props.show.rarities}
+            showName={'rarities'}
+            show={this.props.show}
             handleClick={(e, val) => this.handleClick(e, 'rarities', val)}
             filters={this.props.filters.rarities}/>
           <Row
             name={'Set'}
-            show={this.props.show.sets}
+            showName={'sets'}
+            show={this.props.show}
             handleClick={(e, val) => this.handleClick(e, 'sets', val)}
             filters={this.props.filters.sets}/>
           <Row
             name={'Class'}
-            show={this.props.show.classes}
+            showName={'classes'}
+            show={this.props.show}
             handleClick={(e, val) => this.handleClick(e, 'classes', val)}
             filters={this.props.filters.classes}/>
         </div>
@@ -59,4 +63,4 @@ class Filters extends React.Component {
   }
 }
 
-export default radium(Filters);
+export default radium(Sidebar);

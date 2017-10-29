@@ -14,7 +14,7 @@ class Row extends React.Component {
   }
 
   filterActive(filter) {
-    return this.props.show[filter.name];
+    return this.props.show.showFilter(this.props.showName, filter.name);
   }
 
   filters() {
