@@ -45,7 +45,6 @@ export default class Filters {
 
   toggle(type, val) {
     if (this.count[type] === 0) {
-      console.log('we in ');
       this.resetType(type);
     }
     if (this.show[type][val] === true) {
@@ -55,6 +54,5 @@ export default class Filters {
       this.count[type]++;
       this.show[type][val] = true;
     }
-    console.log('type', this.count[type]);
   }
 }

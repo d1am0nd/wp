@@ -13,6 +13,7 @@ class Sidebar extends React.Component {
         left: 0,
         width: '25%',
         height: '100%',
+        boxShadow: '0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12)',
       },
       inner: {
         position: 'relative',

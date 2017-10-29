@@ -22,14 +22,6 @@ class Layout extends React.Component {
         types: [],
         classes: [],
       },
-      show: {
-        rarities: {},
-        mechanics: {},
-        playReqs: {},
-        sets: {},
-        types: {},
-        classes: {},
-      },
     };
 
     this.types = [
@@ -90,25 +82,6 @@ class Layout extends React.Component {
         return r;
       })
       .slice(0, 20);
-  }
-
-  countSelected(type) {
-    let count = 0;
-    for (let prop in this.state.show[type]) {
-      if (this.state.show[type].hasOwnProperty(prop) &&
-        this.state.show[type][prop] === true) {
-        count++;
-      }
-    }
-    return count;
-  }
-
-  selectAll(type) {
-    for (let prop in this.state.show[type]) {
-      if (this.state.show[type].hasOwnProperty(prop)) {
-        this.state.show[type][prop] = true;
-      }
-    }
   }
 
   handleFilterChange(type, name) {
