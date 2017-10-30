@@ -14,6 +14,7 @@ class Layout extends React.Component {
     this.state = {
       cards: [],
       visibleCards: [],
+      search: '',
       filters: {
         rarities: [],
         mechanics: [],
@@ -73,6 +74,10 @@ class Layout extends React.Component {
     return cards
       .filter(i => {
         let r = true;
+        if (i.name.toLowerCase()
+            .indexOf(this.state.search.toLowerCase()) === -1) {
+          return false;
+        }
         this.types.forEach(type => {
           let toShow = this.Filters.showCard(type.multi, i[type.single]);
           if (toShow === false || typeof toShow === 'undefined') {
@@ -84,6 +89,13 @@ class Layout extends React.Component {
       .slice(0, 20);
   }
 
+  handleSearchChange(e) {
+    this.setState({
+      search: e.target.value,
+      visibleCards: this.visibleCards(this.state.cards),
+    });
+  }
+
   handleFilterChange(type, name) {
     this.Filters.toggle(type, name);
     this.setState({
@@ -93,13 +105,13 @@ class Layout extends React.Component {
 
   render() {
     return (
-      <div>
-        Hi
+      <div style={{height: '100%'}}>
         <Sidebar
+          handleSearchChange={this.handleSearchChange.bind(this)}
           handleClick={this.handleFilterChange.bind(this)}
           show={this.Filters}
           filters={this.state.filters}/>
-        <div style={{marginLeft: '25%'}}>
+        <div style={{marginLeft: '28%'}}>
           <Cards
             cards={this.state.visibleCards}/>
         </div>

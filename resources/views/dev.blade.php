@@ -7,7 +7,7 @@
     <meta property="og:description" content="" id="og-desc"/>
     <meta property="og:type" content="website" />
   </head>
-  <body>
+  <body style="margin: 0;">
     <div id="app"></div>
     <!-- built files will be auto injected -->
   <script type="text/javascript" src="/js/app.js"></script>

@@ -8,22 +8,24 @@ class Sidebar extends React.Component {
     super();
     this.styles = {
       base: {
-        position: 'absolute',
+        position: 'fixed',
         display: 'block',
-        left: 0,
-        width: '25%',
+        float: 'left',
+        width: '400px',
         height: '100%',
-        boxShadow: '0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12)',
-      },
-      inner: {
-        position: 'relative',
-        width: '100%',
+        boxShadow: '0 0 20px 0 rgba(0,0,0,0.16)',
+        marginRight: '10px',
       },
     };
   }
 
   getStyles() {
     return this.styles.base;
+  }
+
+
+  handleSearchChange(e) {
+    return this.props.handleSearchChange(e);
   }
 
   handleClick(e, type, id) {
@@ -33,32 +35,34 @@ class Sidebar extends React.Component {
   render() {
     return (
       <div style={this.getStyles()}>
-        <div style={this.styles.inner}>
-          <Row
-            name={'Type'}
-            showName={'types'}
-            show={this.props.show}
-            handleClick={(e, val) => this.handleClick(e, 'types', val)}
-            filters={this.props.filters.types}/>
-          <Row
-            name={'Rarity'}
-            showName={'rarities'}
-            show={this.props.show}
-            handleClick={(e, val) => this.handleClick(e, 'rarities', val)}
-            filters={this.props.filters.rarities}/>
-          <Row
-            name={'Set'}
-            showName={'sets'}
-            show={this.props.show}
-            handleClick={(e, val) => this.handleClick(e, 'sets', val)}
-            filters={this.props.filters.sets}/>
-          <Row
-            name={'Class'}
-            showName={'classes'}
-            show={this.props.show}
-            handleClick={(e, val) => this.handleClick(e, 'classes', val)}
-            filters={this.props.filters.classes}/>
-        </div>
+        <input
+          type="text"
+          onChange={this.handleSearchChange.bind(this)}
+          placeholder="Search..."/>
+        <Row
+          name={'Type'}
+          showName={'types'}
+          show={this.props.show}
+          handleClick={(e, val) => this.handleClick(e, 'types', val)}
+          filters={this.props.filters.types}/>
+        <Row
+          name={'Rarity'}
+          showName={'rarities'}
+          show={this.props.show}
+          handleClick={(e, val) => this.handleClick(e, 'rarities', val)}
+          filters={this.props.filters.rarities}/>
+        <Row
+          name={'Set'}
+          showName={'sets'}
+          show={this.props.show}
+          handleClick={(e, val) => this.handleClick(e, 'sets', val)}
+          filters={this.props.filters.sets}/>
+        <Row
+          name={'Class'}
+          showName={'classes'}
+          show={this.props.show}
+          handleClick={(e, val) => this.handleClick(e, 'classes', val)}
+          filters={this.props.filters.classes}/>
       </div>
     );
   }
