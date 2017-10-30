@@ -8,10 +8,8 @@ class Sidebar extends React.Component {
     super();
     this.styles = {
       base: {
-        position: 'fixed',
+        position: 'relative',
         display: 'block',
-        float: 'left',
-        width: '400px',
         height: '100%',
         boxShadow: '0 0 20px 0 rgba(0,0,0,0.16)',
         marginRight: '10px',
@@ -23,6 +21,19 @@ class Sidebar extends React.Component {
     return this.styles.base;
   }
 
+  xStyle() {
+    return {
+      ':hover': {
+        cursor: 'pointer',
+      },
+    };
+  }
+
+  topRowStyles() {
+    return {
+      width: '100%',
+    };
+  }
 
   handleSearchChange(e) {
     return this.props.handleSearchChange(e);
@@ -35,6 +46,13 @@ class Sidebar extends React.Component {
   render() {
     return (
       <div style={this.getStyles()}>
+        <div style={this.topRowStyles()}>
+        <span
+          onClick={e => this.props.toggleSidebar()}
+          style={this.xStyle()}>
+          X
+        </span>
+        </div>
         <input
           type="text"
           onChange={this.handleSearchChange.bind(this)}

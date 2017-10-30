@@ -6,11 +6,14 @@ import Filters from '../filter';
 import Cards from './Cards';
 import Sidebar from './Sidebar';
 
+import LayoutStyle from '../styles/layout';
+
 import cardsApi from '../api/cards';
 
 class Layout extends React.Component {
   constructor() {
     super();
+    this.styles = new LayoutStyle();
     this.state = {
       cards: [],
       visibleCards: [],
@@ -23,6 +26,7 @@ class Layout extends React.Component {
         types: [],
         classes: [],
       },
+      sidebarOpen: true,
     };
 
     this.types = [
@@ -70,6 +74,24 @@ class Layout extends React.Component {
       });
   }
 
+  leftStyles() {
+    return this.styles.getLeft(this.state.sidebarOpen);
+  }
+
+  rightStyles() {
+    return this.styles.getRight(this.state.sidebarOpen);
+  }
+
+  toggleIconStyles() {
+    return this.styles.getToggleIcon(this.state.sidebarOpen);
+  }
+
+  toggleSidebar() {
+    this.setState({
+      sidebarOpen: !this.state.sidebarOpen,
+    });
+  }
+
   visibleCards(cards) {
     return cards
       .filter(i => {
@@ -106,12 +128,20 @@ class Layout extends React.Component {
   render() {
     return (
       <div style={{height: '100%'}}>
-        <Sidebar
-          handleSearchChange={this.handleSearchChange.bind(this)}
-          handleClick={this.handleFilterChange.bind(this)}
-          show={this.Filters}
-          filters={this.state.filters}/>
-        <div style={{marginLeft: '28%'}}>
+        <div
+          onClick={e => this.toggleSidebar()}
+          style={this.toggleIconStyles()}>
+        X
+        </div>
+        <div style={this.leftStyles()}>
+          <Sidebar
+            toggleSidebar={this.toggleSidebar.bind(this)}
+            handleSearchChange={this.handleSearchChange.bind(this)}
+            handleClick={this.handleFilterChange.bind(this)}
+            show={this.Filters}
+            filters={this.state.filters}/>
+          </div>
+        <div style={this.rightStyles()}>
           <Cards
             cards={this.state.visibleCards}/>
         </div>
