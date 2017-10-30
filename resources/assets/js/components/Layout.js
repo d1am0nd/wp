@@ -13,7 +13,7 @@ import cardsApi from '../api/cards';
 class Layout extends React.Component {
   constructor() {
     super();
-    this.styles = new LayoutStyle();
+    this.styles = new LayoutStyle(true);
     this.state = {
       cards: [],
       visibleCards: [],
@@ -25,6 +25,10 @@ class Layout extends React.Component {
         sets: [],
         types: [],
         classes: [],
+      },
+      dragging: {
+        currently: false,
+        w: 0,
       },
       sidebarOpen: true,
     };
@@ -75,18 +79,19 @@ class Layout extends React.Component {
   }
 
   leftStyles() {
-    return this.styles.getLeft(this.state.sidebarOpen);
+    return this.styles.getLeft();
   }
 
   rightStyles() {
-    return this.styles.getRight(this.state.sidebarOpen);
+    return this.styles.getRight();
   }
 
   toggleIconStyles() {
-    return this.styles.getToggleIcon(this.state.sidebarOpen);
+    return this.styles.getToggleIcon();
   }
 
   toggleSidebar() {
+    this.styles.setSidebar(!this.state.sidebarOpen);
     this.setState({
       sidebarOpen: !this.state.sidebarOpen,
     });

@@ -1,18 +1,36 @@
 export default class styles {
-  constructor() {
+  constructor(sidebarOpen) {
     this.sbWidth = 400;
     this.sbTransitionSpeed = 0.3;
+
+    this.sidebarOpen = sidebarOpen;
+    this.dragging = {
+      isDragging: false,
+      left: 0,
+    };
+  }
+
+  setSidebar(open) {
+    this.sidebarOpen = open;
+  }
+
+  toggleSidebar() {
+    this.sidebarOpen = !this.sidebarOpen;
+  }
+
+  setDragging(dragging) {
+    this.dragging = dragging;
   }
 
   // Boolean if open
-  getLeft(open) {
+  getLeft() {
     let styles = {
       height: '100%',
       position: 'fixed',
       width: this.sbWidth + 'px',
       transition: this.sbTransitionSpeed + 's',
     };
-    if (open === true) {
+    if (this.sidebarOpen === true) {
       styles.left = '0px';
     } else {
       styles.left = (this.sbWidth * -1) + 'px';
@@ -21,13 +39,13 @@ export default class styles {
   }
 
   // Boolean if open
-  getRight(open) {
+  getRight() {
     let styles = {
       marginRight: '20px',
       transition: '0.4s',
     };
     let margin = 20;
-    if (open === true) {
+    if (this.sidebarOpen === true) {
       styles.marginLeft = (this.sbWidth + margin) + 'px';
     } else {
       styles.marginLeft = margin + 'px';
@@ -35,7 +53,7 @@ export default class styles {
     return styles;
   }
 
-  getToggleIcon(open) {
+  getToggleIcon() {
     let margins = 50;
     let w = 70;
     let h = w;
@@ -49,7 +67,7 @@ export default class styles {
       background: 'black',
       transition: this.sbTransitionSpeed + 's',
     };
-    if (open) {
+    if (this.sidebarOpen) {
       styles.display = 'none';
     } else {
       styles.display = 'block';
