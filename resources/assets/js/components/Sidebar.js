@@ -47,11 +47,6 @@ class Sidebar extends React.Component {
     return (
       <div style={this.getStyles()}>
         <div style={this.topRowStyles()}>
-        <span
-          onClick={e => this.props.toggleSidebar()}
-          style={this.xStyle()}>
-          X
-        </span>
         </div>
         <input
           type="text"

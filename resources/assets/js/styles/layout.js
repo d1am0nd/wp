@@ -42,7 +42,7 @@ export default class styles {
   getRight() {
     let styles = {
       marginRight: '20px',
-      transition: '0.4s',
+      transition: this.sbTransitionSpeed + 's',
     };
     let margin = 20;
     if (this.sidebarOpen === true) {
@@ -66,12 +66,15 @@ export default class styles {
       cursor: 'pointer',
       background: 'black',
       transition: this.sbTransitionSpeed + 's',
+      zIndex: '5',
     };
+    /*
     if (this.sidebarOpen) {
       styles.display = 'none';
     } else {
       styles.display = 'block';
     }
+    */
     return styles;
   }
 }

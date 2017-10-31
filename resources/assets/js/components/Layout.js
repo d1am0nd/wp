@@ -78,58 +78,10 @@ class Layout extends React.Component {
 
           this.Filters.setFilters(res.data);
       });
-
-    document.addEventListener('touchmove', this.onMouseMove.bind(this));
-    document.addEventListener('touchend', this.onMouseUp.bind(this));
   }
 
   leftStyles() {
     return this.styles.getLeft();
-  }
-
-  onMouseDown(e) {
-    this.setState({
-      dragging: {
-        isDragging: true,
-        w: 0,
-      },
-    });
-    this.dragStart = e.touches[0].pageX;
-    this.setState({
-      dragging: {
-        isDragging: true,
-        w: 0,
-      },
-    });
-  }
-
-  onMouseUp(e) {
-    let open = this.state.sidebarOpen;
-    if (open === true &&
-      this.state.dragging.w < -300) {
-      open = false;
-      this.styles.setSidebar(open);
-    } else if (open === false &&
-      this.state.dragging.w > 300) {
-      open = true;
-      this.styles.setSidebar(open);
-    }
-    this.dragStart = 0;
-    this.setState({
-      sidebarOpen: open,
-      dragging: {
-        isDragging: false,
-        w: 0,
-      },
-    });
-  }
-
-  onMouseMove(e) {
-    if (!this.state.dragging.isDragging) {
-      return;
-    }
-    let newW = e.touches[0].pageX - this.dragStart;
-    this.state.dragging.w = newW;
   }
 
   rightStyles() {
@@ -183,7 +135,6 @@ class Layout extends React.Component {
   render() {
     return (
       <div
-        onTouchStart={this.onMouseDown.bind(this)}
         style={{height: '100%'}}>
         <div
           onClick={e => this.toggleSidebar()}
@@ -192,7 +143,6 @@ class Layout extends React.Component {
         </div>
         <div style={this.leftStyles()}>
           <Sidebar
-            toggleSidebar={this.toggleSidebar.bind(this)}
             handleSearchChange={this.handleSearchChange.bind(this)}
             handleClick={this.handleFilterChange.bind(this)}
             show={this.Filters}
