@@ -5,6 +5,7 @@ import Filters from '../filter';
 
 import Cards from './Cards';
 import Sidebar from './Sidebar';
+import TopLine from './layout/TopLine';
 
 import LayoutStyle from '../styles/layout';
 
@@ -119,6 +120,7 @@ class Layout extends React.Component {
   }
 
   handleSearchChange(e) {
+    this.state.search = e.target.value;
     this.setState({
       search: e.target.value,
       visibleCards: this.visibleCards(this.state.cards),
@@ -136,19 +138,21 @@ class Layout extends React.Component {
     return (
       <div
         style={{height: '100%'}}>
-        <div
+        <i
+          className="fa fa-chevron-circle-right"
           onClick={e => this.toggleSidebar()}
           style={this.toggleIconStyles()}>
-        X
-        </div>
+        </i>
         <div style={this.leftStyles()}>
           <Sidebar
-            handleSearchChange={this.handleSearchChange.bind(this)}
             handleClick={this.handleFilterChange.bind(this)}
             show={this.Filters}
             filters={this.state.filters}/>
           </div>
         <div style={this.rightStyles()}>
+          <TopLine
+            handleSearchChange={this.handleSearchChange.bind(this)}
+            count={this.state.visibleCards.length}/>
           <Cards
             cards={this.state.visibleCards}/>
         </div>

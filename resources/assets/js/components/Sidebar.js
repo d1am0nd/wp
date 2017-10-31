@@ -35,10 +35,6 @@ class Sidebar extends React.Component {
     };
   }
 
-  handleSearchChange(e) {
-    return this.props.handleSearchChange(e);
-  }
-
   handleClick(e, type, id) {
     return this.props.handleClick(type, id);
   }
@@ -48,10 +44,6 @@ class Sidebar extends React.Component {
       <div style={this.getStyles()}>
         <div style={this.topRowStyles()}>
         </div>
-        <input
-          type="text"
-          onChange={this.handleSearchChange.bind(this)}
-          placeholder="Search..."/>
         <Row
           name={'Type'}
           showName={'types'}

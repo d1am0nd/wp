@@ -63,18 +63,15 @@ export default class styles {
       bottom: margins + 'px',
       height: h + 'px',
       width: w + 'px',
+      fontSize: w + 'px',
       cursor: 'pointer',
-      background: 'black',
+      // background: 'black',
       transition: this.sbTransitionSpeed + 's',
       zIndex: '5',
     };
-    /*
-    if (this.sidebarOpen) {
-      styles.display = 'none';
-    } else {
-      styles.display = 'block';
+    if (this.sidebarOpen === true) {
+      styles.transform = 'rotateY(-180deg)';
     }
-    */
     return styles;
   }
 }
