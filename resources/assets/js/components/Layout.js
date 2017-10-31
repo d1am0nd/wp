@@ -81,6 +81,10 @@ class Layout extends React.Component {
       });
   }
 
+  topLineStyles() {
+    return this.styles.getTopLineStyle();
+  }
+
   leftStyles() {
     return this.styles.getLeft();
   }
@@ -143,6 +147,10 @@ class Layout extends React.Component {
           onClick={e => this.toggleSidebar()}
           style={this.toggleIconStyles()}>
         </i>
+        <TopLine
+          styles={this.topLineStyles()}
+          handleSearchChange={this.handleSearchChange.bind(this)}
+          count={this.state.visibleCards.length}/>
         <div style={this.leftStyles()}>
           <Sidebar
             handleClick={this.handleFilterChange.bind(this)}
@@ -150,9 +158,6 @@ class Layout extends React.Component {
             filters={this.state.filters}/>
           </div>
         <div style={this.rightStyles()}>
-          <TopLine
-            handleSearchChange={this.handleSearchChange.bind(this)}
-            count={this.state.visibleCards.length}/>
           <Cards
             cards={this.state.visibleCards}/>
         </div>

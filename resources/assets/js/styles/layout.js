@@ -22,11 +22,32 @@ export default class styles {
     this.dragging = dragging;
   }
 
-  // Boolean if open
+  getTopLineStyle() {
+    let padding = '15px';
+    let styles = {
+      borderBottom: 'solid 1spx #DCDCDC',
+      marginBottom: '20px',
+      paddingTop: padding,
+      paddingBottom: padding,
+      boxShadow: '0 0 20px 0 rgba(0,0,0,0.16)',
+      transition: this.sbTransitionSpeed + 's',
+    };
+    let margin = 20;
+    if (this.sidebarOpen === true) {
+      styles.paddingLeft = (this.sbWidth + margin) + 'px';
+    } else {
+      styles.paddingLeft = margin;
+    }
+    return styles;
+  }
+
   getLeft() {
     let styles = {
       height: '100%',
       position: 'fixed',
+      top: 0,
+      background: '#EDEDED',
+      zIndex: 3,
       width: this.sbWidth + 'px',
       transition: this.sbTransitionSpeed + 's',
     };
@@ -38,17 +59,16 @@ export default class styles {
     return styles;
   }
 
-  // Boolean if open
   getRight() {
     let styles = {
-      marginRight: '20px',
+      paddingRight: '20px',
       transition: this.sbTransitionSpeed + 's',
     };
     let margin = 20;
     if (this.sidebarOpen === true) {
-      styles.marginLeft = (this.sbWidth + margin) + 'px';
+      styles.paddingLeft = (this.sbWidth + margin) + 'px';
     } else {
-      styles.marginLeft = margin + 'px';
+      styles.paddingLeft = margin + 'px';
     }
     return styles;
   }

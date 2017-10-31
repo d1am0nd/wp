@@ -12,7 +12,7 @@ class Sidebar extends React.Component {
         display: 'block',
         height: '100%',
         boxShadow: '0 0 20px 0 rgba(0,0,0,0.16)',
-        marginRight: '10px',
+        borderRight: '3px solid #DCDCDC',
       },
     };
   }
