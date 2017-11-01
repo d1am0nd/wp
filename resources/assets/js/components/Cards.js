@@ -6,17 +6,14 @@ import Card from './card/Card';
 class Cards extends React.Component {
   constructor() {
     super();
-    this.styles = {
-      base: {
-        'width': '100%',
-        'display': 'flex',
-        'flexWrap': 'wrap',
-      },
-    };
   }
 
   getStyles() {
-    return this.styles.base;
+    let styles = {};
+    if (this.props.styles) {
+      Object.assign(styles, this.props.styles.getCards());
+    }
+    return styles;
   }
 
   renderCards() {
@@ -25,6 +22,7 @@ class Cards extends React.Component {
       .cards
       .map(i => {
         return <Card
+          styles={this.props.styles}
           key={i.id}
           card={i}/>;
       });

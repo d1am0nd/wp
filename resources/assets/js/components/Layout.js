@@ -123,6 +123,13 @@ class Layout extends React.Component {
       .slice(0, 20);
   }
 
+  clearFilterType(type) {
+    this.Filters.resetType(type);
+    this.setState({
+      visibleCards: this.visibleCards(this.state.cards),
+    });
+  }
+
   handleSearchChange(e) {
     this.state.search = e.target.value;
     this.setState({
@@ -148,17 +155,19 @@ class Layout extends React.Component {
           style={this.toggleIconStyles()}>
         </i>
         <TopLine
-          styles={this.topLineStyles()}
+          styles={this.styles}
           handleSearchChange={this.handleSearchChange.bind(this)}
           count={this.state.visibleCards.length}/>
         <div style={this.leftStyles()}>
           <Sidebar
+            clearType={(e, type) => this.clearFilterType(type)}
             handleClick={this.handleFilterChange.bind(this)}
             show={this.Filters}
             filters={this.state.filters}/>
           </div>
         <div style={this.rightStyles()}>
           <Cards
+            styles={this.styles}
             cards={this.state.visibleCards}/>
         </div>
       </div>

@@ -12,7 +12,7 @@ class Sidebar extends React.Component {
         display: 'block',
         height: '100%',
         boxShadow: '0 0 20px 0 rgba(0,0,0,0.16)',
-        borderRight: '3px solid #DCDCDC',
+        borderRight: '3px solid rgb(200, 200, 200, 1)',
       },
     };
   }
@@ -35,6 +35,12 @@ class Sidebar extends React.Component {
     };
   }
 
+  clearType(e, type) {
+    if (this.props.clearType) {
+      this.props.clearType(e, type);
+    }
+  }
+
   handleClick(e, type, id) {
     return this.props.handleClick(type, id);
   }
@@ -45,27 +51,31 @@ class Sidebar extends React.Component {
         <div style={this.topRowStyles()}>
         </div>
         <Row
-          name={'Type'}
+          name={'Types'}
           showName={'types'}
           show={this.props.show}
+          clearType={e => this.clearType(e, 'types')}
           handleClick={(e, val) => this.handleClick(e, 'types', val)}
           filters={this.props.filters.types}/>
         <Row
-          name={'Rarity'}
+          name={'Rarities'}
           showName={'rarities'}
           show={this.props.show}
+          clearType={e => this.clearType(e, 'rarities')}
           handleClick={(e, val) => this.handleClick(e, 'rarities', val)}
           filters={this.props.filters.rarities}/>
         <Row
-          name={'Set'}
+          name={'Sets'}
           showName={'sets'}
           show={this.props.show}
+          clearType={e => this.clearType(e, 'sets')}
           handleClick={(e, val) => this.handleClick(e, 'sets', val)}
           filters={this.props.filters.sets}/>
         <Row
-          name={'Class'}
+          name={'Classes'}
           showName={'classes'}
           show={this.props.show}
+          clearType={e => this.clearType(e, 'classes')}
           handleClick={(e, val) => this.handleClick(e, 'classes', val)}
           filters={this.props.filters.classes}/>
       </div>

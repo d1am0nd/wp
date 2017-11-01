@@ -12,17 +12,28 @@ class Filter extends React.Component {
           cursor: 'pointer',
         },
       },
-      active: {
-        border: 'solid black 1px',
-      },
     };
   }
 
   getStyles() {
     let s = {};
     Object.assign(s, this.styles.base);
+    return s;
+  }
+
+  getButtonStyles() {
+    let s = {
+      'backgroundColor': 'white',
+      'border': 'none',
+      ':active': {
+        outline: 'none',
+      },
+    };
     if (this.isActive()) {
-      Object.assign(s, this.styles.active);
+      let active = {
+        'border': '1px solid black',
+      };
+      Object.assign(s, active);
     }
     return s;
   }
@@ -42,7 +53,9 @@ class Filter extends React.Component {
       <li
         onClick={this.handleClick.bind(this)}
         style={this.getStyles()}>
-        <button>
+        <button
+          key={this.props.name + '-filter-button'}
+          style={this.getButtonStyles()}>
           {this.props.filter.name}
         </button>
       </li>

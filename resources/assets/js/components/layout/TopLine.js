@@ -17,24 +17,31 @@ class TopLine extends React.Component {
   getLayoutStyles() {
     let styles = {};
     if (this.props.styles) {
-      Object.assign(styles, this.props.styles);
+      Object.assign(styles, this.props.styles.getTopLineStyle());
     }
     return styles;
   }
 
   getLeftStyles() {
     let styles = {
-      width: '300px',
-      float: 'left',
+      width: '100%',
     };
     return styles;
   }
 
+  /*
   getRightStyles() {
     let styles = {
       float: 'right',
       marginRight: '20px',
     };
+    return styles;
+  }
+  */
+
+  getSearchStyles() {
+    let styles = {};
+    Object.assign(styles, this.props.styles.getSearch());
     return styles;
   }
 
@@ -44,14 +51,10 @@ class TopLine extends React.Component {
         <div
           style={this.getLeftStyles()}>
           <Search
+            styles={this.getSearchStyles()}
             handleChange={e => this.handleSearchChange(e)}
             />
         </div>
-        <div
-          style={this.getRightStyles()}>
-          {this.props.count} cards found
-        </div>
-        <div style={{clear: 'both'}}></div>
       </div>
     );
   }

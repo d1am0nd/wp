@@ -24,21 +24,57 @@ export default class styles {
 
   getTopLineStyle() {
     let padding = '15px';
+    let margin = 20;
     let styles = {
       borderBottom: 'solid 1spx #DCDCDC',
       marginBottom: '20px',
+      paddingRight: margin + 'px',
       paddingTop: padding,
       paddingBottom: padding,
       boxShadow: '0 0 20px 0 rgba(0,0,0,0.16)',
       transition: this.sbTransitionSpeed + 's',
     };
-    let margin = 20;
     if (this.sidebarOpen === true) {
       styles.paddingLeft = (this.sbWidth + margin) + 'px';
     } else {
       styles.paddingLeft = margin;
     }
     return styles;
+  }
+
+  getSearch() {
+    return {
+      'width': '100%',
+      'border': 0,
+      'borderBottom': '1px solid #DCDCDC',
+      'fontSize': '50px',
+      ':focus': {
+        border: 0,
+        outline: 'none',
+        borderBottom: '1px solid black',
+      },
+    };
+  }
+
+  getCards() {
+    return {
+      'width': '100%',
+      'display': 'flex',
+      'flexWrap': 'wrap',
+    };
+  }
+
+  getCardWrapper() {
+    return {
+      'width': '25%',
+      'flexGrow': '1',
+    };
+  }
+
+  getCard() {
+    return {
+      width: '100%',
+    };
   }
 
   getLeft() {

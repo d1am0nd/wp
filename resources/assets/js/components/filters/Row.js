@@ -8,9 +8,33 @@ class Row extends React.Component {
     super();
     this.styles = {
       base: {
-
+        marginLeft: '10px',
+        marginRight: '10px',
+        fontSize: '35px',
       },
     };
+  }
+
+  getLeftStyles() {
+    let styles = {
+      float: 'left',
+    };
+    return styles;
+  }
+
+  getRightStyles() {
+    let styles = {
+      float: 'right',
+      cursor: 'pointer',
+      borderBottom: '1px solid black',
+    };
+    return styles;
+  }
+
+  clearType(e) {
+    if (this.props.clearType) {
+      this.props.clearType(e);
+    }
   }
 
   filterActive(filter) {
@@ -35,11 +59,19 @@ class Row extends React.Component {
       <div
         style={this.styles.base}>
         <div>
-          {this.props.name}
-          <ul>
-            {this.filters()}
-          </ul>
+          <div style={this.getLeftStyles()}>
+            {this.props.name}
+          </div>
+          <div
+            onClick={e => this.clearType(e)}
+            style={this.getRightStyles()}>
+            Clear
+          </div>
+          <div style={{clear: 'both'}}></div>
         </div>
+        <ul style={{padding: '0'}}>
+          {this.filters()}
+        </ul>
       </div>
     );
   }

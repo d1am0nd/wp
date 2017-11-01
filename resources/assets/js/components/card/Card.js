@@ -6,37 +6,24 @@ import CardProp from './CardProp';
 class Card extends React.Component {
   constructor() {
     super();
-    this.styles = {
-      base: {
-        'width': '33%',
-        'flexGrow': '1',
-      },
-      wrapper: {
-        display: 'flex',
-      },
-      left: {
-        'width': '50%',
-      },
-      right: {
-        'width': '50%',
-      },
-    };
   }
 
   getStyles() {
-    return this.styles.base;
+    let styles = {
+        'width': '100%',
+    };
+    if (this.props.styles) {
+      Object.assign(styles, this.props.styles.getCard());
+    }
+    return styles;
   }
 
-  getWrapperStyles() {
-    return this.styles.wrapper;
-  }
-
-  getLeftStyles() {
-    return this.styles.left;
-  }
-
-  getRightStyles() {
-    return this.styles.right;
+  getCardWrapper() {
+    let styles = {};
+    if (this.props.styles) {
+      Object.assign(styles, this.props.styles.getCardWrapper());
+    }
+    return styles;
   }
 
   cardProps() {
@@ -50,24 +37,10 @@ class Card extends React.Component {
   render() {
     return (
       <div
-        style={this.getStyles()}>
-        <div>{this.props.card.name}</div>
-        <div
-          style={this.getWrapperStyles()}>
-          <div
-            key={'left'}
-            style={this.getLeftStyles()}>
-            <img
-              style={{width: '100%'}}
-              src={this.props.card.image_path}/>
-          </div>
-          <div
-            key={'right'}
-            style={this.getRightStyles()}>
-            <div dangerouslySetInnerHTML={{__html: this.props.card.text}}></div>
-          </div>
-        </div>
-        {this.cardProps()}
+        style={this.getCardWrapper()}>
+        <img
+          style={{width: '100%'}}
+          src={this.props.card.image_path}/>
       </div>
     );
   }

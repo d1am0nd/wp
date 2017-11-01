@@ -14,9 +14,7 @@ class Search extends React.Component {
   }
 
   getStyles() {
-    let styles = {
-      width: '100%',
-    };
+    let styles = {};
     if (this.props.styles) {
       Object.assign(styles, this.props.styles);
     }
