@@ -82,7 +82,7 @@ export default class styles {
       height: '100%',
       position: 'fixed',
       top: 0,
-      background: '#EDEDED',
+      background: '#67C8FF', // '#EDEDED',
       zIndex: 3,
       width: this.sbWidth + 'px',
       transition: this.sbTransitionSpeed + 's',

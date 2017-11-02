@@ -24,7 +24,16 @@ class Filter extends React.Component {
   getButtonStyles() {
     let s = {
       'backgroundColor': 'white',
-      'border': 'none',
+      'border': '2px solid #515151',
+      'padding': '12px 30px !important',
+      'marginBottom': '5px',
+      'fontSize': '30px',
+      ':hover': {
+        cursor: 'pointer',
+      },
+      ':visited': {
+        backgroundColor: 'white',
+      },
       ':active': {
         outline: 'none',
       },
@@ -32,6 +41,8 @@ class Filter extends React.Component {
     if (this.isActive()) {
       let active = {
         'border': '1px solid black',
+        'backgroundColor': 'black',
+        'color': 'white',
       };
       Object.assign(s, active);
     }

@@ -3,6 +3,8 @@ import radium from 'radium';
 
 import Filters from '../filter';
 
+import {StyleRoot} from 'radium';
+
 import Cards from './Cards';
 import Sidebar from './Sidebar';
 import TopLine from './layout/TopLine';
@@ -147,7 +149,7 @@ class Layout extends React.Component {
 
   render() {
     return (
-      <div
+      <StyleRoot
         style={{height: '100%'}}>
         <i
           className="fa fa-chevron-circle-right"
@@ -170,7 +172,7 @@ class Layout extends React.Component {
             styles={this.styles}
             cards={this.state.visibleCards}/>
         </div>
-      </div>
+      </StyleRoot>
     );
   }
 }

@@ -69,7 +69,7 @@ class Row extends React.Component {
           </div>
           <div style={{clear: 'both'}}></div>
         </div>
-        <ul style={{padding: '0'}}>
+        <ul style={{padding: '0', marginTop: '5px', marginBottom: '5px'}}>
           {this.filters()}
         </ul>
       </div>
