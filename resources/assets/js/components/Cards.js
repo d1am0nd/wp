@@ -8,7 +8,7 @@ import Card from './card/Card';
 class Cards extends React.Component {
   constructor() {
     super();
-    this.show = 12;
+    this.show = 28;
   }
 
   getStyles() {
