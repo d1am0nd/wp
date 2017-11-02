@@ -20,6 +20,7 @@ class Layout extends React.Component {
     this.state = {
       cards: [],
       visibleCards: [],
+      show: 12,
       search: '',
       filters: {
         rarities: [],
@@ -121,8 +122,7 @@ class Layout extends React.Component {
           }
         });
         return r;
-      })
-      .slice(0, 20);
+      });
   }
 
   clearFilterType(type) {
