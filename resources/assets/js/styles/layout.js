@@ -1,3 +1,5 @@
+import vars from './vars';
+
 export default class styles {
   constructor(sidebarOpen) {
     this.sbWidth = 400;
@@ -28,6 +30,7 @@ export default class styles {
     let styles = {
       borderBottom: 'solid 1spx #DCDCDC',
       marginBottom: '20px',
+      fontFamily: vars.fonts.main,
       paddingRight: margin + 'px',
       paddingTop: padding,
       paddingBottom: padding,
@@ -48,6 +51,7 @@ export default class styles {
       'border': 0,
       'borderBottom': '1px solid #DCDCDC',
       'fontSize': '50px',
+      ...vars.fonts.main,
       ':focus': {
         border: 0,
         outline: 'none',
@@ -80,9 +84,11 @@ export default class styles {
   getLeft() {
     let styles = {
       height: '100%',
+      overflowY: 'auto',
       position: 'fixed',
+      boxShadow: '0 0 20px 10px rgba(0,0,0,0.16)',
       top: 0,
-      background: '#67C8FF', // '#EDEDED',
+      background: 'white', // '#EDEDED',
       zIndex: 3,
       width: this.sbWidth + 'px',
       transition: this.sbTransitionSpeed + 's',

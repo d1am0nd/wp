@@ -1,13 +1,17 @@
 import React from 'react';
 import radium from 'radium';
 
+import styleVars from '../../styles/vars';
+
 class Filter extends React.Component {
   constructor() {
     super();
     this.styles = {
       base: {
         'display': 'inline-block',
-        'marginRight': '5px',
+        'width': '46%',
+        'marginLeft': '2%',
+        'marginRight': '2%',
         ':hover': {
           cursor: 'pointer',
         },
@@ -26,8 +30,9 @@ class Filter extends React.Component {
       'backgroundColor': 'white',
       'border': '2px solid #515151',
       'padding': '12px 30px !important',
-      'marginBottom': '5px',
-      'fontSize': '30px',
+      'fontSize': '20px',
+      'width': '100%',
+      ...styleVars.fonts.main,
       ':hover': {
         cursor: 'pointer',
       },

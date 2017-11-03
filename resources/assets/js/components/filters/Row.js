@@ -11,6 +11,7 @@ class Row extends React.Component {
         marginLeft: '10px',
         marginRight: '10px',
         fontSize: '35px',
+        marginBottom: '20px',
       },
     };
   }
@@ -18,6 +19,7 @@ class Row extends React.Component {
   getLeftStyles() {
     let styles = {
       float: 'left',
+      marginLeft: '2%',
     };
     return styles;
   }
@@ -26,6 +28,7 @@ class Row extends React.Component {
     let styles = {
       float: 'right',
       cursor: 'pointer',
+      marginRight: '2%',
       borderBottom: '1px solid black',
     };
     return styles;

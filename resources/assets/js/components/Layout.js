@@ -8,6 +8,7 @@ import {StyleRoot} from 'radium';
 import Cards from './Cards';
 import Sidebar from './Sidebar';
 import TopLine from './layout/TopLine';
+import SingleCard from './SingleCard';
 
 import LayoutStyle from '../styles/layout';
 
@@ -156,6 +157,7 @@ class Layout extends React.Component {
           onClick={e => this.toggleSidebar()}
           style={this.toggleIconStyles()}>
         </i>
+        <SingleCard/>
         <TopLine
           styles={this.styles}
           handleSearchChange={this.handleSearchChange.bind(this)}

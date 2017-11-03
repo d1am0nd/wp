@@ -31,6 +31,7 @@ class Sidebar extends React.Component {
 
   topRowStyles() {
     return {
+      paddingTop: '20px',
       width: '100%',
     };
   }
