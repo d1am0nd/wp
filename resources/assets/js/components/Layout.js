@@ -145,6 +145,7 @@ class Layout extends React.Component {
 
   handleCardClick(e, card) {
     if (this.state.selectedCard === null) {
+      window.history.pushState('', '', '/card/' + card.slug);
       this.setState({
         selectedCard: card,
       });
@@ -153,6 +154,7 @@ class Layout extends React.Component {
 
   handleContentClick(e) {
     if (this.state.selectedCard) {
+      window.history.pushState('', '', '/');
       this.setState({
         selectedCard: null,
       });
