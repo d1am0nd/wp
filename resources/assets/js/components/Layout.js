@@ -62,10 +62,23 @@ class Layout extends React.Component {
     cardsApi
       .getCards()
       .then(res => {
+        let path = window.location.pathname;
+        let match = path.match(/^\/card\/([A-z-]*)\/?$/);
+        let selectedCard = null;
+        if (match !== null) {
+          let slug = match[1];
+          let card = res.data.find(i => {
+            return i.slug == slug;
+          });
+          if (typeof card !== 'undefined') {
+            selectedCard = card;
+          }
+        }
         this
           .setState({
             cards: res.data,
             visibleCards: this.visibleCards(res.data),
+            selectedCard: selectedCard,
           });
       });
 
