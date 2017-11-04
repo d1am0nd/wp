@@ -26,6 +26,12 @@ class Card extends React.Component {
     return styles;
   }
 
+  handleClick(e) {
+    if (this.props.handleClick) {
+      this.props.handleClick(e);
+    }
+  }
+
   cardProps() {
     return [
       <CardProp key={'c'} name={'COST'} val={this.props.card.cost}/>,
@@ -37,8 +43,11 @@ class Card extends React.Component {
   render() {
     return (
       <div
+        onClick={e => this.handleClick(e)}
         style={this.getCardWrapper()}>
         <img
+          alt={this.props.card.name}
+          title={this.props.card.name}
           style={{width: '100%'}}
           src={this.props.card.image_path}/>
       </div>

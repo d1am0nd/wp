@@ -23,6 +23,7 @@ class Layout extends React.Component {
       visibleCards: [],
       show: 12,
       search: '',
+      selectedCard: null,
       filters: {
         rarities: [],
         mechanics: [],
@@ -30,10 +31,6 @@ class Layout extends React.Component {
         sets: [],
         types: [],
         classes: [],
-      },
-      dragging: {
-        isDragging: false,
-        w: 0,
       },
       sidebarOpen: true,
     };
@@ -133,6 +130,22 @@ class Layout extends React.Component {
     });
   }
 
+  handleCardClick(e, card) {
+    if (this.state.selectedCard === null) {
+      this.setState({
+        selectedCard: card,
+      });
+    }
+  }
+
+  handleContentClick(e) {
+    if (this.state.selectedCard) {
+      this.setState({
+        selectedCard: null,
+      });
+    }
+  }
+
   handleSearchChange(e) {
     this.state.search = e.target.value;
     this.setState({
@@ -157,22 +170,28 @@ class Layout extends React.Component {
           onClick={e => this.toggleSidebar()}
           style={this.toggleIconStyles()}>
         </i>
-        <SingleCard/>
-        <TopLine
-          styles={this.styles}
-          handleSearchChange={this.handleSearchChange.bind(this)}
-          count={this.state.visibleCards.length}/>
-        <div style={this.leftStyles()}>
-          <Sidebar
-            clearType={(e, type) => this.clearFilterType(type)}
-            handleClick={this.handleFilterChange.bind(this)}
-            show={this.Filters}
-            filters={this.state.filters}/>
-          </div>
-        <div style={this.rightStyles()}>
-          <Cards
+        <SingleCard card={this.state.selectedCard}/>
+        <div onClick={e => this.handleContentClick()}>
+          <TopLine
+            onClick={e => this.handleContentClick()}
             styles={this.styles}
-            cards={this.state.visibleCards}/>
+            handleSearchChange={this.handleSearchChange.bind(this)}
+            count={this.state.visibleCards.length}/>
+          <div style={this.leftStyles()}>
+            <Sidebar
+              clearType={(e, type) => this.clearFilterType(type)}
+              handleClick={this.handleFilterChange.bind(this)}
+              show={this.Filters}
+              filters={this.state.filters}/>
+            </div>
+          <div
+            onClick={e => this.handleContentClick(e)}
+            style={this.rightStyles()}>
+            <Cards
+              styles={this.styles}
+              handleCardClick={(e, card) => this.handleCardClick(e, card)}
+              cards={this.state.visibleCards}/>
+          </div>
         </div>
       </StyleRoot>
     );

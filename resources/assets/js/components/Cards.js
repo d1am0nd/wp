@@ -30,6 +30,12 @@ class Cards extends React.Component {
     }
   }
 
+  handleCardClick(e, card) {
+    if (this.props.handleCardClick) {
+      this.props.handleCardClick(e, card);
+    }
+  }
+
   renderCards() {
     return this
       .props
@@ -37,6 +43,7 @@ class Cards extends React.Component {
       .slice(0, this.show)
       .map(i => {
         return <Card
+          handleClick={e => this.handleCardClick(e, i)}
           styles={this.props.styles}
           key={i.id}
           card={i}/>;

@@ -48,14 +48,18 @@ export default class styles {
   getSearch() {
     return {
       'width': '100%',
-      'border': 0,
+      'borderLeft': 0,
+      'borderRight': 0,
+      'borderTop': 0,
       'borderBottom': '1px solid #DCDCDC',
       'fontSize': '50px',
       ...vars.fonts.main,
       ':focus': {
-        border: 0,
-        outline: 'none',
-        borderBottom: '1px solid black',
+        'borderLeft': 0,
+        'borderRight': 0,
+        'borderTop': 0,
+        'outline': 'none',
+        'borderBottom': '1px solid black',
       },
     };
   }
