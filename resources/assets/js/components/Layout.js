@@ -21,8 +21,6 @@ class Layout extends React.Component {
     this.state = {
       cards: [],
       visibleCards: [],
-      show: 12,
-      search: '',
       selectedCard: null,
       filters: {
         rarities: [],
@@ -34,27 +32,6 @@ class Layout extends React.Component {
       },
       sidebarOpen: true,
     };
-    // This is used to track dragging state
-    this.dragStart = 0;
-
-    this.types = [
-      {
-        multi: 'types',
-        single: 'type',
-      },
-      {
-        multi: 'rarities',
-        single: 'rarity',
-      },
-      {
-        multi: 'sets',
-        single: 'set',
-      },
-      {
-        multi: 'classes',
-        single: 'class',
-      },
-    ];
 
     this.Filters = new Filters();
 
@@ -62,6 +39,8 @@ class Layout extends React.Component {
     cardsApi
       .getCards()
       .then(res => {
+        // Check if the url is /card/{cardName}
+        // Show that card if it is (set it as selectedCard)
         let path = window.location.pathname;
         let match = path.match(/^\/card\/([A-z-]*)\/?$/);
         let selectedCard = null;
@@ -74,6 +53,8 @@ class Layout extends React.Component {
             selectedCard = card;
           }
         }
+
+        // set state after loading cards
         this
           .setState({
             cards: res.data,
