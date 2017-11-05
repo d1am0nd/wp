@@ -148,6 +148,7 @@ class SingleCard extends React.Component {
     return (
       <li style={this.getLiStyles()}>
         <a
+          target="_blank"
           style={this.getLinkStyles()}
           href={this.props.card.wikia_url}>
         Wikia
@@ -160,6 +161,7 @@ class SingleCard extends React.Component {
     return (
       <li style={this.getLiStyles()}>
         <a
+          target="_blank"
           style={this.getLinkStyles()}
           href={this.props.card.gamepedia_url}>
         Gamepedia
@@ -172,6 +174,7 @@ class SingleCard extends React.Component {
     return (
       <li style={this.getLiStyles()}>
         <a
+          target="_blank"
           style={this.getLinkStyles()}
           href={this.props.card.hearthhead_url}>
         HearthHead

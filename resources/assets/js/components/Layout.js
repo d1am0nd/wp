@@ -1,7 +1,7 @@
 import React from 'react';
 import radium from 'radium';
 
-import Filters from '../filter';
+import Filters from '../filters/index';
 
 import {StyleRoot} from 'radium';
 
@@ -121,18 +121,7 @@ class Layout extends React.Component {
   visibleCards(cards) {
     return cards
       .filter(i => {
-        let r = true;
-        if (i.name.toLowerCase()
-            .indexOf(this.state.search.toLowerCase()) === -1) {
-          return false;
-        }
-        this.types.forEach(type => {
-          let toShow = this.Filters.showCard(type.multi, i[type.single]);
-          if (toShow === false || typeof toShow === 'undefined') {
-            r = false;
-          }
-        });
-        return r;
+        return this.Filters.showCard(i);
       });
   }
 
@@ -162,7 +151,7 @@ class Layout extends React.Component {
   }
 
   handleSearchChange(e) {
-    this.state.search = e.target.value;
+    this.Filters.setSearch(e.target.value);
     this.setState({
       search: e.target.value,
       visibleCards: this.visibleCards(this.state.cards),
@@ -170,7 +159,7 @@ class Layout extends React.Component {
   }
 
   handleFilterChange(type, name) {
-    this.Filters.toggle(type, name);
+    this.Filters.toggleType(type, name);
     this.setState({
       visibleCards: this.visibleCards(this.state.cards),
     });
@@ -196,7 +185,7 @@ class Layout extends React.Component {
             <Sidebar
               clearType={(e, type) => this.clearFilterType(type)}
               handleClick={this.handleFilterChange.bind(this)}
-              show={this.Filters}
+              show={this.Filters.Filters}
               filters={this.state.filters}/>
             </div>
           <div
