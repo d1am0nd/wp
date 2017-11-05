@@ -1,88 +1,10 @@
+import SidebarClass from './SidebarClass';
+
 import vars from './vars';
 
-export default class styles {
+export default class Layout extends SidebarClass {
   constructor(sidebarOpen) {
-    this.sbWidth = 400;
-    this.sbTransitionSpeed = 0.3;
-
-    this.sidebarOpen = sidebarOpen;
-    this.dragging = {
-      isDragging: false,
-      left: 0,
-    };
-  }
-
-  setSidebar(open) {
-    this.sidebarOpen = open;
-  }
-
-  toggleSidebar() {
-    this.sidebarOpen = !this.sidebarOpen;
-  }
-
-  setDragging(dragging) {
-    this.dragging = dragging;
-  }
-
-  getTopLineStyle() {
-    let padding = '15px';
-    let margin = 20;
-    let styles = {
-      borderBottom: 'solid 1spx #DCDCDC',
-      marginBottom: '20px',
-      fontFamily: vars.fonts.main,
-      paddingRight: margin + 'px',
-      paddingTop: padding,
-      paddingBottom: padding,
-      boxShadow: '0 0 20px 0 rgba(0,0,0,0.16)',
-      transition: this.sbTransitionSpeed + 's',
-    };
-    if (this.sidebarOpen === true) {
-      styles.paddingLeft = (this.sbWidth + margin) + 'px';
-    } else {
-      styles.paddingLeft = margin;
-    }
-    return styles;
-  }
-
-  getSearch() {
-    return {
-      'width': '100%',
-      'borderLeft': 0,
-      'borderRight': 0,
-      'borderTop': 0,
-      'borderBottom': '1px solid #DCDCDC',
-      'fontSize': '50px',
-      ...vars.fonts.main,
-      ':focus': {
-        'borderLeft': 0,
-        'borderRight': 0,
-        'borderTop': 0,
-        'outline': 'none',
-        'borderBottom': '1px solid black',
-      },
-    };
-  }
-
-  getCards() {
-    return {
-      'width': '100%',
-      'display': 'flex',
-      'flexWrap': 'wrap',
-    };
-  }
-
-  getCardWrapper() {
-    return {
-      'width': '25%',
-      'flexGrow': '1',
-    };
-  }
-
-  getCard() {
-    return {
-      width: '100%',
-    };
+    super(sidebarOpen);
   }
 
   getLeft() {
@@ -94,13 +16,13 @@ export default class styles {
       top: 0,
       background: 'white', // '#EDEDED',
       zIndex: 3,
-      width: this.sbWidth + 'px',
-      transition: this.sbTransitionSpeed + 's',
+      width: vars.nums.sbWidth + 'px',
+      transition: vars.nums.sbTransitionSpeed + 's',
     };
     if (this.sidebarOpen === true) {
       styles.left = '0px';
     } else {
-      styles.left = (this.sbWidth * -1) + 'px';
+      styles.left = (vars.nums.sbWidth * -1) + 'px';
     }
     return styles;
   }
@@ -108,11 +30,11 @@ export default class styles {
   getRight() {
     let styles = {
       paddingRight: '20px',
-      transition: this.sbTransitionSpeed + 's',
+      transition: vars.nums.sbTransitionSpeed + 's',
     };
     let margin = 20;
     if (this.sidebarOpen === true) {
-      styles.paddingLeft = (this.sbWidth + margin) + 'px';
+      styles.paddingLeft = (vars.nums.sbWidth + margin) + 'px';
     } else {
       styles.paddingLeft = margin + 'px';
     }
@@ -132,7 +54,7 @@ export default class styles {
       fontSize: w + 'px',
       cursor: 'pointer',
       // background: 'black',
-      transition: this.sbTransitionSpeed + 's',
+      transition: vars.nums.sbTransitionSpeed + 's',
       zIndex: '5',
     };
     if (this.sidebarOpen === true) {

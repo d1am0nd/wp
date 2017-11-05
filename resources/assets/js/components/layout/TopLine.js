@@ -15,11 +15,7 @@ class TopLine extends React.Component {
   }
 
   getLayoutStyles() {
-    let styles = {};
-    if (this.props.styles) {
-      Object.assign(styles, this.props.styles.getTopLineStyle());
-    }
-    return styles;
+    return this.props.styles.getTopLineStyles();
   }
 
   getLeftStyles() {
@@ -41,7 +37,7 @@ class TopLine extends React.Component {
 
   getSearchStyles() {
     let styles = {};
-    Object.assign(styles, this.props.styles.getSearch());
+    Object.assign(styles, this.props.styles.getSearchStyles());
     return styles;
   }
 

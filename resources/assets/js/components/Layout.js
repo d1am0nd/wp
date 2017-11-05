@@ -10,14 +10,17 @@ import Sidebar from './Sidebar';
 import TopLine from './layout/TopLine';
 import SingleCard from './SingleCard';
 
-import LayoutStyle from '../styles/layout';
+import Styles from '../styles/index';
 
 import cardsApi from '../api/cards';
 
 class Layout extends React.Component {
   constructor() {
     super();
-    this.styles = new LayoutStyle(true);
+    this.mainStyle = new Styles();
+    this.styles = this.mainStyle.Layout;
+    console.log(this.mainStyle);
+    console.log(this.styles);
     this.state = {
       cards: [],
       visibleCards: [],
@@ -93,7 +96,7 @@ class Layout extends React.Component {
   }
 
   toggleSidebar() {
-    this.styles.setSidebar(!this.state.sidebarOpen);
+    this.mainStyle.setSidebar(!this.state.sidebarOpen);
     this.setState({
       sidebarOpen: !this.state.sidebarOpen,
     });
@@ -159,12 +162,13 @@ class Layout extends React.Component {
         <div onClick={e => this.handleContentClick()}>
           <TopLine
             onClick={e => this.handleContentClick()}
-            styles={this.styles}
+            styles={this.mainStyle.TopLine}
             handleSearchChange={this.handleSearchChange.bind(this)}
             count={this.state.visibleCards.length}/>
           <div style={this.leftStyles()}>
             <Sidebar
               clearType={(e, type) => this.clearFilterType(type)}
+              styles={this.mainStyle.Sidebar}
               handleClick={this.handleFilterChange.bind(this)}
               show={this.Filters.Filters}
               filters={this.state.filters}/>
@@ -173,7 +177,7 @@ class Layout extends React.Component {
             onClick={e => this.handleContentClick(e)}
             style={this.rightStyles()}>
             <Cards
-              styles={this.styles}
+              styles={this.mainStyle.Cards}
               handleCardClick={(e, card) => this.handleCardClick(e, card)}
               cards={this.state.visibleCards}/>
           </div>

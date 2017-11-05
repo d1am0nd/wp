@@ -6,27 +6,10 @@ import Row from './filters/Row';
 class Sidebar extends React.Component {
   constructor() {
     super();
-    this.styles = {
-      base: {
-        position: 'relative',
-        display: 'block',
-        height: '100%',
-        boxShadow: '0 0 20px 0 rgba(0,0,0,0.16)',
-        borderRight: '3px solid rgb(200, 200, 200, 1)',
-      },
-    };
   }
 
   getStyles() {
     return this.styles.base;
-  }
-
-  xStyle() {
-    return {
-      ':hover': {
-        cursor: 'pointer',
-      },
-    };
   }
 
   topRowStyles() {
@@ -48,8 +31,8 @@ class Sidebar extends React.Component {
 
   render() {
     return (
-      <div style={this.getStyles()}>
-        <div style={this.topRowStyles()}>
+      <div style={this.props.styles.getSidebarWrapper()}>
+        <div style={this.props.styles.topRowStyles()}>
         </div>
         <Row
           name={'Types'}
