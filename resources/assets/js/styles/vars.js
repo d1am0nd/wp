@@ -5,7 +5,7 @@ export default {
     },
   },
   nums: {
-    sbWidth: 40,
+    sbWidth: 30,
     sbMWidth: 60,
     sbTransitionSpeed: 0.3,
   },

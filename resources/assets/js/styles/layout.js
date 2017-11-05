@@ -55,11 +55,11 @@ export default class Layout extends SidebarClass {
 
   getToggleIcon() {
     let margins = 50;
-    let w = 70;
+    let w = 100;
     let h = w;
     let styles = {
       position: 'fixed',
-      left: margins + 'px',
+      right: margins + 'px',
       bottom: margins + 'px',
       height: h + 'px',
       width: w + 'px',
