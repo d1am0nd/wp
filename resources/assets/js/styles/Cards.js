@@ -1,6 +1,8 @@
-export default class Cards {
-  constructor() {
+import SidebarClass from './SidebarClass';
 
+export default class Cards extends SidebarClass {
+  constructor(isOpen) {
+    super(isOpen);
   }
 
   getCards() {
@@ -12,15 +14,20 @@ export default class Cards {
   }
 
   getCardWrapper() {
-    return {
+    let styles = {
       'width': '25%',
       'flexGrow': '1',
+      ':hover': {
+        cursor: 'pointer',
+      },
+      '@media (max-width: 750px)': {
+        width: '50%',
+      },
     };
-  }
-
-  getCard() {
-    return {
-      width: '100%',
-    };
+    if (this.sidebarOpen) {
+      styles['@media (max-width: 750px)']
+        .width = '100%';
+    }
+    return styles;
   }
 }

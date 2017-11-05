@@ -3,8 +3,6 @@ import radium from 'radium';
 
 import Filters from '../filters/index';
 
-import {StyleRoot} from 'radium';
-
 import Cards from './Cards';
 import Sidebar from './Sidebar';
 import TopLine from './layout/TopLine';
@@ -151,8 +149,7 @@ class Layout extends React.Component {
 
   render() {
     return (
-      <StyleRoot
-        style={{height: '100%'}}>
+      <div>
         <i
           className="fa fa-chevron-circle-right"
           onClick={e => this.toggleSidebar()}
@@ -172,7 +169,7 @@ class Layout extends React.Component {
               handleClick={this.handleFilterChange.bind(this)}
               show={this.Filters.Filters}
               filters={this.state.filters}/>
-            </div>
+          </div>
           <div
             onClick={e => this.handleContentClick(e)}
             style={this.rightStyles()}>
@@ -182,7 +179,7 @@ class Layout extends React.Component {
               cards={this.state.visibleCards}/>
           </div>
         </div>
-      </StyleRoot>
+      </div>
     );
   }
 }

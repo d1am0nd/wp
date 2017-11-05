@@ -11,16 +11,12 @@ class SingleCard extends React.Component {
       zIndex: 10,
       borderRadius: '10px',
       position: 'fixed',
-      display: 'flex',
-      left: '20%',
-      right: '20%',
-      width: '60%',
+      display: 'inline-flex',
+      left: '10%',
+      width: '80%',
       top: '10%',
-      bottom: '10%',
-      height: '80%',
       // marginLeft: '-320px',
       // width: '620px',
-      transition: '2s',
       backgroundColor: 'rgba(0, 0, 0, 0.70)',
     };
     return styles;
@@ -51,22 +47,37 @@ class SingleCard extends React.Component {
     return styles;
   }
 
+  getSideStyles() {
+    let styles = {
+      'width': '100%',
+      'paddingLeft': 0,
+      'paddingRight': 0,
+      'marginLeft': 0,
+      'marginRight': 0,
+    };
+    return styles;
+  }
+
   getLeftStyles() {
     let styles = {
-      width: '48%',
-      display: 'inline-block',
+      '@media (max-width: 750px)': {
+        marginTop: '-35px',
+      },
     };
+    Object.assign(styles, this.getSideStyles());
     return styles;
   }
 
   getRightStyles() {
     let styles = {
-      width: '48%',
-      color: 'white',
-      marginTop: '45px',
-      display: 'inline-block',
-      overflowY: 'auto',
+      'color': 'white',
+      'marginTop': '45px',
+      'overflowY': 'auto',
+      '@media (max-width: 750px)': {
+        display: 'none',
+      },
     };
+    Object.assign(styles, this.getSideStyles());
     return styles;
   }
 

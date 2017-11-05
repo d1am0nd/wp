@@ -9,34 +9,46 @@ export default class Layout extends SidebarClass {
 
   getLeft() {
     let styles = {
-      height: '100%',
-      overflowY: 'auto',
-      position: 'fixed',
-      boxShadow: '0 0 20px 10px rgba(0,0,0,0.16)',
-      top: 0,
-      background: 'white', // '#EDEDED',
-      zIndex: 3,
-      width: vars.nums.sbWidth + 'px',
-      transition: vars.nums.sbTransitionSpeed + 's',
+      'height': '100%',
+      'overflowY': 'auto',
+      'position': 'fixed',
+      'boxShadow': '0 0 20px 10px rgba(0,0,0,0.16)',
+      'top': 0,
+      'background': 'white', // '#EDEDED',
+      'zIndex': 3,
+      'width': vars.nums.sbWidth + '%',
+      'transition': vars.nums.sbTransitionSpeed + 's',
+      '@media (max-width: 750px)': {
+        width: vars.nums.sbMWidth + '%',
+      },
     };
     if (this.sidebarOpen === true) {
       styles.left = '0px';
+      styles['@media (max-width: 750px)']
+        .left = '0%';
     } else {
-      styles.left = (vars.nums.sbWidth * -1) + 'px';
+      styles.left = (vars.nums.sbWidth * -1) + '%';
+      styles['@media (max-width: 750px)']
+        .left = (vars.nums.sbMWidth * -1) + '%';
     }
     return styles;
   }
 
   getRight() {
     let styles = {
-      paddingRight: '20px',
-      transition: vars.nums.sbTransitionSpeed + 's',
+      'paddingRight': '20px',
+      'transition': vars.nums.sbTransitionSpeed + 's',
+      '@media (max-width: 750px)': {},
     };
-    let margin = 20;
+    let margin = 2;
     if (this.sidebarOpen === true) {
-      styles.paddingLeft = (vars.nums.sbWidth + margin) + 'px';
+      styles.paddingLeft = (vars.nums.sbWidth + margin) + '%';
+      styles['@media (max-width: 750px)']
+        .paddingLeft = (vars.nums.sbMWidth + margin) + '%';
     } else {
-      styles.paddingLeft = margin + 'px';
+      styles.paddingLeft = margin + '%';
+      styles['@media (max-width: 750px)']
+        .paddingLeft = margin + '%';
     }
     return styles;
   }
@@ -55,7 +67,7 @@ export default class Layout extends SidebarClass {
       cursor: 'pointer',
       // background: 'black',
       transition: vars.nums.sbTransitionSpeed + 's',
-      zIndex: '5',
+      zIndex: 5,
     };
     if (this.sidebarOpen === true) {
       styles.transform = 'rotateY(-180deg)';

@@ -8,16 +8,6 @@ class Card extends React.Component {
     super();
   }
 
-  getStyles() {
-    let styles = {
-        'width': '100%',
-    };
-    if (this.props.styles) {
-      Object.assign(styles, this.props.styles.getCard());
-    }
-    return styles;
-  }
-
   getCardWrapper() {
     let styles = {};
     if (this.props.styles) {
@@ -48,7 +38,7 @@ class Card extends React.Component {
         <img
           alt={this.props.card.name}
           title={this.props.card.name}
-          style={{width: '100%'}}
+          style={{width: '100%', cursor: 'pointer'}}
           src={this.props.card.image_path}/>
       </div>
     );
